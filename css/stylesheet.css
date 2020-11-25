@@ -1,1 +1,65 @@
 /* There's gonna be some cascade stylesheet code in the near future */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+:root {
+  --primary-color: #ff5722;
+  --primary-color-hover: #ee3900;
+  --black: #1b1f24;
+  --black-hover: #050607;
+  --white: #fdfdfd;
+  --padding: 4vw;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Body: fondo del color d'arriba y margin 0 */
+
+body {
+  background: var(--white);
+  margin: 0;
+}
+
+/* Vamos a definir de manera general los contenedores header, main y footer con
+to' lo suyo! */
+
+header, main, footer {
+  padding: 0 var(--padding);
+}
+
+/* HEADER */
+
+header {
+  background: var(--black);
+  color: var(--white);
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+header > a > img {
+  height: 64px;
+}
+
+/* NAV */
+
+nav {
+  margin-left: auto;
+}
+
+nav > a {
+  text-decoration: none;
+  color: var(--white);
+  padding: 1em;
+  margin: 0;
+  font-size: 1.2em;
+  transition: 0.3s;
+}
+
+nav > a:hover {
+  background: var(--black-hover);
+  transition: 0.3s;
+}
+
+/* MAIN */
+
+main {
+  
+}
