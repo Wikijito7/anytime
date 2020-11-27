@@ -219,10 +219,13 @@ div > span {
 #portada .container-row {
   height: fit-content;
   margin: auto;
+  align-items: center;
 }
 
 #portada .container-column {
   width: 2px;
+  padding: 2em;
+  text-align: left;
 }
 
 .container-column {
