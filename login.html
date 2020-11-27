@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="./css/stylesheet.css">
     <link rel="icon" type="image/png" href="./img/anytime.png" sizes="128x128">
   </head>
-  <body>
+  <body id="no-overflow">
     <header>
-      <a href="index.html"><img src="./img/logo.png" alt="Logo de Anytime"></a>
+      <a href="index.html" class="middle"><img src="./img/logo.png" alt="Logo de Anytime"></a>
     </header>
     <main>
-      <div class="imagen-fondo">
+      <div id="background">
         <img src="./img/background.png" alt="imagen fondo vectorial">
       </div>
       <section id="login">
@@ -22,14 +22,18 @@
           <label for="usuario">Usuario</label><br>
           <input type="text" id="usuario" name="" value=""><br>
 
-          <label for="pass">Usuario</label><br>
-          <input type="text" id="pass" name="" value=""><br>
-          <span>¿Has olvidado tu contraseña?</span><br>
-
-          <input type="submit" name="" value="Acceder"><br>
-          <span id="register">
-            ¿No tienes cuenta? <a href="register.html">Regístrate</a>
+          <label for="pass">Contraseña</label><br>
+          <input type="password" id="pass" name="" value=""><br>
+          <span>
+            <a href="recover-pass">¿Has olvidado tu contraseña?</a>
           </span>
+          <br>
+          <div class="submit">
+            <input type="submit" name="" value="Acceder"><br>
+            <span id="register">
+              ¿No tienes cuenta? <a href="register.html">Regístrate</a>
+            </span>
+          </div>
         </form>
       </section>
     </main>

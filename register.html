@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="./css/stylesheet.css">
     <link rel="icon" type="image/png" href="./img/anytime.png" sizes="128x128">
   </head>
-  <body>
+  <body id="no-overflow">
     <header>
-      <a href="index.html"><img src="./img/logo.png" alt="Logo de Anytime"></a>
+      <a href="index.html" class="middle"><img src="./img/logo.png" alt="Logo de Anytime"></a>
     </header>
     <main>
-      <div class="imagen-fondo">
+      <div id="background">
         <img src="./img/background.png" alt="imagen fondo vectorial">
       </div>
       <section id="register">
@@ -26,16 +26,19 @@
           <input type="text" id="user" name="username" value=""> <br>
 
           <label for="pass">Contraseña</label> <br>
-          <input type="text" id="pass" name="pass" value=""> <br>
+          <input type="password" id="pass" name="pass" value=""> <br>
 
           <input type="checkbox" id="term" name="term" value="">
           <label for="term">
             He leido y acepto los <a href="term-cond.html">términos y
             condiciones de uso</a>.
-          </label> <br>
-
-          <input type="submit" value="Continuar"> <br>
-          <a href="login.html">¿Tienes una cuenta?</a>
+          </label>
+          <br>
+          
+          <div class="submit">
+            <input type="submit" value="Continuar"> <br>
+            <a href="login.html">¿Tienes una cuenta?</a>
+          </div>
         </form>
       </section>
     </main>
