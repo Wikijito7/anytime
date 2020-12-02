@@ -8,29 +8,29 @@
     <link rel="stylesheet" href="./css/stylesheet.css">
     <link rel="icon" type="image/png" href="./img/anytime.png" sizes="128x128">
   </head>
-  <body id="no-overflow">
-    <header>
-      <div class="header-app">
-        <a href="#" id="admin">Administración</a>
-        <a href="index.html" class="middle"><img src="./img/logo.png" alt="Logo de Anytime"></a>
+  <body>
+    <header id="header-app">
+      <a href="#" id="admin"><i class="fas fa-cogs"></i></a>
+      <div id="imagen-app">
+        <a href="index.html"><img src="./img/logo.png" alt="Logo de Anytime"></a>
       </div>
-
-      <a href="perfil.html" class="right"><img id="profile" src="./img/profile.webp" alt="Imagen del usuario"></a>
+      <a href="perfil.html"><img id="profile" src="./img/profile.webp" alt="Imagen del usuario"></a>
     </header>
-    <main>
+    <main id="app">
       <section id="sinfichar">
         <h2>Bienvenido de nuevo, user.name</h2>
-        <a href="#">Fichar</a>
+        <a href="#" onclick="fichar();" class="boton">Fichar</a>
       </section>
       <section id="fichado">
         <h2>Tiempo trabajado</h2>
         <span id="time">0:00:00</span>
-        <div class="">
-          <a class="circular-boton" onclick="#"><i class="fas fa-coffee"></i></a>
-          <a class="circular-boton" onclick="#"><i class="fas fa-pause"></i></a>
-          <a class="circular-boton" onclick="#"><i class="fas fa-utensils"></i></a>
+
+        <div class="container-row">
+          <a class="botoncir not-selected" onclick="pauseFichar(this)"><i class="fas fa-mug-hot"></i></a>
+          <a class="botoncir not-selected" onclick="pauseFichar(this)"><i class="fas fa-pause"></i></a>
+          <a class="botoncir not-selected" onclick="pauseFichar(this)"><i class="fas fa-utensils"></i></a>
         </div>
-        <a href="#">Finalizar</a>
+        <a href="#" class="boton" onclick="desfichar();">Finalizar</a>
       </section>
       <section id="table">
         <div class="botones-tabla">
@@ -45,4 +45,5 @@
     </main>
   </body>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+  <script defer src="./js/script.js"></script>
 </html>

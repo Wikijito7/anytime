@@ -10,8 +10,11 @@
   </head>
   <body>
     <header>
-      <a href="index.html"><img src="./img/logo.png" alt="Logo de Anytime"></a>
-      <nav>
+      <div class="responsive">
+        <a href="index.html"><img src="./img/logo.png" alt="Logo de Anytime"></a>
+        <a id="lista" onclick="toggleList()"><i class="fas fa-list-ul" id="icon"></i></a>
+      </div>
+      <nav id="nav">
         <a href="index.html">Inicio</a>
         <a href="login.html">Login</a>
         <a href="contacto.html">Contacto</a>
