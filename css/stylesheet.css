@@ -68,6 +68,7 @@ nav > a:hover, #admin:hover {
   flex-grow: 2;
   align-items: center;
   justify-content: space-between;
+  padding: 0 12%
 }
 
 #imagen-app a {
@@ -76,7 +77,7 @@ nav > a:hover, #admin:hover {
 
 #admin {
   font-size: 1.2em;
-  display: none;
+  display: block;
 }
 
 .middle {
@@ -440,6 +441,50 @@ article:last-child {
   /* transition: 0.2s ease-in-out; */
 }
 
+#table {
+  margin: auto;
+  width: 80%;
+}
+
+.botones-tabla {
+  min-height: fit-content;
+  margin-bottom: 0.5em;
+}
+
+.botones-tabla a {
+  text-decoration: none;
+  color: var(--black);
+  padding: 0.25em 1em;
+  border-bottom: 5px solid #00000000;
+
+}
+
+.botones-tabla .btn-selected {
+  font-weight: bold;
+  border-bottom: 5px solid var(--primary-color-hover);
+}
+
+table {
+  width: 100%;
+  /* min-height: 350px; */
+  border: 1px solid #acacac;
+}
+
+th, tr, td {
+  padding: 1.2em;
+}
+
+tr {
+  width: 50%;
+  height: fit-content;
+}
+
+th {
+  width: fit-content;
+  text-align: left;
+  font-weight: bold;
+}
+
 /* FOOTER */
 
 footer {
@@ -505,6 +550,62 @@ footer p, footer a {
   }
 }
 
+@media only screen and (max-width: 640px) {
+  #table {
+    margin: 0;
+  }
+
+  #header-app {
+      padding: 0 var(--padding);
+  }
+
+  thead {
+    display: none;
+  }
+
+  #app .boton {
+    min-width: unset;
+    width: 70%;
+  }
+
+  #admin {
+    padding: 1rem;
+  }
+
+  tr {
+    display: block;
+    width: fit-content;
+    min-width: 90vw;
+    padding: 0;
+    text-align: left;
+    margin-bottom: 1em;
+  }
+
+  td {
+    display: block;
+    min-width: fit-content;
+    max-width: fit-content;
+    text-align: left;
+    /* margin: 1em;
+    padding: 1em; */
+  }
+
+  table {
+    display: inline-block;
+    min-width: fit-content;
+    padding: 0;
+    margin-top: 0.5em;
+    border: 0;
+  }
+
+  td:before {
+    content: attr(data) ": ";
+    font-weight: bold;
+    width: 10em;
+    display: inline-block;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   header {
     flex-flow: column;
@@ -551,7 +652,7 @@ footer p, footer a {
     width: 80vw;
   }
 
-  header a {
+  header a:not(.perfil) {
     margin-right: auto;
   }
 

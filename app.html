@@ -2,7 +2,7 @@
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Anytime - Register</title>
+    <title>Anytime - App</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
     <link rel="stylesheet" href="./css/stylesheet.css">
@@ -14,7 +14,7 @@
       <div id="imagen-app">
         <a href="index.html"><img src="./img/logo.png" alt="Logo de Anytime"></a>
       </div>
-      <a href="perfil.html"><img id="profile" src="./img/profile.webp" alt="Imagen del usuario"></a>
+      <a href="perfil.html" class="perfil"><img id="profile" src="./img/profile.webp" alt="Imagen del usuario"></a>
     </header>
     <main id="app">
       <section id="sinfichar">
@@ -35,11 +35,38 @@
       <section id="table">
         <div class="botones-tabla">
           <a href="#">Hoy</a>
-          <a href="#">Semana</a>
+          <a href="#" class="btn-selected">Semana</a>
           <a href="#">Mes</a>
         </div>
         <table>
-
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora de entrada</th>
+              <th>Hora de salida</th>
+              <th>Tiempo fichado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data="Fecha">19/10/2020</td>
+              <td data="Hora de entrada">8:10</td>
+              <td data="Hora de salida">14:31</td>
+              <td data="Tiempo fichado">6h 21 min</td>
+            </tr>
+            <tr>
+              <td data="Fecha">20/10/2020</td>
+              <td data="Hora de entrada">8:10</td>
+              <td data="Hora de salida">14:31</td>
+              <td data="Tiempo fichado">6h 21 min</td>
+            </tr>
+            <tr>
+              <td data="Fecha">21/10/2020</td>
+              <td data="Hora de entrada">8:10</td>
+              <td data="Hora de salida">14:31</td>
+              <td data="Tiempo fichado">6h 21 min</td>
+            </tr>
+          </tbody>
         </table>
       </section>
     </main>
