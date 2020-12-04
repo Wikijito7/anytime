@@ -21,6 +21,8 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* That dark / light theme thingy */
+
 .light {
   background: var(--white);
   color: var(--black);
@@ -688,6 +690,10 @@ footer p, footer a {
   }
 
   /* LOGIN / REGISTER */
+
+  #login, #register {
+    margin: 10vh auto;
+  }
 
   #background img {
     transform: rotate(270deg);

@@ -18,18 +18,18 @@ function toggleList() {
 }
 
 function changeDark(btn) {
-  let moon = document.getElementById('moon');
+  let sun = document.getElementById('sun');
   let body = document.getElementById('body');
   body.classList.replace("light", "dark");
-  moon.style.display = "block";
+  sun.style.display = "block";
   btn.style.display = "none";
 }
 
 function changeLight(btn) {
-  let sun = document.getElementById('sun');
+  let moon = document.getElementById('moon');
   let body = document.getElementById('body');
   body.classList.replace("dark", "light");
-  sun.style.display = "block";
+  moon.style.display = "block";
   btn.style.display = "none";
 }
 
