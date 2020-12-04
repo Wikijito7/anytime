@@ -8,14 +8,29 @@ var sinfichar = document.getElementById("sinfichar");
 var fichado = document.getElementById("fichado");
 
 function toggleList() {
-    // if(window.outerWidth > 760) return;
-        if (lista){
-            navlist.style.display = "none";
-        } else {
-          navlist.style.display = "flex";
-        }
+  if (lista){
+    navlist.classList.replace("visible", "invisible");
+  } else {
+    navlist.classList.replace("invisible", "visible");
+  }
 
-        lista = !lista;
+  lista = !lista;
+}
+
+function changeDark(btn) {
+  let moon = document.getElementById('moon');
+  let body = document.getElementById('body');
+  body.classList.replace("light", "dark");
+  moon.style.display = "block";
+  btn.style.display = "none";
+}
+
+function changeLight(btn) {
+  let sun = document.getElementById('sun');
+  let body = document.getElementById('body');
+  body.classList.replace("dark", "light");
+  sun.style.display = "block";
+  btn.style.display = "none";
 }
 
 function pauseFichar(btn) {
