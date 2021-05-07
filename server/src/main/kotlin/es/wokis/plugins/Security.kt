@@ -5,18 +5,17 @@ import io.ktor.auth.jwt.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import es.wokis.dto.LoginUserDTO
+import es.wokis.data.dto.LoginUserDTO
 import io.ktor.application.*
 
 private lateinit var jwtIssuer: String
 private lateinit var jwtAudience: String
-private lateinit var privateKey: String
 private lateinit var algorithm: Algorithm
 
 fun Application.configureSecurity() {
     jwtIssuer = environment.config.property("jwt.domain").getString()
     jwtAudience = environment.config.property("jwt.audience").getString()
-    privateKey = environment.config.property("secret.key").getString()
+    val privateKey = config.getString("secretkey")
 
     algorithm = Algorithm.HMAC256(privateKey)
 

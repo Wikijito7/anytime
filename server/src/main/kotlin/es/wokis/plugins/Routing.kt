@@ -1,8 +1,8 @@
 package es.wokis.plugins
 
-import es.wokis.dto.LoginUserDTO
+import es.wokis.data.dto.LoginUserDTO
 
-import es.wokis.repository.UserRepository
+import es.wokis.data.repository.UserRepository
 import es.wokis.utils.user
 import io.ktor.routing.*
 import io.ktor.http.*

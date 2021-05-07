@@ -1,4 +1,4 @@
-package es.wokis.dto
+package es.wokis.data.dto
 
 import io.ktor.auth.*
 

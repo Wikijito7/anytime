@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    // ktor
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-auth:$ktor_version")
     implementation("io.ktor:ktor-auth-jwt:$ktor_version")
@@ -26,10 +27,14 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    // exposed
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
+    // jbcrypt
     implementation ("org.mindrot:jbcrypt:0.4")
+    // sql
     implementation ("mysql:mysql-connector-java:8.0.19")
     implementation ("com.zaxxer:HikariCP:3.4.2")
 }
