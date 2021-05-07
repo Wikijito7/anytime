@@ -1,8 +1,7 @@
 package es.wokis.data.dto
 
-data class UserDTO(val username: String,
-                   val password: String,
-                   val name: String,
-                   val surname: String,
-                   val id_empresa: Int)
+import es.wokis.data.models.Empresa
+
+data class UserDTO(val username: String, val password: String, val nombre: String?, val apellidos: String?,
+                   val direccion: String?, val avatar: String?, val empresa: Empresa)
 
