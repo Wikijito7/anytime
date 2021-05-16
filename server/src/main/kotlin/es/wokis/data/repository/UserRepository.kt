@@ -6,16 +6,13 @@ import es.wokis.data.dto.UserDTO
 import es.wokis.data.models.Empresa
 import es.wokis.data.models.User
 import es.wokis.data.models.Users
-import es.wokis.plugins.makeToken
 import es.wokis.data.repository.interfaces.IUserRespository
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import es.wokis.plugins.makeToken
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 import java.sql.SQLException
 
-class UserRepository: IUserRespository {
+class UserRepository private constructor() : IUserRespository {
     override fun login(user: LoginUserDTO): String? {
         var userDB: User? = null
         transaction {
@@ -55,14 +52,32 @@ class UserRepository: IUserRespository {
             val userDB = User.find { Users.username eq username }.singleOrNull()
 
             if (userDB != null) {
-                user = UserDTO(userDB.username, userDB.password, userDB.nombre, userDB.apellidos, userDB.direccion,
-                    userDB.avatar, userDB.empresa)
+                user = UserDTO(
+                    userDB.username, userDB.password, userDB.nombre, userDB.apellidos, userDB.direccion,
+                    userDB.avatar, userDB.empresa
+                )
             }
         }
         return user
     }
 
-    override fun getAllUsersInCompany(companyName: String): Set<UserDTO> {
-        TODO("Not yet implemented")
+    override fun getAllUsersInCompany(companyName: String): Set<UserDTO>? {
+        val users: MutableSet<UserDTO> = mutableSetOf()
+        return null
+    }
+
+    companion object {
+        // instancia, da igual que lo llames del hilo x o del hilo y
+        @Volatile
+        var INSTANCE: UserRepository? = null
+
+        // al ser privado, llamamos a Klass.getInstance()
+        fun getInstance(): UserRepository {
+            return INSTANCE ?: synchronized(this) {
+                val instance = UserRepository()
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 }

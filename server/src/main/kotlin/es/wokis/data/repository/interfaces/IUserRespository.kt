@@ -8,5 +8,5 @@ interface IUserRespository {
     fun login(user: LoginUserDTO): String?
     fun register(user: RegisterUserDTO): String?
     fun getUser(username: String): UserDTO?
-    fun getAllUsersInCompany(companyName: String): Set<UserDTO>
+    fun getAllUsersInCompany(companyName: String): Set<UserDTO>?
 }

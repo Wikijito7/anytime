@@ -5,12 +5,10 @@ import es.wokis.data.models.Invitacion
 import es.wokis.data.models.Invitaciones
 import es.wokis.data.repository.interfaces.IInvitacionesRepository
 import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 
-class InvitacionesRepository : IInvitacionesRepository {
+class InvitacionesRepository private constructor() : IInvitacionesRepository {
     override fun crearInvitacion(invitacion: InvitacionDTO): InvitacionDTO? {
         var finalInvitacion: InvitacionDTO? = null
         val invitacionDTO = getInvitacion(invitacion.email)
@@ -49,6 +47,19 @@ class InvitacionesRepository : IInvitacionesRepository {
             }
         }
         return invitacion
+    }
+
+    companion object {
+        @Volatile
+        var INSTANCE: InvitacionesRepository? = null
+
+        fun getInstance(): InvitacionesRepository {
+            return INSTANCE ?: synchronized(this) {
+                val instance = InvitacionesRepository()
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 
 }

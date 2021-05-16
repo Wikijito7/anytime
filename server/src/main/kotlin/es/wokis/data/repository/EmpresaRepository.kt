@@ -4,7 +4,7 @@ import es.wokis.data.dto.EmpresaDTO
 import es.wokis.data.dto.UserDTO
 import es.wokis.data.repository.interfaces.IEmpresaRepository
 
-class EmpresaRepository : IEmpresaRepository {
+class EmpresaRepository private constructor() : IEmpresaRepository {
     override fun getEmpresa(name: String): EmpresaDTO {
         TODO("Not yet implemented")
     }
@@ -23,5 +23,18 @@ class EmpresaRepository : IEmpresaRepository {
 
     override fun eliminarTrabajador(user: UserDTO): Boolean {
         TODO("Not yet implemented")
+    }
+
+    companion object {
+        @Volatile
+        var INSTANCE: EmpresaRepository? = null
+
+        fun getInstance(): EmpresaRepository {
+            return INSTANCE ?: synchronized(this) {
+                val instance = EmpresaRepository()
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 }
