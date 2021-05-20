@@ -2,39 +2,58 @@ package es.wokis.data.repository
 
 import es.wokis.data.dto.EmpresaDTO
 import es.wokis.data.dto.UserDTO
+import es.wokis.data.models.Empresa
+import es.wokis.data.models.Empresas
 import es.wokis.data.repository.interfaces.IEmpresaRepository
+import es.wokis.utils.toEmpresaDTO
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.lowerCase
+import org.jetbrains.exposed.sql.transactions.transaction
 
-class EmpresaRepository private constructor() : IEmpresaRepository {
-    override fun getEmpresa(name: String): EmpresaDTO {
-        TODO("Not yet implemented")
-    }
+class EmpresaRepository : IEmpresaRepository {
+    override fun getEmpresa(name: String): EmpresaDTO? {
+        var empresaDTO: EmpresaDTO? = null
+        transaction {
+            val empresa = Empresa.find { Empresas.nombre eq name }.singleOrNull() ?: return@transaction
+            empresaDTO = empresa.toEmpresaDTO()
+        }
 
-    override fun getEmpresaOfUser(username: String): EmpresaDTO {
-        TODO("Not yet implemented")
+        return empresaDTO
     }
 
     override fun addEmpresa(empresa: EmpresaDTO): EmpresaDTO? {
-        TODO("Not yet implemented")
+        var empresaDTO: EmpresaDTO? = null
+        transaction {
+            val empresaDB = Empresa
+                .find { Empresas.nombre.lowerCase() eq empresa.name.toLowerCase() }
+                .singleOrNull()
+
+            if (empresaDB == null) {
+                empresaDTO = Empresa.new {
+                    nombre = empresa.name
+                    direccion = empresa.direccion
+                    piso = empresa.piso
+                    logo = empresa.logo
+                    creador = empresa.creador
+                }.toEmpresaDTO()
+            }
+        }
+
+        return empresaDTO
     }
 
     override fun removeEmpresa(empresa: EmpresaDTO): Boolean {
-        TODO("Not yet implemented")
+        if (getEmpresa(empresa.name) != null) {
+            Empresas.deleteWhere { Empresas.id eq empresa.id }
+            return true
+        }
+        return false
     }
 
     override fun eliminarTrabajador(user: UserDTO): Boolean {
-        TODO("Not yet implemented")
-    }
+        transaction {
 
-    companion object {
-        @Volatile
-        var INSTANCE: EmpresaRepository? = null
-
-        fun getInstance(): EmpresaRepository {
-            return INSTANCE ?: synchronized(this) {
-                val instance = EmpresaRepository()
-                INSTANCE = instance
-                instance
-            }
         }
+        return false
     }
 }

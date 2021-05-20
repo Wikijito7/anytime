@@ -8,11 +8,12 @@ import es.wokis.data.models.User
 import es.wokis.data.models.Users
 import es.wokis.data.repository.interfaces.IUserRespository
 import es.wokis.plugins.makeToken
+import es.wokis.utils.toEmpresaDTO
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 import java.sql.SQLException
 
-class UserRepository private constructor() : IUserRespository {
+class UserRepository : IUserRespository {
     override fun login(user: LoginUserDTO): String? {
         var userDB: User? = null
         transaction {
@@ -53,31 +54,10 @@ class UserRepository private constructor() : IUserRespository {
 
             if (userDB != null) {
                 user = UserDTO(
-                    userDB.username, userDB.password, userDB.nombre, userDB.apellidos, userDB.direccion,
-                    userDB.avatar, userDB.empresa
-                )
+                    userDB.username, userDB.password, userDB.nombre, userDB.apellidos,
+                    userDB.direccion, userDB.avatar, userDB.empresa.toEmpresaDTO())
             }
         }
         return user
-    }
-
-    override fun getAllUsersInCompany(companyName: String): Set<UserDTO>? {
-        val users: MutableSet<UserDTO> = mutableSetOf()
-        return null
-    }
-
-    companion object {
-        // instancia, da igual que lo llames del hilo x o del hilo y
-        @Volatile
-        var INSTANCE: UserRepository? = null
-
-        // al ser privado, llamamos a Klass.getInstance()
-        fun getInstance(): UserRepository {
-            return INSTANCE ?: synchronized(this) {
-                val instance = UserRepository()
-                INSTANCE = instance
-                instance
-            }
-        }
     }
 }

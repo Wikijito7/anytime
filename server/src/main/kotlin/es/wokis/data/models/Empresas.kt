@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.ReferenceOption
 object Empresas : IntIdTable() {
     val nombre = varchar("nombre", 30)
     val direccion = varchar("direccion", 60).nullable()
-    val piso = integer("piso").nullable()
+    val piso = varchar("piso", 10).nullable()
 
     val logo = varchar("logo", 60).nullable()
     val creador = reference("creador", Users, ReferenceOption.CASCADE)
@@ -18,9 +18,10 @@ object Empresas : IntIdTable() {
 class Empresa(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<Empresa>(Empresas)
 
-    val nombre by Empresas.nombre
-    val direccion by Empresas.direccion
-    val piso by Empresas.piso
-    val logo by Empresas.logo
-    val creador by User referencedOn Empresas.creador
+    var nombre by Empresas.nombre
+    var direccion by Empresas.direccion
+    var piso by Empresas.piso
+    var logo by Empresas.logo
+    var creador by User referencedOn Empresas.creador
+    val users by User referrersOn Users.codigoEmpresa
 }

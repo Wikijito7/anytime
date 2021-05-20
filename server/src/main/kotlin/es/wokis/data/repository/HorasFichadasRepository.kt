@@ -1,35 +1,38 @@
 package es.wokis.data.repository
 
 import es.wokis.data.dto.HorasFichadasDTO
+import es.wokis.data.dto.UserDTO
+import es.wokis.data.models.HorasFichadasObj
+import es.wokis.data.models.TipoHoraFichada
+import es.wokis.data.models.User
 import es.wokis.data.repository.interfaces.IHorasFichadasRepository
+import es.wokis.utils.toHorasFichadasDTO
+import org.jetbrains.exposed.sql.transactions.transaction
+import java.time.LocalDateTime
 
-class HorasFichadasRepository private constructor() : IHorasFichadasRepository {
-    override fun fichar(idUser: Int): HorasFichadasDTO {
-        TODO("Not yet implemented")
-    }
+class HorasFichadasRepository : IHorasFichadasRepository {
+    override fun fichar(user: User, tipoHoraFichada: TipoHoraFichada): HorasFichadasDTO? {
+        var fichaje: HorasFichadasDTO? = null
 
-    override fun desfichar(idUser: Int): HorasFichadasDTO {
-        TODO("Not yet implemented")
-    }
-
-    override fun horasFichadas(idUser: Int): List<HorasFichadasDTO> {
-        TODO("Not yet implemented")
-    }
-
-    override fun modificarDato(old: HorasFichadasDTO, new: HorasFichadasDTO) {
-        TODO("Not yet implemented")
-    }
-
-    companion object {
-        @Volatile
-        var INSTANCE: HorasFichadasRepository? = null
-
-        fun getInstance(): HorasFichadasRepository {
-            return INSTANCE ?: synchronized(this) {
-                val instance = HorasFichadasRepository()
-                INSTANCE = instance
-                instance
+        transaction {
+            val horaFichadaDB = HorasFichadasObj.new {
+                this.user = user
+                this.empresa = user.empresa
+                this.tipo = tipoHoraFichada
+                this.createdOn = LocalDateTime.now()
             }
+
+            fichaje = horaFichadaDB.toHorasFichadasDTO()
         }
+
+        return fichaje
+    }
+
+    override fun horasFichadas(user: UserDTO): List<HorasFichadasDTO> {
+        TODO("Not yet implemented")
+    }
+
+    override fun modificarDato(old: HorasFichadasDTO, new: HorasFichadasDTO): HorasFichadasDTO {
+        TODO("Not yet implemented")
     }
 }

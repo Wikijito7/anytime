@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 
-class InvitacionesRepository private constructor() : IInvitacionesRepository {
+class InvitacionesRepository : IInvitacionesRepository {
     override fun crearInvitacion(invitacion: InvitacionDTO): InvitacionDTO? {
         var finalInvitacion: InvitacionDTO? = null
         val invitacionDTO = getInvitacion(invitacion.email)
@@ -47,19 +47,6 @@ class InvitacionesRepository private constructor() : IInvitacionesRepository {
             }
         }
         return invitacion
-    }
-
-    companion object {
-        @Volatile
-        var INSTANCE: InvitacionesRepository? = null
-
-        fun getInstance(): InvitacionesRepository {
-            return INSTANCE ?: synchronized(this) {
-                val instance = InvitacionesRepository()
-                INSTANCE = instance
-                instance
-            }
-        }
     }
 
 }
