@@ -14,7 +14,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 
 fun Application.initDB() {
-    val config = HikariConfig().apply {
+    val databaseConfig = HikariConfig().apply {
         jdbcUrl = "jdbc:mysql://${config.getString("db.ip")}:${config.getString("db.port")}" +
                 "/${config.getString("db.databaseName")}"
         driverClassName = "com.mysql.cj.jdbc.Driver"
@@ -24,11 +24,10 @@ fun Application.initDB() {
 
     }
 
-    val dataSource = HikariDataSource(config)
+    val dataSource = HikariDataSource(databaseConfig)
     Database.connect(dataSource)
 
     transaction {
-
         SchemaUtils.create(Users, Empresas, HorasFichadas, Invitaciones)
 
         Users.insertIgnore {

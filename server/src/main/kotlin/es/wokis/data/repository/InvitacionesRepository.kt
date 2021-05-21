@@ -4,6 +4,8 @@ import es.wokis.data.dto.InvitacionDTO
 import es.wokis.data.models.Invitacion
 import es.wokis.data.models.Invitaciones
 import es.wokis.data.repository.interfaces.IInvitacionesRepository
+import es.wokis.utils.toEmpresa
+import es.wokis.utils.toEmpresaDTO
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
@@ -16,7 +18,7 @@ class InvitacionesRepository : IInvitacionesRepository {
             transaction {
                 Invitacion.new {
                     email = invitacion.email
-                    empresa = invitacion.empresa
+                    empresa = invitacion.empresa.toEmpresa()
                     createdOn = LocalDate.now()
                 }
             }
@@ -43,7 +45,8 @@ class InvitacionesRepository : IInvitacionesRepository {
             val invitacionDB = Invitacion.find { Invitaciones.email eq email }.singleOrNull()
 
             if (invitacionDB != null) {
-                invitacion = InvitacionDTO(invitacionDB.empresa, invitacionDB.email, invitacionDB.createdOn)
+                invitacion =
+                    InvitacionDTO(invitacionDB.empresa.toEmpresaDTO(), invitacionDB.email, invitacionDB.createdOn)
             }
         }
         return invitacion

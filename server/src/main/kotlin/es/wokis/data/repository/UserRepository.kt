@@ -20,6 +20,8 @@ class UserRepository : IUserRespository {
             userDB = User.find { Users.username eq user.username }.singleOrNull()
         }
 
+        if (userDB == null) return null
+
         return when (BCrypt.checkpw(user.password, userDB?.password)) {
             true -> makeToken(user)
             else -> null

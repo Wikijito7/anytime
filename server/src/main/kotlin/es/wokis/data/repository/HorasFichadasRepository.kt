@@ -11,14 +11,14 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
 class HorasFichadasRepository : IHorasFichadasRepository {
-    override fun fichar(user: User, tipoHoraFichada: TipoHoraFichada): HorasFichadasDTO? {
+    override fun fichar(user: User, tipo: TipoHoraFichada): HorasFichadasDTO? {
         var fichaje: HorasFichadasDTO? = null
 
         transaction {
             val horaFichadaDB = HorasFichadasObj.new {
                 this.user = user
                 this.empresa = user.empresa
-                this.tipo = tipoHoraFichada
+                this.tipo = tipo
                 this.createdOn = LocalDateTime.now()
             }
 

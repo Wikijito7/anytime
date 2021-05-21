@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 class EmpresaRepository : IEmpresaRepository {
     override fun getEmpresa(name: String): EmpresaDTO? {
         var empresaDTO: EmpresaDTO? = null
+
         transaction {
             val empresa = Empresa.find { Empresas.nombre eq name }.singleOrNull() ?: return@transaction
             empresaDTO = empresa.toEmpresaDTO()
@@ -21,8 +22,19 @@ class EmpresaRepository : IEmpresaRepository {
         return empresaDTO
     }
 
+    override fun getEmpresa(id: Int): EmpresaDTO? {
+        var empresaDTO: EmpresaDTO? = null
+
+        transaction {
+            empresaDTO = Empresa.findById(id)?.toEmpresaDTO()
+        }
+
+        return empresaDTO
+    }
+
     override fun addEmpresa(empresa: EmpresaDTO): EmpresaDTO? {
         var empresaDTO: EmpresaDTO? = null
+
         transaction {
             val empresaDB = Empresa
                 .find { Empresas.nombre.lowerCase() eq empresa.name.toLowerCase() }
@@ -34,7 +46,7 @@ class EmpresaRepository : IEmpresaRepository {
                     direccion = empresa.direccion
                     piso = empresa.piso
                     logo = empresa.logo
-                    creador = empresa.creador
+//                    creador = empresa.creador
                 }.toEmpresaDTO()
             }
         }
@@ -45,8 +57,10 @@ class EmpresaRepository : IEmpresaRepository {
     override fun removeEmpresa(empresa: EmpresaDTO): Boolean {
         if (getEmpresa(empresa.name) != null) {
             Empresas.deleteWhere { Empresas.id eq empresa.id }
+
             return true
         }
+
         return false
     }
 
@@ -54,6 +68,7 @@ class EmpresaRepository : IEmpresaRepository {
         transaction {
 
         }
+
         return false
     }
 }

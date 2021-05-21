@@ -2,6 +2,7 @@ package es.wokis.plugins
 
 import es.wokis.data.dto.LoginUserDTO
 import es.wokis.data.dto.RegisterUserDTO
+import es.wokis.data.repository.EmpresaRepository
 import es.wokis.data.repository.UserRepository
 import es.wokis.utils.user
 import io.ktor.application.*
@@ -12,7 +13,9 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Application.configureRouting() {
-    val userRepository = UserRepository.getInstance()
+    val userRepository = UserRepository()
+    val empresaRepository = EmpresaRepository()
+
 
     routing {
         get("/") {
@@ -56,21 +59,6 @@ fun Application.configureRouting() {
                 }
             }
 
-            // perfil del usuario logueado
-            get("/profile") {
-                val user = call.user
-
-                if (user != null) {
-                    val fullUser = userRepository.getUser(user.username)
-
-                    if (fullUser != null) {
-                        call.respond(HttpStatusCode.OK, fullUser)
-                    }
-                }
-
-                call.respond(HttpStatusCode.Forbidden)
-            }
-
             // perfil usuario x, TODO: Añadir roles.
             get("/user/{username}") {
                 val username = call.parameters["username"]
@@ -88,7 +76,6 @@ fun Application.configureRouting() {
                         call.respond(HttpStatusCode.NotFound, username)
                     }
                 }
-
             }
         }
     }
