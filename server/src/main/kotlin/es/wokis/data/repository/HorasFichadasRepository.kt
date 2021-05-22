@@ -2,6 +2,7 @@ package es.wokis.data.repository
 
 import es.wokis.data.dto.HorasFichadasDTO
 import es.wokis.data.dto.UserDTO
+import es.wokis.data.models.HorasFichadas
 import es.wokis.data.models.HorasFichadasObj
 import es.wokis.data.models.TipoHoraFichada
 import es.wokis.data.models.User
@@ -29,7 +30,15 @@ class HorasFichadasRepository : IHorasFichadasRepository {
     }
 
     override fun horasFichadas(user: UserDTO): List<HorasFichadasDTO> {
-        TODO("Not yet implemented")
+        val fichajesList: MutableList<HorasFichadasDTO> = mutableListOf()
+
+        transaction {
+            val horasFichadas = HorasFichadasObj.find { HorasFichadas.idUser eq user.id }
+
+            fichajesList.addAll(horasFichadas.map { it.toHorasFichadasDTO() })
+        }
+
+        return fichajesList
     }
 
     override fun modificarDato(old: HorasFichadasDTO, new: HorasFichadasDTO): HorasFichadasDTO {

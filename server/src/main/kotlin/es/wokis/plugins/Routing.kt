@@ -3,6 +3,7 @@ package es.wokis.plugins
 import es.wokis.data.dto.LoginUserDTO
 import es.wokis.data.dto.RegisterUserDTO
 import es.wokis.data.repository.EmpresaRepository
+import es.wokis.data.repository.HorasFichadasRepository
 import es.wokis.data.repository.UserRepository
 import es.wokis.utils.user
 import io.ktor.application.*
@@ -15,7 +16,7 @@ import io.ktor.routing.*
 fun Application.configureRouting() {
     val userRepository = UserRepository()
     val empresaRepository = EmpresaRepository()
-
+    val horasFichadasRepository = HorasFichadasRepository()
 
     routing {
         get("/") {
@@ -75,6 +76,35 @@ fun Application.configureRouting() {
                     } else {
                         call.respond(HttpStatusCode.NotFound, username)
                     }
+                }
+            }
+
+            post("/fichar") {
+                val user = call.user
+
+                if (user != null) {
+
+//                    horasFichadasRepository.fichar()
+                }
+            }
+
+            get("/fichaje/{username}") {
+                val username = call.parameters["username"]
+
+                if (username != null) {
+                    val userDTO = userRepository.getUser(username)
+
+                    if (userDTO != null) {
+                        val fichaje = horasFichadasRepository.horasFichadas(userDTO)
+
+                        call.respond(fichaje)
+
+                    } else {
+                        call.respond(HttpStatusCode.NotFound, username)
+                    }
+
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "Username must be given")
                 }
             }
         }
