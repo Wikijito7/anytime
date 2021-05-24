@@ -12,21 +12,18 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
 class HorasFichadasRepository : IHorasFichadasRepository {
-    override fun fichar(user: User, tipo: TipoHoraFichada): HorasFichadasDTO? {
-        var fichaje: HorasFichadasDTO? = null
+    override fun fichar(user: User, tipo: TipoHoraFichada): HorasFichadasDTO {
+        // devolucion de la funcion
+        return transaction {
+            // devolución en la transacción
+            return@transaction HorasFichadasObj.new {
+                 this.user = user
+                 empresa = user.empresa
+                 this.tipo = tipo
+                 createdOn = LocalDateTime.now()
+             }
 
-        transaction {
-            val horaFichadaDB = HorasFichadasObj.new {
-                this.user = user
-                this.empresa = user.empresa
-                this.tipo = tipo
-                this.createdOn = LocalDateTime.now()
-            }
-
-            fichaje = horaFichadaDB.toHorasFichadasDTO()
-        }
-
-        return fichaje
+        }.toHorasFichadasDTO()
     }
 
     override fun horasFichadas(user: UserDTO): List<HorasFichadasDTO> {

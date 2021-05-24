@@ -13,7 +13,7 @@ class HashGenerator {
          *
          */
         fun generateHash(length: Long = 12L): String {
-            val hashSource = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            val hashSource = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_"
             return Random().ints(length, 0, hashSource.length-1)
                 .asSequence()
                 .map(hashSource::get)

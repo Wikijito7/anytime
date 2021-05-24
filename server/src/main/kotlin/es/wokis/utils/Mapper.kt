@@ -31,3 +31,7 @@ fun Invitacion.toInvitacionDTO(): InvitacionDTO {
 fun EmpresaDTO.toEmpresa(): Empresa {
     return Empresa(EntityID(id, Empresas))
 }
+
+fun UserDTO.toUser(): User {
+    return User(EntityID(id, Users))
+}
