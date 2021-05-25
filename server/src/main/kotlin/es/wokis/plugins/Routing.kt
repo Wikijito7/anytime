@@ -21,6 +21,8 @@ fun Application.configureRouting() {
     val userRepository = UserRepository()
     val empresaRepository = EmpresaRepository()
     val horasFichadasRepository = HorasFichadasRepository()
+    val imageService = ImageService()
+
 
     routing {
         get("/") {
@@ -88,14 +90,17 @@ fun Application.configureRouting() {
                         }
                     }
 
-                    route ("/avatar") {
+                    route("avatar") {
                         get {
                             val callUser = call.user
+                            val username = call.parameters["username"]
+                            print(username)
 
-                            callUser?.let {
-                                val user = userRepository.getUser(it.username) ?: return@let
 
-                                call.respondFile(ImageService.getAvatar(user.avatar))
+                            username?.let {
+                                val user = userRepository.getUser(username) ?: return@let
+
+                                call.respondFile(imageService.getAvatar(user.avatar))
                             }
                         }
 
@@ -106,15 +111,26 @@ fun Application.configureRouting() {
                             callUser?.let { user ->
                                 multipartData.forEachPart {
                                     if (it is PartData.FileItem) {
-                                        val avatarPath: String = ImageService.insertAvatar(user.username, it)
-                                        userRepository.changeAvatar(user.username, avatarPath)
+                                        val avatarPath: String = imageService.insertAvatar(user.username, it)
+                                        if (!avatarPath.isBlank()) {
+                                            userRepository.changeAvatar(user.username, avatarPath)
+                                            call.respond(imageService.getAvatar(avatarPath))
+                                        }
+
+
                                     }
                                 }
                             }
 
                         }
-                        delete {  }
+
+                        delete {
+
+                        }
+
+                        // fin avatar
                     }
+                    // fin username
                 }
             }
 

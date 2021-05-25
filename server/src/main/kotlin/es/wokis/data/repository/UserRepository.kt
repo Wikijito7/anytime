@@ -51,6 +51,7 @@ class UserRepository : IUserRespository {
 
     override fun getUser(username: String): UserDTO? {
         var user: UserDTO? = null
+
         transaction {
             val userDB = User.find { Users.username eq username }.singleOrNull()
 

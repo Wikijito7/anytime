@@ -8,6 +8,7 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.start(testing: Boolean = true) {
     initConfig()
+    initImages()
     initDB()
     configureSecurity()
     configureHTTP()

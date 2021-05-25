@@ -7,8 +7,8 @@ import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
 fun Application.initImages() {
-    val imagePath = config.getString("imagepath")
-    val imageFolder = File(imagePath)
+    val imagePath = config.getString("imagefolder")
+    val imageFolder = File(imagePath + File.separator, "default.png").normalize()
 
     val defaultImagePath = this::class.java.getResource("/default.png") ?: throw IllegalAccessException()
     val defaultImage = Paths.get(File(defaultImagePath.toURI()).path)
@@ -21,4 +21,5 @@ fun Application.initImages() {
 
         Files.copy(defaultImage, imageFolder.toPath(), StandardCopyOption.REPLACE_EXISTING)
     }
+
 }

@@ -5,66 +5,65 @@ import io.ktor.http.content.*
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 import javax.naming.NoPermissionException
 
 class ImageService {
-    companion object {
-        private val imageFolder = config.getString("imagefolder")
-        private const val AVATARS = "avatars"
-        private const val LOGOS = "logos"
+    private val imageFolder = config.getString("imagefolder")
+    private val avatars = "avatars"
+    private val logos = "logos"
 
-        fun getAvatar(username: String): File {
-            return getImage(username)
+    fun getAvatar(avatarPath: String): File {
+        return getImage(avatarPath)
+    }
+
+    fun getLogo(logoPath: String): File {
+        return getImage(logoPath)
+    }
+
+    private fun getImage(path: String): File {
+        val defaultIcon = File("$imageFolder/default.png")
+        val imagePath = Paths.get(path).normalize()
+
+        val file = File(imagePath.toUri())
+
+        return if (file.exists()) {
+            file
+        } else {
+            defaultIcon
         }
 
-        fun getLogo(empresaName: String): File {
-            return getImage(empresaName)
-        }
+    }
 
-        private fun getImage(path: String): File {
-            val defaultIcon = File("$imageFolder/default.png")
-            val imagePath = Paths.get(path).normalize()
+    fun insertAvatar(name: String, image: PartData.FileItem): String {
+        return insertImage(avatars, name, image)
+    }
 
-            val file = File(imagePath.toUri())
+    fun insertLogo(name: String, image: PartData.FileItem): String {
+        return insertImage(logos, name, image)
+    }
 
-            return if (file.exists()) {
-                file
-            } else {
-                defaultIcon
+    private fun insertImage(root: String, name: String, image: PartData.FileItem): String {
+        try {
+            val imageExtension = image.contentType?.contentSubtype
+            val imageName = "$name.${imageExtension}"
+            val imagePath = File("$imageFolder/$root/$name", imageName).normalize()
+
+            val imageInputStream = image.streamProvider.invoke()
+
+            if (!imagePath.exists()) {
+                imagePath.mkdirs()
             }
 
+            Files.copy(imageInputStream, imagePath.toPath(), StandardCopyOption.REPLACE_EXISTING)
+
+            imageInputStream.close()
+
+            return imagePath.toPath().toString()
+        } catch (exc: NoPermissionException) {
+            /* no-op */
         }
 
-        fun insertAvatar(name: String, image: PartData.FileItem): String {
-            return insertImage(AVATARS, name, image)
-        }
-
-        fun insertLogo(name: String, image: PartData.FileItem): String {
-            return insertImage(LOGOS, name, image)
-        }
-
-        private fun insertImage(root: String, name: String, image: PartData.FileItem): String {
-            try {
-                val imageExtension = image.contentType?.contentSubtype
-                val imageName = "$name.${imageExtension}"
-                val imagePath = File("$imageFolder/$root/$name", imageName).normalize()
-
-                val imageInputStream = image.streamProvider.invoke()
-
-                if (!imagePath.exists()) {
-                    imagePath.mkdirs()
-                }
-
-                Files.copy(imageInputStream, imagePath.toPath())
-
-                imageInputStream.close()
-
-                return imagePath.toPath().toString()
-            } catch (exc: NoPermissionException) {
-                /* no-op */
-            }
-
-            return ""
-        }
+        return ""
     }
 }
