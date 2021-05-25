@@ -9,8 +9,8 @@ services:
     volumes:
       - ./db-init:/docker-entrypoint-initdb.d/
     environment:
-      MYSQL_DATABASE: videoclub
-      MYSQL_USER: hlc
+      MYSQL_DATABASE: anytime
+      MYSQL_USER: anytime
       MYSQL_PASSWORD: pestillo
       MYSQL_ROOT_PASSWORD: pestillo
 
