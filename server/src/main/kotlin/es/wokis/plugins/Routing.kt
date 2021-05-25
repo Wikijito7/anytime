@@ -93,9 +93,12 @@ fun Application.configureRouting() {
                             val callUser = call.user
 
                             callUser?.let {
-                                call.respondFile(ImageService.getAvatar(it.username))
+                                val user = userRepository.getUser(it.username) ?: return@let
+
+                                call.respondFile(ImageService.getAvatar(user.avatar))
                             }
                         }
+
                         post {
                             val multipartData = call.receiveMultipart()
                             val callUser = call.user
@@ -103,7 +106,8 @@ fun Application.configureRouting() {
                             callUser?.let { user ->
                                 multipartData.forEachPart {
                                     if (it is PartData.FileItem) {
-                                        ImageService.insertAvatar(user.username, it)
+                                        val avatarPath: String = ImageService.insertAvatar(user.username, it)
+                                        userRepository.changeAvatar(user.username, avatarPath)
                                     }
                                 }
                             }

@@ -13,7 +13,7 @@ object Users: IntIdTable() {
     val nombre = varchar("nombre", 30).nullable()
     val apellidos = varchar("apellidos", 60).nullable()
     val direccion = varchar("direccion", 100).nullable()
-    val avatar = varchar("avatar", 255).nullable()
+    val avatar = varchar("avatar", 255).default("no-image")
     val codigoEmpresa = reference("id_empresa", Empresas, ReferenceOption.CASCADE)
 }
 

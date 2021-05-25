@@ -3,7 +3,6 @@ package es.wokis.services
 import es.wokis.plugins.config
 import io.ktor.http.content.*
 import java.io.File
-import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Paths
 import javax.naming.NoPermissionException
@@ -15,37 +14,36 @@ class ImageService {
         private const val LOGOS = "logos"
 
         fun getAvatar(username: String): File {
-            return getImage(AVATARS, username)
+            return getImage(username)
         }
 
         fun getLogo(empresaName: String): File {
-            return getImage(LOGOS, empresaName)
+            return getImage(empresaName)
         }
 
-        private fun getImage(root: String, name: String): File {
+        private fun getImage(path: String): File {
             val defaultIcon = File("$imageFolder/default.png")
-            val pathString = "$imageFolder/$root/$name"
-            val path = Paths.get(pathString).normalize()
+            val imagePath = Paths.get(path).normalize()
 
-            val file = File(path.toUri())
+            val file = File(imagePath.toUri())
 
-            if (file.exists()) {
-                val image = file.listFiles()?.firstOrNull()
-                return image ?: defaultIcon
+            return if (file.exists()) {
+                file
+            } else {
+                defaultIcon
             }
 
-            return defaultIcon
         }
 
-        fun insertAvatar(name: String, image: PartData.FileItem) {
-            insertImage(AVATARS, name, image)
+        fun insertAvatar(name: String, image: PartData.FileItem): String {
+            return insertImage(AVATARS, name, image)
         }
 
-        fun insertLogo(name: String, image: PartData.FileItem) {
-            insertImage(LOGOS, name, image)
+        fun insertLogo(name: String, image: PartData.FileItem): String {
+            return insertImage(LOGOS, name, image)
         }
 
-        private fun insertImage(root: String, name: String, image: PartData.FileItem): Boolean {
+        private fun insertImage(root: String, name: String, image: PartData.FileItem): String {
             try {
                 val imageExtension = image.contentType?.contentSubtype
                 val imageName = "$name.${imageExtension}"
@@ -61,12 +59,12 @@ class ImageService {
 
                 imageInputStream.close()
 
-                return true
+                return imagePath.toPath().toString()
             } catch (exc: NoPermissionException) {
                 /* no-op */
             }
 
-            return false
+            return ""
         }
     }
 }

@@ -55,11 +55,22 @@ class UserRepository : IUserRespository {
             val userDB = User.find { Users.username eq username }.singleOrNull()
 
             if (userDB != null) {
-                user = UserDTO(
+                user = UserDTO(userDB.id.value,
                     userDB.username, userDB.password, userDB.nombre, userDB.apellidos,
                     userDB.direccion, userDB.avatar, userDB.empresa.toEmpresaDTO())
             }
         }
         return user
+    }
+
+    override fun changeAvatar(username: String, avatar: String) {
+        transaction {
+            val user = User.find { Users.username eq username }.firstOrNull()
+
+            user?.let {
+                it.avatar = avatar
+                commit()
+            }
+        }
     }
 }
