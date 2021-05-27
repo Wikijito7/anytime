@@ -25,7 +25,7 @@ fun HorasFichadasObj.toHorasFichadasDTO(): HorasFichadasDTO {
 }
 
 fun Invitacion.toInvitacionDTO(): InvitacionDTO {
-    return InvitacionDTO(empresa.toEmpresaDTO(), email, createdOn)
+    return InvitacionDTO(empresa.toEmpresaDTO(), email, hash, createdOn)
 }
 
 fun EmpresaDTO.toEmpresa(): Empresa {
