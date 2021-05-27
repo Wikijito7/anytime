@@ -10,17 +10,18 @@ import javax.mail.MessagingException
 import javax.mail.Session
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
-import kotlin.math.log
 
 class EmailService {
     private val remitente = config.getString("mail.user")
     private val passw = config.getString("mail.pass")
 
     private val asunto = "Invitacion"
-    private val cuerpo = "Cuerpo"
+    private val emailHtml = this::class.java.getResource("/email-unminified.html") ?: throw IllegalAccessException()
+
 
     fun sendEmail(invitacion: InvitacionDTO): InvitacionDTO {
         val properties: Properties = System.getProperties()
+        val cuerpo = emailHtml.readText().replace("\$\$Empresa", invitacion.empresa.name)
         val hash = HashGenerator.generateHash(20)
 
         with(properties) {
@@ -29,7 +30,8 @@ class EmailService {
             put("mail.smtp.clave", passw)
             put("mail.smtp.auth", "true")
             put("mail.smtp.starttls.enable", "true")
-            put("mail.smtp.port", "587")
+            put("mail.smtp.ssl.trust", "smtp.gmail.com");
+            put("mail.smtp.port", 587)
         }
 
         val session = Session.getDefaultInstance(properties)
@@ -40,7 +42,7 @@ class EmailService {
                 setFrom(InternetAddress(remitente))
                 addRecipients(Message.RecipientType.TO, invitacion.email)
                 subject = asunto
-                setText(cuerpo)
+                setContent(cuerpo, "text/html")
             }
 
             val transport = session.getTransport("smtp")
@@ -50,7 +52,7 @@ class EmailService {
                 close()
             }
         } catch (e: MessagingException) {
-            print(e.message)
+            println(e.message)
         }
 
         return InvitacionDTO(invitacion.empresa, invitacion.email, hash, LocalDate.now())

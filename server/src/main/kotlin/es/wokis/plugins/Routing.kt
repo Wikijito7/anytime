@@ -1,10 +1,10 @@
 package es.wokis.plugins
 
-import es.wokis.data.dto.LoginUserDTO
-import es.wokis.data.dto.RegisterUserDTO
+import es.wokis.data.dto.*
 import es.wokis.data.repository.EmpresaRepository
 import es.wokis.data.repository.HorasFichadasRepository
 import es.wokis.data.repository.UserRepository
+import es.wokis.services.EmailService
 import es.wokis.services.ImageService
 import es.wokis.utils.tipoFichaje
 import es.wokis.utils.toUser
@@ -22,7 +22,7 @@ fun Application.configureRouting() {
     val empresaRepository = EmpresaRepository()
     val horasFichadasRepository = HorasFichadasRepository()
     val imageService = ImageService()
-
+    val emailService = EmailService()
 
     routing {
         get("/") {
@@ -205,6 +205,13 @@ fun Application.configureRouting() {
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "$type is not valid")
                 }
+            }
+
+            post("email") {
+                val empresaDTO = EmpresaDTO(1, "Test", null, null, null, listOf<UserDTO>())
+                val invitacion = emailService.sendEmail(InvitacionDTO(empresaDTO, "wikyfg@gmail.com"))
+
+                call.respond(invitacion)
             }
         }
     }
