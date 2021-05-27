@@ -38,4 +38,6 @@ dependencies {
     // sql
     implementation("mysql:mysql-connector-java:8.0.19")
     implementation("com.zaxxer:HikariCP:3.4.2")
+    // JavaMail
+    implementation("java-mail:java.mail-api:1.6.2")
 }
