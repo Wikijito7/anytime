@@ -209,7 +209,7 @@ fun Application.configureRouting() {
 
             post("email") {
                 val empresaDTO = EmpresaDTO(1, "Test", null, null, null, listOf<UserDTO>())
-                val invitacion = emailService.sendEmail(InvitacionDTO(empresaDTO, "wikyfg@gmail.com"))
+                val invitacion = emailService.sendEmail(InvitacionDTO(empresaDTO, "antoniojoselojoojeda@gmail.com"))
 
                 call.respond(invitacion)
             }

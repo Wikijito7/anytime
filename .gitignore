@@ -2,3 +2,5 @@
 /lib/
 /.idea/
 /images/
+/server/gradlew
+/server/gradlew.bat

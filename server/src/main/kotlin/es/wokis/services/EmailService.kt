@@ -21,8 +21,10 @@ class EmailService {
 
     fun sendEmail(invitacion: InvitacionDTO): InvitacionDTO {
         val properties: Properties = System.getProperties()
-        val cuerpo = emailHtml.readText().replace("\$\$Empresa", invitacion.empresa.name)
         val hash = HashGenerator.generateHash(20)
+        val cuerpo = emailHtml.readText()
+            .replace("\$\$Empresa", invitacion.empresa.name)
+            .replace("\$\$Enlace", hash)
 
         with(properties) {
             put("mail.smtp.host", "smtp.gmail.com")

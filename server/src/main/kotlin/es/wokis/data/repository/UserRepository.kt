@@ -9,6 +9,7 @@ import es.wokis.data.models.Users
 import es.wokis.data.repository.interfaces.IUserRespository
 import es.wokis.plugins.makeToken
 import es.wokis.utils.toEmpresaDTO
+import es.wokis.utils.toUserDTO
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 import java.sql.SQLException
@@ -55,11 +56,7 @@ class UserRepository : IUserRespository {
         transaction {
             val userDB = User.find { Users.username eq username }.singleOrNull()
 
-            if (userDB != null) {
-                user = UserDTO(userDB.id.value,
-                    userDB.username, userDB.password, userDB.nombre, userDB.apellidos,
-                    userDB.direccion, userDB.avatar, userDB.empresa.toEmpresaDTO())
-            }
+            user = userDB?.toUserDTO()
         }
         return user
     }
