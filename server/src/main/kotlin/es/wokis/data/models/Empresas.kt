@@ -6,7 +6,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
 object Empresas : IntIdTable() {
-    val nombre = varchar("nombre", 30)
+    val nombre = varchar("nombre", 30).uniqueIndex()
     val direccion = varchar("direccion", 60).nullable()
     val piso = varchar("piso", 10).nullable()
 

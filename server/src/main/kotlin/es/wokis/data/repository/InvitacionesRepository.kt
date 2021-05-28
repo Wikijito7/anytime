@@ -1,6 +1,7 @@
 package es.wokis.data.repository
 
 import es.wokis.data.dto.InvitacionDTO
+import es.wokis.data.models.Empresa
 import es.wokis.data.models.Invitacion
 import es.wokis.data.models.Invitaciones
 import es.wokis.data.repository.interfaces.IInvitacionesRepository
@@ -14,29 +15,34 @@ import java.time.LocalDate
 class InvitacionesRepository : IInvitacionesRepository {
     override fun crearInvitacion(invitacion: InvitacionDTO): InvitacionDTO? {
         var finalInvitacion: InvitacionDTO? = null
-        val invitacionDTO = getInvitacion(invitacion.email)
-        if (invitacionDTO == null) {
+
             transaction {
-                Invitacion.new {
+                val empresa = Empresa.findById(invitacion.empresa.id) ?: return@transaction
+
+                finalInvitacion = Invitacion.new {
                     email = invitacion.email
-                    empresa = invitacion.empresa.toEmpresa()
+                    this.empresa = empresa
+                    hash = invitacion.hash!!
                     createdOn = LocalDate.now()
-                }
+                }.toInvitacionDTO()
             }
-            finalInvitacion = invitacion
-        }
+
         return finalInvitacion
     }
 
     override fun eliminarInvitacion(invitacion: InvitacionDTO): Boolean {
         val invitacionDTO = getInvitacion(invitacion.email)
+
         if (invitacionDTO != null) {
             transaction {
                 Invitaciones.deleteWhere { Invitaciones.email eq invitacion.email }
             }
+
         } else {
             return false
+
         }
+
         return true
     }
 
@@ -49,6 +55,7 @@ class InvitacionesRepository : IInvitacionesRepository {
                 invitacion = invitacionDB.toInvitacionDTO()
             }
         }
+
         return invitacion
     }
 

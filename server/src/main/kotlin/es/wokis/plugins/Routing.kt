@@ -3,6 +3,7 @@ package es.wokis.plugins
 import es.wokis.data.dto.*
 import es.wokis.data.repository.EmpresaRepository
 import es.wokis.data.repository.HorasFichadasRepository
+import es.wokis.data.repository.InvitacionesRepository
 import es.wokis.data.repository.UserRepository
 import es.wokis.services.EmailService
 import es.wokis.services.ImageService
@@ -21,6 +22,7 @@ fun Application.configureRouting() {
     val userRepository = UserRepository()
     val empresaRepository = EmpresaRepository()
     val horasFichadasRepository = HorasFichadasRepository()
+    val invitacionesRepository = InvitacionesRepository()
     val imageService = ImageService()
     val emailService = EmailService()
 
@@ -208,9 +210,9 @@ fun Application.configureRouting() {
             }
 
             post("email") {
-                val empresaDTO = EmpresaDTO(1, "Test", null, null, null, listOf<UserDTO>())
-                val invitacion = emailService.sendEmail(InvitacionDTO(empresaDTO, "antoniojoselojoojeda@gmail.com"))
-
+                val invitacionDTO = call.receive<InvitacionDTO>()
+                val invitacion = emailService.sendEmail(invitacionDTO)
+                invitacionesRepository.crearInvitacion(invitacion)
                 call.respond(invitacion)
             }
         }
