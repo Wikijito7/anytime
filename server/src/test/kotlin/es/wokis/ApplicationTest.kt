@@ -1,26 +1,32 @@
 package es.wokis
 
-import io.ktor.routing.*
+import es.wokis.data.repository.EmpresaRepository
+import es.wokis.data.repository.HorasFichadasRepository
+import es.wokis.data.repository.InvitacionesRepository
+import es.wokis.data.repository.UserRepository
+import es.wokis.plugins.configureRouting
+import es.wokis.services.EmailService
+import es.wokis.services.ImageService
 import io.ktor.http.*
-import io.ktor.auth.*
-import io.ktor.util.*
-import io.ktor.auth.jwt.*
-import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
-import com.auth0.jwt.algorithms.Algorithm
-import io.ktor.gson.*
-import io.ktor.features.*
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import es.wokis.plugins.*
-import kotlin.test.*
 import io.ktor.server.testing.*
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.singleton
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ApplicationTest {
     @Test
     fun testRoot() {
-        withTestApplication({ configureRouting() }) {
+        val di = DI {
+            bind<UserRepository>(tag = "userRepo") with singleton { UserRepository() }
+            bind<EmpresaRepository>(tag = "empresaRepo") with singleton { EmpresaRepository() }
+            bind<HorasFichadasRepository>(tag = "horasFichadasRepo") with singleton { HorasFichadasRepository() }
+            bind<InvitacionesRepository>(tag = "invitacionesRepo") with singleton { InvitacionesRepository() }
+            bind<ImageService>(tag = "imageService") with singleton { ImageService() }
+            bind<EmailService>(tag = "emailService") with singleton { EmailService() }
+        }
+        withTestApplication({ configureRouting(di) }) {
             handleRequest(HttpMethod.Get, "/").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
                 assertEquals("Hello World!", response.content)

@@ -6,6 +6,7 @@ val exposedVersion: String by project
 plugins {
     application
     kotlin("jvm") version "1.4.32"
+    java
 }
 
 group = "es.wokis"
@@ -17,6 +18,12 @@ application {
 
 repositories {
     mavenCentral()
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -41,4 +48,10 @@ dependencies {
     // JavaMail
     implementation("javax.mail:javax.mail-api:1.6.2")
     implementation("com.sun.mail:javax.mail:1.6.2")
+    // Kodein
+    implementation("org.kodein.di:kodein-di:7.5.0")
+//    implementation("org.kodein.di:kodein-di-jvm:7.5.0")
+//    implementation( "org.kodein.di:kodein-di:7.5.0")
+
+
 }

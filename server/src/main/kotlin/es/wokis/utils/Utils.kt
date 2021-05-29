@@ -7,6 +7,7 @@ import io.ktor.auth.*
 
 val ApplicationCall.user: LoginUserDTO? get() = authentication.principal()
 
+
 fun tipoFichaje(tipo: String): TipoHoraFichada? = when (tipo) {
     "entrada" -> {
         TipoHoraFichada.ENTRADA

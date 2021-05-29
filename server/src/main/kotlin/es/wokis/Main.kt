@@ -7,11 +7,12 @@ import io.ktor.server.netty.*
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.start(testing: Boolean = true) {
+    val di = initKodeIn()
     initConfig()
     initImages()
     initDB()
     configureSecurity()
     configureHTTP()
     configureSerialization()
-    configureRouting()
+    configureRouting(di)
 }
