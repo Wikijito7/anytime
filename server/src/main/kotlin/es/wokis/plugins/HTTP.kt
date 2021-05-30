@@ -22,7 +22,7 @@ fun Application.configureHTTP() {
         allowSameOrigin = true
         maxAgeInSeconds = Duration.ofDays(1).toMinutes() * 60L
 
-        anyHost() // TODO: 30/05/2021 No dejarlo como anyhost, limitarlo al host final 
+        anyHost() // TODO: 30/05/2021 No dejarlo como anyhost, limitarlo al host final
     }
 
 }

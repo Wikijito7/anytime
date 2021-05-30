@@ -18,6 +18,9 @@ fun Route.userRouting(di: DI) {
     val imageService: ImageService by di.instance("imageService")
     authenticate {
         route("/user") {
+            get {
+                // TODO: 30/05/2021 Añadir el soporte
+            }
             route("{username}") {
                 get {
                     val username = call.parameters["username"]
