@@ -13,8 +13,8 @@ lateinit var config: Config
 
 fun Application.initConfig() {
     // si no existe, tira una excepción
-    val internalConfUrl = this::class.java.getResource("/app.conf") ?: throw IllegalAccessException()
-    val internalConf = Paths.get(File(internalConfUrl.toURI()).path)
+    val internalConf = this::class.java.getResourceAsStream("/app.conf") ?: throw IllegalAccessException()
+//    val internalConf = Paths.get(File(internalConfUrl.toURI()).path)
 
     if (!configFile.exists()) {
         configFile.mkdirs()
