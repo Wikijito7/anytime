@@ -27,4 +27,4 @@ const UserProvider = () => {
     return {getUser, refreshUser};
 }
 
-export default UserProvider;
+export {UserProvider};
