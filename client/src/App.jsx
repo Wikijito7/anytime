@@ -13,6 +13,7 @@ import FicharApp from './components/FicharApp';
 import {AuthProvider} from './auth/AuthProvider'
 import Perfil from './components/Perfil';
 
+
 // TODO: Comprobar las cookies para saber si está logueado y pasarselo a la página que se encuentra para temas como
 // el dark mode y que acceda directamente a la app en vez de pasar por el Login.
 
@@ -55,12 +56,12 @@ function App() {
                         <FicharApp token={token}/>
                     </Route>
                     <Route path="/perfil">
-                        <Perfil token={token} />
+                        <Perfil token={token}/>
                     </Route>
                 </Switch>
             </Router>
         </div>
     );
-    }
+}
 
 export default App;

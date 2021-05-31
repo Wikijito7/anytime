@@ -6,7 +6,7 @@ const FicharApp = () => {
 
     return (
         <div>
-            <AppNavbar />
+            <AppNavbar/>
         </div>
     )
 }

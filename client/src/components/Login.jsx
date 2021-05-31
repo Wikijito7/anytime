@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {AuthProvider} from '../auth/AuthProvider'
 // TODO: Hacer el código para conectar a la API y hacer Login real.
-// TODO: Añadir cabecera al componente.
 
 const Login = () => {
     const auth = AuthProvider();
@@ -9,7 +8,8 @@ const Login = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
-    const login = async () => {
+    const login = async (e) => {
+        e.preventDefault();
         await auth.login()
     }
 
@@ -22,10 +22,12 @@ const Login = () => {
                 <h1>Iniciar sesión</h1>
                 <form className="" onSubmit={login} method="post">
                     <label htmlFor="usuario">Usuario o correo</label><br/>
-                    <input type="text" id="usuario" onChange={(event) => setUsername(event.target.value)}  name="" value={username}/><br/>
+                    <input type="text" id="usuario" onChange={(event) => setUsername(event.target.value)} name=""
+                           value={username}/><br/>
 
                     <label htmlFor="pass">Contraseña</label><br/>
-                    <input type="password" id="pass" name="" onChange={(event) => setPassword(event.target.value)} value={password}/><br/>
+                    <input type="password" id="pass" name="" onChange={(event) => setPassword(event.target.value)}
+                           value={password}/><br/>
                     <span>
                         <a href="recover-pass">¿Has olvidado tu contraseña?</a>
                     </span>
