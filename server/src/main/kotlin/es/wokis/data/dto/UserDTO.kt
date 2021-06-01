@@ -6,6 +6,7 @@ data class UserDTO(
     val nombre: String?,
     val apellidos: String?,
     val direccion: String?,
+    val avatar: String,
     val empresa: EmpresaDTO?
 )
 
