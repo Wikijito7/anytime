@@ -1,16 +1,30 @@
 import React, {useState} from 'react'
+import {Link, withRouter} from 'react-router-dom';
 import {AuthProvider} from '../auth/AuthProvider'
+
 // TODO: Hacer el código para conectar a la API y hacer Login real.
 
-const Login = () => {
+const Login = (props) => {
     const auth = AuthProvider();
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
+    const authInstance = props.authInstance
+
     const login = async (e) => {
         e.preventDefault();
-        await auth.login()
+
+        try {
+            let token = await auth.login(username, password)
+            console.log(token);
+            
+            props.history.push("/app")
+            
+
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -20,7 +34,7 @@ const Login = () => {
             </div>
             <section id="login">
                 <h1>Iniciar sesión</h1>
-                <form className="" onSubmit={login} method="post">
+                <form className="" onSubmit={login}>
                     <label htmlFor="usuario">Usuario o correo</label><br/>
                     <input type="text" id="usuario" onChange={(event) => setUsername(event.target.value)} name=""
                            value={username}/><br/>
@@ -35,7 +49,7 @@ const Login = () => {
                     <div className="submit">
                         <input type="submit" name="" value="Acceder"/><br/>
                         <span id="reg">
-                            ¿No tienes cuenta? <a href="register">Regístrate</a>
+                            ¿No tienes cuenta? <Link to="register">Regístrate</Link>
                         </span>
                     </div>
                 </form>
@@ -44,4 +58,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default withRouter(Login)

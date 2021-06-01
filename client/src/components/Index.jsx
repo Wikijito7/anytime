@@ -1,4 +1,6 @@
 import React from 'react'
+import {Link} from 'react-router-dom';
+
 
 // TODO: Añadir Header al componente.
 // TODO: Añadir Footer al componente.
@@ -16,7 +18,7 @@ const Index = () => {
                             en la oficina desde el móvil o desde el ordenador, estamos disponibles en
                             cualquier dispositivo inteligente actual.
                         </p>
-                        <a className="boton" href="login.html">Acceder</a>
+                        <Link className="boton" to="login.html">Acceder</Link>
                     </div>
                     <img src="./img/test-img.png"
                          alt="Imagen de la portada con la web abierta en un portatil y en un teléfono móvil."/>

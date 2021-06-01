@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom';
 
 // TODO: Hacer el código para conectar a la API y hacer Register real.
 
@@ -24,16 +25,16 @@ const Register = () => {
                     <input type="password" id="pass" name="pass" value=""/> <br/>
 
                     <input type="checkbox" id="term" name="term" value=""/>
-                    <label htmlFor="term">
-                        He leido y acepto los <a href="term-cond.html">términos y
-                        condiciones de uso</a>.
+                    <label id="term-cond" htmlFor="term">
+                        He leido y acepto los <Link to="/term-cond">términos y
+                        condiciones de uso</Link>.
                     </label>
                     <br/>
 
                     <div className="submit">
                         <button>Continuar</button>
                         <br/>
-                        <a href="login">¿Tienes una cuenta?</a>
+                        <Link to="/login">¿Tienes una cuenta?</Link>
                     </div>
                 </form>
             </section>

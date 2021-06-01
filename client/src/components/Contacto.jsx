@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom';
 
 const Contacto = () => {
     return (
@@ -15,9 +16,9 @@ const Contacto = () => {
                 <div id="contactanos">
                     <h2>Contáctanos</h2>
                     <div className="iconos">
-                        <a href="#"><i className="fab fa-twitter"></i></a>
-                        <a href="#"><i className="fas fa-phone"></i></a>
-                        <a href="#"><i className="fas fa-envelope"></i></a>
+                        <a href="https://twitter.com"><i className="fab fa-twitter"></i></a>
+                        <a href="tel:666696969"><i className="fas fa-phone"></i></a>
+                        <a href="mailto:test@test.es"><i className="fas fa-envelope"></i></a>
                     </div>
                 </div>
             </section>
@@ -25,21 +26,21 @@ const Contacto = () => {
             <section id="contacto">
                 <h2>¿Tienes una consulta?</h2>
                 <form className="" action="index.html" method="post">
-                    <label for="correo">Correo electrónico</label><br/>
+                    <label htmlFor="correo">Correo electrónico</label><br/>
                     <input type="text" id="correo" name="correo" value=""/><br/>
 
-                    <label for="nombre">Nombre y apellidos</label><br/>
+                    <label htmlFor="nombre">Nombre y apellidos</label><br/>
                     <input type="text" id="nombre" name="nombre" value=""/><br/>
 
-                    <label for="asunto">Asunto</label><br/>
+                    <label htmlFor="asunto">Asunto</label><br/>
                     <input type="text" id="asunto" name="asunto" value=""/><br/>
 
-                    <label for="consulta">Consulta</label><br/>
+                    <label htmlFor="consulta">Consulta</label><br/>
                     <textarea id="consulta" name="consulta" rows="8" cols="80"></textarea><br/>
                     <input type="checkbox" id="term" name="term" value=""/>
-                    <label for="term">
-                        He leido y acepto los <a href="terminos-condiciones.html">términos y
-                        condiciones de uso</a>.
+                    <label htmlFor="term">
+                        He leido y acepto los <Link href="terminos-condiciones">términos y
+                        condiciones de uso</Link>.
                     </label><br/>
                     <input type="submit" className="button" name="" value="Enviar"/>
 

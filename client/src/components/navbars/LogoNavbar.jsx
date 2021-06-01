@@ -1,9 +1,11 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+
 
 const LogoNavbar = () => {
     return (
         <header>
-            <a href="/" className="middle"><img src="./img/logo.png" alt="Logo de Anytime"/></a>
+            <Link to="/" className="middle"><img src="./img/logo.png" alt="Logo de Anytime"/></Link>
         </header>
     )
 }

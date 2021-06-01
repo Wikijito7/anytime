@@ -128,7 +128,7 @@ nav {
 /* MAIN */
 
 main {
-  min-height: 100vh;
+  //min-height: 100vh;
   display: flex;
   flex-flow: column;
   flex: 0 1;
@@ -152,7 +152,9 @@ done. */
   z-index: -1;
   opacity: 0.85;
   overflow: hidden;
-
+  height: 100vh;
+  width: 100vw;
+  
   img {
     height: 100vh;
   }
@@ -165,6 +167,10 @@ done. */
   padding: 1em;
   background: #fdfdfdaa;
   border-radius: 0.5em;
+}
+
+#term-cond {
+  margin-left: 0.5em;
 }
 
 /*Amo a pone el form bonito iyo*/
@@ -507,6 +513,12 @@ th {
   font-weight: bold;
 }
 
+/* PERFIL */
+
+#perfil-cont{
+  padding: 0 $padding;
+}
+
 /* FOOTER */
 
 footer {
@@ -712,9 +724,14 @@ footer {
     margin: 10vh auto;
   }
 
+#background {
+  height: 100vh;
+  width: 100vw;
+}
+
   #background img {
     transform: rotate(270deg);
     opacity: 0.85;
+    width: auto;
   }
 }
-

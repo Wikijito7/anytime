@@ -1,17 +1,32 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import {Link} from 'react-router-dom';
+import {fetchBase} from '../../utils/Const'
 
-const AppNavbar = (props) => {
-    const token = props.token;
+const AppNavbar = (props) => {    
+    const [user, setUser] = useState({})
+
+    useEffect(async () => {
+        const retrieveUser = async () => {
+            let user = await props.user.getUser(props.token)
+            setUser(user);
+        }
+
+        await retrieveUser();
+    }, [props])
 
     return (
-        <header id="header-app">
-            <a href="/admin" id="admin"><i className="fas fa-cogs"></i></a>
-            <div id="imagen-app">
-                <a href="/"><img src="./img/logo.png" alt="Logo de Anytime"/></a>
-            </div>
-            <a href="/perfil" className="perfil"><img id="profile" src="./img/profile.webp"
-                                                      alt="Imagen del usuario"/></a>
-        </header>
+        <div>
+            {user && 
+                <header id="header-app">
+                    <Link to="/admin" id="admin"><i className="fas fa-cogs"></i></Link>
+                    <div id="imagen-app">
+                        <Link to="/app"><img src="/img/logo.png" alt="Logo de Anytime" /></Link>
+                    </div>
+                    <Link to="/app/perfil" className="perfil"><img id="profile" src={`${fetchBase}/user/${user.username}/avatar`}
+                        alt="Imagen del usuario" /></Link>
+                </header>
+            }
+        </div>
     )
 }
 

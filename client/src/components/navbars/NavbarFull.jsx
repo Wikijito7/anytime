@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {Link} from 'react-router-dom'
+
 const NavbarFull = (props) => {
 
     const toggleList = () => {
@@ -17,13 +19,13 @@ const NavbarFull = (props) => {
     return (
         <header>
             <div className="responsive">
-                <a href="/"><img src="./img/logo.png" alt="Logo de Anytime"/></a>
+                <Link to="/"><img src="./img/logo.png" alt="Logo de Anytime"/></Link>
                 <a id="lista" onClick={toggleList()}><i className="fas fa-list-ul" id="icon"></i></a>
             </div>
             <nav id="nav" className="invisible">
-                <a href="/">Inicio</a>
-                {props.token === undefined ? <a href="/login">Login</a> : <a href="/login">Acceder</a>}
-                <a href="contacto">Contacto</a>
+                <Link to="/">Inicio</Link>
+                {props.token.authToken === undefined ? <Link to="/login">Login</Link> : <Link to="/app">Acceder</Link>}
+                <Link to="contacto">Contacto</Link>
                 <a id="sun" style={{display: "none"}} onClick={changeLight(this)}><i className="far fa-sun"></i></a>
                 <a id="moon" onClick={changeDark(this)}><i className="far fa-moon"></i></a>
             </nav>

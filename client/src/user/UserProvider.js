@@ -12,19 +12,41 @@ const UserProvider = () => {
         return await fetchUser(token);
     }
 
-    const fetchUser = async (token) => {
-        fetch(`${fetchBase}/user`, {
+    const getUserByUsername = async (username, token) => {
+        let user;
+
+        await fetch(`${fetchBase}/user/${username}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authoritation': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
             mode: "cors"
         }).then(res => res.json()
-            .then(data => setUser(data)));
+            .then(data => user = data));
+        
+        setUser(user);
+        return user;
     }
 
-    return {getUser, refreshUser};
+    const fetchUser = async (token) => {
+        let user;
+        
+        await fetch(`${fetchBase}/user`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            mode: "cors"
+        }).then(res => res.json()
+        .then(data => user = data));
+
+        setUser(user);
+        return user;
+    }
+
+    return {getUser, refreshUser, getUserByUsername};
 }
 
 export {UserProvider};

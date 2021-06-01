@@ -1,4 +1,4 @@
 // const fetchBase = "dev.wokis.es"
-const fetchBase = "localhost:8000"
+const fetchBase = "http://localhost:8000"
 
 export {fetchBase}
