@@ -20,12 +20,9 @@ fun Route.userRouting(di: DI) {
     route("/user/{username}/avatar") {
         get {
             val username = call.parameters["username"]
-            print(username)
-
 
             username?.let {
                 val user = userRepository.getUser(username) ?: return@let
-
                 call.respondFile(imageService.getAvatar(user.avatar))
             }
         }

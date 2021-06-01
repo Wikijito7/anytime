@@ -13,18 +13,18 @@ const User = (props) => {
     const auth = props.auth;
 
     useEffect(() => {
-        const fetchUser = async (username, token) => {
+        const fetchUser = async () => {
             try {
-                const user = await userInstance.getUserByUsername(username, token);
+                const user = await userInstance.getUserByUsername(username, auth.token);
                 setUser(user);
             } catch (error) {
                 console.log(error);
             }
         }
 
-        await fetchUser(username, auth.authToken);
+        fetchUser();
         
-    }, [username, auth])
+    }, [])
 
     return (
         <div>

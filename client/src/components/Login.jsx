@@ -14,14 +14,25 @@ const Login = (props) => {
 
     const login = async (e) => {
         e.preventDefault();
+        
+        console.log(`${username}, ${password}`);
+
+        if (!username.trim()) {
+            console.log("username empty");
+            return
+        }
+
+        if (!password.trim()) {
+            console.log("password empty");
+            return
+        }
 
         try {
             let token = await auth.login(username, password)
-            console.log(token);
-            
-            props.history.push("/app")
-            
 
+            console.log(token);
+
+            props.history.push("/app")
         } catch(error) {
             console.log(error);
         }
@@ -36,18 +47,18 @@ const Login = (props) => {
                 <h1>Iniciar sesión</h1>
                 <form className="" onSubmit={login}>
                     <label htmlFor="usuario">Usuario o correo</label><br/>
-                    <input type="text" id="usuario" onChange={(event) => setUsername(event.target.value)} name=""
+                    <input type="text" id="usuario" name="" onChange={e => setUsername(e.target.value)}
                            value={username}/><br/>
 
                     <label htmlFor="pass">Contraseña</label><br/>
-                    <input type="password" id="pass" name="" onChange={(event) => setPassword(event.target.value)}
+                    <input type="password" id="pass" name="" onChange={e => setPassword(e.target.value)}
                            value={password}/><br/>
                     <span>
                         <a href="recover-pass">¿Has olvidado tu contraseña?</a>
                     </span>
                     <br/>
                     <div className="submit">
-                        <input type="submit" name="" value="Acceder"/><br/>
+                        <button>Acceder</button><br/>
                         <span id="reg">
                             ¿No tienes cuenta? <Link to="register">Regístrate</Link>
                         </span>

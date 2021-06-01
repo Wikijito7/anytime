@@ -25,7 +25,6 @@ const UserProvider = () => {
         }).then(res => res.json()
             .then(data => user = data));
         
-        setUser(user);
         return user;
     }
 

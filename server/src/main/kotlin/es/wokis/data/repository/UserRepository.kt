@@ -63,9 +63,7 @@ class UserRepository : IUserRespository {
     override fun changeAvatar(username: String, avatar: String) {
         transaction {
             val user = User.find { Users.username eq username }.singleOrNull()
-            println("------------ user is: $user")
             if (user == null) {
-                println(username)
                 return@transaction
             }
 

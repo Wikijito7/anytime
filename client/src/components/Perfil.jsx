@@ -12,14 +12,14 @@ const Perfil = (props) => {
     useEffect(() => {
         const fetchUser = async (token) => {
             try {
-                const user = await userInstance.getUser( token);
+                const user = await userInstance.getUser(token);
                 setUser(user);
             } catch (error) {
                 console.log(error);
             }
         }
 
-        await fetchUser(userInstance, auth.authToken);
+        fetchUser(userInstance, auth.authToken);
 
     }, [userInstance, auth])
 
@@ -33,7 +33,9 @@ const Perfil = (props) => {
                         <p id="username">
                             {user.username}
                         </p>
-
+                        <p id="email">
+                            {user.email}
+                        </p>
                         {
                             user.nombre !== undefined ? <p id="userNombre">{user.nombre}</p> : ""
                         }

@@ -5,14 +5,16 @@ import {fetchBase} from '../../utils/Const'
 const AppNavbar = (props) => {    
     const [user, setUser] = useState({})
 
-    useEffect(async () => {
+    const token = props.token;
+
+    useEffect(() => {
         const retrieveUser = async () => {
-            let user = await props.user.getUser(props.token)
+            let user = await props.user.getUser(token);
             setUser(user);
         }
 
-        await retrieveUser();
-    }, [props])
+        retrieveUser();
+    }, [])
 
     return (
         <div>

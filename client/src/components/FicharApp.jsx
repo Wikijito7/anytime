@@ -1,14 +1,16 @@
 import React from 'react'
 import AppNavbar from './navbars/AppNavbar';
 
+import {AuthProvider} from '../auth/AuthProvider'
+
+
 const FicharApp = (props) => {
     const userInstance = props.user;
-    const auth = props.auth;
+    const auth = AuthProvider();
 
     return (
         <div>
             <AppNavbar token={auth.authToken} user={userInstance}/>
-            
         </div>
     )
 }

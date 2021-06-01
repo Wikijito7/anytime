@@ -3,6 +3,7 @@ package es.wokis.data.dto
 data class UserDTO(
     val id: Int,
     val username: String,
+    val email: String,
     val nombre: String?,
     val apellidos: String?,
     val direccion: String?,
