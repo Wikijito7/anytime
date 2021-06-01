@@ -16,12 +16,63 @@ import org.kodein.di.instance
 fun Route.userRouting(di: DI) {
     val userRepository: UserRepository by di.instance("userRepo")
     val imageService: ImageService by di.instance("imageService")
+
+    route("/user/{username}/avatar") {
+        get {
+            val username = call.parameters["username"]
+            print(username)
+
+
+            username?.let {
+                val user = userRepository.getUser(username) ?: return@let
+
+                call.respondFile(imageService.getAvatar(user.avatar))
+            }
+        }
+    }
+
     authenticate {
         route("/user") {
             get {
-                // TODO: 30/05/2021 Añadir el soporte
+                val callUser = call.user
+                callUser?.let {
+                    val userDTO = userRepository.getUser(callUser.username)
+
+                    if (userDTO != null) {
+                        call.respond(userDTO)
+                    } else {
+                        call.respond(HttpStatusCode.NotFound)
+                    }
+                }
             }
-            route("{username}") {
+
+            route("/avatar") {
+                post {
+                    val multipartData = call.receiveMultipart()
+                    val callUser = call.user
+
+                    callUser?.let { user ->
+                        multipartData.forEachPart {
+                            if (it is PartData.FileItem) {
+                                val avatarPath: String = imageService.insertAvatar(user.username, it)
+                                if (avatarPath.isNotBlank()) {
+                                    userRepository.changeAvatar(user.username, avatarPath)
+                                    call.respondFile(imageService.getAvatar(avatarPath))
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                delete {
+
+                }
+
+                // fin avatar
+            }
+
+            route("/{username}") {
                 get {
                     val username = call.parameters["username"]
                     val callUser = call.user
@@ -41,47 +92,6 @@ fun Route.userRouting(di: DI) {
                             call.respond(HttpStatusCode.NotFound, username)
                         }
                     }
-                }
-
-                route("avatar") {
-                    get {
-                        val callUser = call.user
-                        val username = call.parameters["username"]
-                        print(username)
-
-
-                        username?.let {
-                            val user = userRepository.getUser(username) ?: return@let
-
-                            call.respondFile(imageService.getAvatar(user.avatar))
-                        }
-                    }
-
-                    post {
-                        val multipartData = call.receiveMultipart()
-                        val callUser = call.user
-
-                        callUser?.let { user ->
-                            multipartData.forEachPart {
-                                if (it is PartData.FileItem) {
-                                    val avatarPath: String = imageService.insertAvatar(user.username, it)
-                                    if (!avatarPath.isBlank()) {
-                                        userRepository.changeAvatar(user.username, avatarPath)
-                                        call.respond(imageService.getAvatar(avatarPath))
-                                    }
-
-
-                                }
-                            }
-                        }
-
-                    }
-
-                    delete {
-
-                    }
-
-                    // fin avatar
                 }
                 // fin username
             }

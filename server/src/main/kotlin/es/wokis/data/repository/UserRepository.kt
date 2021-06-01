@@ -8,7 +8,6 @@ import es.wokis.data.models.User
 import es.wokis.data.models.Users
 import es.wokis.data.repository.interfaces.IUserRespository
 import es.wokis.plugins.makeToken
-import es.wokis.utils.toEmpresaDTO
 import es.wokis.utils.toUserDTO
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
@@ -63,12 +62,15 @@ class UserRepository : IUserRespository {
 
     override fun changeAvatar(username: String, avatar: String) {
         transaction {
-            val user = User.find { Users.username eq username }.firstOrNull()
-
-            user?.let {
-                it.avatar = avatar
-                commit()
+            val user = User.find { Users.username eq username }.singleOrNull()
+            println("------------ user is: $user")
+            if (user == null) {
+                println(username)
+                return@transaction
             }
+
+            user.avatar = avatar
+            commit()
         }
     }
 }

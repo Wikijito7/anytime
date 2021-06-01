@@ -16,6 +16,7 @@ fun Application.configureHTTP() {
         header(HttpHeaders.AccessControlAllowHeaders)
         header(HttpHeaders.ContentType)
         header(HttpHeaders.AccessControlAllowOrigin)
+        header(HttpHeaders.Authorization)
 
         allowNonSimpleContentTypes = true
         allowCredentials = true
