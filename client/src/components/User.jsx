@@ -30,7 +30,7 @@ const User = (props) => {
         }
 
         fetchUser();
-        
+
     }, [])
 
     return (
@@ -51,19 +51,19 @@ const User = (props) => {
                                 {user.email}
                             </p>
                             {
-                                user.nombre !== undefined ? 
-                                <div>
-                                    <p className="label">Nombre</p>
-                                    <p id="userNombre">{user.nombre}</p>
-                                </div> : ""
+                                user.nombre !== undefined ?
+                                    <div>
+                                        <p className="label">Nombre</p>
+                                        <p id="userNombre">{user.nombre}</p>
+                                    </div> : ""
                             }
 
                             {
-                                user.apellidos !== undefined ? 
-                                <div>
-                                    <p className="label">Apellidos</p>
-                                    <p id="userApellidos">{user.apellidos}</p>
-                                </div> : ""
+                                user.apellidos !== undefined ?
+                                    <div>
+                                        <p className="label">Apellidos</p>
+                                        <p id="userApellidos">{user.apellidos}</p>
+                                    </div> : ""
                             }
 
                             {
@@ -72,7 +72,7 @@ const User = (props) => {
                                     <p id="userDireccion">{user.direccion}</p>
                                 </div> : ""
                             }
-                        </div>    
+                        </div>
                     </div>
                 }
             </main>

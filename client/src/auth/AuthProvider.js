@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import {useCookies} from 'react-cookie';
-import {fetchBase} from '../utils/Const'
-
+import {cookieExpire, fetchBase} from '../utils/Const'
 
 const AuthProvider = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['authtoken']);
@@ -10,6 +8,7 @@ const AuthProvider = () => {
 
     const login = async (username, password) => {
         let token;
+
 
         await fetch(`${fetchBase}/login`, {
             method: 'POST',
@@ -20,8 +19,10 @@ const AuthProvider = () => {
             body: JSON.stringify({"username": username, "password": password}),
         }).then(response => response.text())
             .then(data => token = data);
-        
-        setCookie("token", token);
+        if (!token.toLowerCase().startsWith('wrong')) {
+            setCookie("token", token, { expires: cookieExpire });
+        }
+
         return token;
     }
 
@@ -39,7 +40,10 @@ const AuthProvider = () => {
         }).then(response => response.text())
             .then(data => token = data);
 
-        setCookie("token", token);
+        if (!token.toLowerCase().startsWith('wrong')) {
+            setCookie("token", token, { expires: cookieExpire });
+        }
+
         return token;
     }
 

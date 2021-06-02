@@ -1,38 +1,42 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {AuthProvider} from '../auth/AuthProvider'
+import {AuthProvider} from '../auth/AuthProvider';
 
 // TODO: Hacer el código para conectar a la API y hacer Login real.
 
 const Login = (props) => {
     const auth = AuthProvider();
 
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-    const authInstance = props.authInstance
+    const authInstance = props.authInstance;
 
     const login = async (e) => {
         e.preventDefault();
         
-        console.log(`${username}, ${password}`);
+        setError("");
 
         if (!username.trim()) {
-            console.log("username empty");
-            return
+            setError("Usuario o contraseña incorrecta");
+            return;
         }
 
         if (!password.trim()) {
-            console.log("password empty");
-            return
+            setError("Usuario o contraseña incorrecta");
+            return;
         }
 
         try {
             let token = await auth.login(username, password)
+            
+            if (!token.toLowerCase().startsWith('wrong')) {
+                props.history.push("/app");
+            } else {
+                setError("Usuario o contraseña incorrecta");
+            }
 
-            console.log(token);
-
-            props.history.push("/app");
         } catch(error) {
             console.log(error);
         }
@@ -42,7 +46,7 @@ const Login = (props) => {
         if (auth.authToken != undefined) {
             props.history.push("/app");
         }
-    }, [])
+    }, []);
 
     return (
         <main>
@@ -51,6 +55,8 @@ const Login = (props) => {
             </div>
             <section id="login">
                 <h1>Iniciar sesión</h1>
+                {error.trim() && <p className="error">{error}</p>}
+                
                 <form className="" onSubmit={login}>
                     <label htmlFor="usuario">Usuario o correo</label><br/>
                     <input type="text" id="usuario" name="" onChange={e => setUsername(e.target.value)}
@@ -72,7 +78,7 @@ const Login = (props) => {
                 </form>
             </section>
         </main>
-    )
+    );
 }
 
-export default withRouter(Login)
+export default withRouter(Login);

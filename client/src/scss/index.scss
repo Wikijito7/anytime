@@ -168,6 +168,15 @@ done. */
   padding: 1em;
   background: #fdfdfdaa;
   border-radius: 0.5em;
+
+  .error {
+  color: $red;
+  background: $lightred;
+  border-radius: 0.25em;
+  margin: 0.5em 0;
+  padding: 0.75em;
+  }
+
 }
 
 #term-cond {
@@ -515,17 +524,21 @@ th {
 /* PERFIL */
 
 #perfil-cont{
-  padding: 0 $padding;
+  padding: 2em $padding;
   
   .container-row {
     margin: auto;
-    width: 100%;
-    max-width: 800px;
-    justify-content: space-around;
+    width: 80%;
+    //justify-content: space-between;
+    justify-items: center;
+
+    #img-cont {
+      margin-right: 5em;
+    }
 
     img {
-      height: 128px;
-      width: 128px;
+      height: 160px;
+      width: 160px;
       object-fit: cover;
       border-radius: 50%;
     }
@@ -534,9 +547,9 @@ th {
   .container-column {
     width: fit-content;
     flex: unset;
-
+    
     .label {
-      margin: 0.5em 0;
+      margin: 0.75em 0;
       font-weight: 600;
       width: fit-content;
     }
@@ -544,6 +557,31 @@ th {
     p {
       margin: 0;
       width: fit-content;
+      margin-top: auto;
+    }
+    
+    #userNombre {
+      font-size: 1.2em;
+      font-weight: 600;
+      padding: 1rem;
+      margin: 0;
+    }
+
+    #nombre-cont {
+      width: 100%;
+      align-items: center;
+    }
+
+    #other-data {
+      width: 100%;
+      justify-content: space-between;
+      
+      .container-column {
+        width: fit-content;
+        padding: 1em;
+      }
+
+      
     }
   }
 
@@ -552,7 +590,8 @@ th {
     font-size: 1rem;
     width: fit-content;
     padding: 0.75rem 1.5rem;
-    margin: 1rem auto;
+    margin: 1rem;
+    //margin-left: auto;
   }
 
 }
