@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, withRouter} from 'react-router-dom';
 import {AuthProvider} from '../auth/AuthProvider'
 
@@ -32,11 +32,17 @@ const Login = (props) => {
 
             console.log(token);
 
-            props.history.push("/app")
+            props.history.push("/app");
         } catch(error) {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        if (auth.authToken != undefined) {
+            props.history.push("/app");
+        }
+    }, [])
 
     return (
         <main>

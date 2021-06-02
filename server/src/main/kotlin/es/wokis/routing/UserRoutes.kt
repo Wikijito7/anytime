@@ -65,8 +65,6 @@ fun Route.userRouting(di: DI) {
                 delete {
 
                 }
-
-                // fin avatar
             }
 
             route("/{username}") {
