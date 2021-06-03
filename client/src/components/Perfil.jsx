@@ -78,9 +78,9 @@ const Perfil = (props) => {
                     }
                 </section>
                 <section id="table">
-                    <div class="botones-tabla">
+                    <div className="botones-tabla">
                         <a href="#">Hoy</a>
-                        <a href="#" class="btn-selected">Semana</a>
+                        <a href="#" className="btn-selected">Semana</a>
                         <a href="#">Mes</a>
                     </div>
                     <table>

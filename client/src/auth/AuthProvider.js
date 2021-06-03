@@ -1,5 +1,6 @@
 import {useCookies} from 'react-cookie';
-import {cookieExpire, fetchBase} from '../utils/Const'
+import {fetchBase} from '../utils/Const'
+import {cookieExpire} from '../utils/DateUtils'
 
 const AuthProvider = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['authtoken']);

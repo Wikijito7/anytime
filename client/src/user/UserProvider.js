@@ -22,8 +22,8 @@ const UserProvider = () => {
                 'Authorization': `Bearer ${token}`
             },
             mode: "cors"
-        }).then(res => res.json()
-            .then(data => user = data));
+        }).then(res => res.json())
+            .then(data => user = data);
         
         return user;
     }
@@ -38,8 +38,8 @@ const UserProvider = () => {
                 'Authorization': `Bearer ${token}`
             },
             mode: "cors"
-        }).then(res => res.json()
-        .then(data => user = data));
+        }).then(res => res.json())
+        .then(data => user = data);
 
         setUser(user);
         return user;
@@ -55,13 +55,48 @@ const UserProvider = () => {
                 'Authorization': `Bearer ${token}`
             },
             mode: "cors"
-        }).then(res => res.json()
-            .then(data => fichajes.push(...data)));
+        }).then(res => res.json())
+        .then(data => fichajes.push(...data));
 
         return fichajes;
     }
 
-    return {getUser, refreshUser, getUserByUsername, fetchFichados};
+    const fichar = async (token) => {
+        let fichar;
+
+        await fetch(`${fetchBase}/fichar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            mode: "cors"
+        }).then(res => res.json()
+        .then(data => fichar = data));
+
+        return fichar;
+    }
+
+    const desfichar = async (token, ficharDTO) => {
+        let fichar;
+
+        await fetch(`${fetchBase}/desfichar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(ficharDTO),
+            mode: "cors"
+        }).then(res => res.json()
+        .then(data => fichar = data));
+
+
+
+        return fichar;
+    }
+
+    return {getUser, refreshUser, getUserByUsername, fetchFichados, fichar, desfichar};
 }
 
 export {UserProvider};

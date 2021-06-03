@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import AppNavbar from './navbars/AppNavbar';
 import {withRouter} from 'react-router-dom'
 
+import {formatTime, getHoras} from '../utils/DateUtils'
 import {AuthProvider} from '../auth/AuthProvider'
 
 
@@ -13,7 +14,11 @@ const FicharApp = (props) => {
 
     const [modoFichar, setModoFichar] = useState(false)
 
-    const [fichajes, setFichajes] = useState([]);
+    const [ficharDTO, setFicharDTO] = useState({})
+
+    const [timer, setTimer] = useState(null)
+
+    let interval;
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -24,34 +29,53 @@ const FicharApp = (props) => {
                 console.log(error);
             }
         }
-
-        if (auth.authToken === undefined) {
-            props.history.push("/login")
-            return;
-        }
         
-        if (auth.authToken === undefined) {
-            props.history.push("/login")
+        const updateView = async (fichajes) => {
+            const listFichaje = await fichajes
+            
+            const ultimoFichaje = listFichaje.sort((a, b) => b["id"] - a["id"])[0]
+
+            if (ultimoFichaje.salida === undefined) {
+                setFicharDTO(ultimoFichaje)
+                setTimer(getHoras(ultimoFichaje))
+                interval = setInterval(() => setTimer(getHoras(ultimoFichaje)), 1000);
+                setModoFichar(true);
+            }
         }
 
-        const fetchFichados = async () => {
-            const user = await userInstance.getUser(auth.authToken);
-            const fichados = await userInstance.fetchFichados(auth.authToken, user)
-
-            console.log(fichados);
+        if (auth.authToken === undefined) {
+            props.history.push("/login");
+            return;
         }
 
         fetchUser();
-        fetchFichados();
+        
+        updateView(fetchFichados());
     }, [])
 
+    const fetchFichados = async () => {
+        const user = await userInstance.getUser(auth.authToken);
+        const fichados = await userInstance.fetchFichados(auth.authToken, user);
 
-    const fichar = () => {
-        setModoFichar(true);
+        return fichados;
     }
 
-    const desfichar = () => {
-        setModoFichar(false);
+    const fichar = async () => {
+        setModoFichar(true);
+        const ficharDTO = await userInstance.fichar(auth.authToken);
+
+        interval = setInterval(() => setTimer(getHoras(ficharDTO)), 1000);
+    }
+
+    const desfichar = async () => {
+        const res = await userInstance.desfichar(auth.authToken, ficharDTO);
+        
+        if (res != undefined) {
+            clearInterval(interval);
+            setModoFichar(false);
+            setFicharDTO({})
+        }
+
     }
 
     const pauseFichar = () => {
@@ -67,19 +91,19 @@ const FicharApp = (props) => {
                         !modoFichar ?
                         <section id="sinfichar">
                             <h2>Bienvenido de nuevo, {user.nombre !== undefined ? user.nombre : user.username}</h2>
-                            <a href="#" onClick={fichar} className="boton">Fichar</a>
+                            <a onClick={fichar} className="boton">Fichar</a>
                         </section>
                         :
                         <section id="fichado"> 
                             <h2>Tiempo trabajado</h2>
-                            <span id="time">0:00:00</span>
+                            <span id="time">{timer && `${formatTime(timer.horas)}:${formatTime(timer.minutos)}:${formatTime(timer.segundos)}`}</span>
 
                             <div className="container-row">
                                 <a className="botoncir not-selected" onClick={pauseFichar(this)}><i className="fas fa-mug-hot"></i></a>
                                 <a className="botoncir not-selected" onClick={pauseFichar(this)}><i className="fas fa-pause"></i></a>
                                 <a className="botoncir not-selected" onClick={pauseFichar(this)}><i className="fas fa-utensils"></i></a>
                             </div>
-                            <a href="#" className="boton" onClick={desfichar}>Finalizar</a>
+                            <a className="boton" onClick={desfichar}>Finalizar</a>
                         </section>
                     }
                     

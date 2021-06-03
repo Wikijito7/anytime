@@ -78,39 +78,39 @@ const User = (props) => {
                     }
                 </section>
                 <section id="table">
-                    <div class="botones-tabla">
+                    <div className="botones-tabla">
                         <a href="#">Hoy</a>
-                        <a href="#" class="btn-selected">Semana</a>
+                        <a href="#" className="btn-selected">Semana</a>
                         <a href="#">Mes</a>
                     </div>
                     <table>
                         <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Hora de entrada</th>
-                            <th>Hora de salida</th>
-                            <th>Tiempo fichado</th>
-                        </tr>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora de entrada</th>
+                                <th>Hora de salida</th>
+                                <th>Tiempo fichado</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td data="Fecha">19/10/2020</td>
-                            <td data="Hora de entrada">8:10</td>
-                            <td data="Hora de salida">14:31</td>
-                            <td data="Tiempo fichado">6h 21 min</td>
-                        </tr>
-                        <tr>
-                            <td data="Fecha">20/10/2020</td>
-                            <td data="Hora de entrada">8:10</td>
-                            <td data="Hora de salida">14:31</td>
-                            <td data="Tiempo fichado">6h 21 min</td>
-                        </tr>
-                        <tr>
-                            <td data="Fecha">21/10/2020</td>
-                            <td data="Hora de entrada">8:10</td>
-                            <td data="Hora de salida">14:31</td>
-                            <td data="Tiempo fichado">6h 21 min</td>
-                        </tr>
+                            <tr>
+                                <td data="Fecha">19/10/2020</td>
+                                <td data="Hora de entrada">8:10</td>
+                                <td data="Hora de salida">14:31</td>
+                                <td data="Tiempo fichado">6h 21 min</td>
+                            </tr>
+                            <tr>
+                                <td data="Fecha">20/10/2020</td>
+                                <td data="Hora de entrada">8:10</td>
+                                <td data="Hora de salida">14:31</td>
+                                <td data="Tiempo fichado">6h 21 min</td>
+                            </tr>
+                            <tr>
+                                <td data="Fecha">21/10/2020</td>
+                                <td data="Hora de entrada">8:10</td>
+                                <td data="Hora de salida">14:31</td>
+                                <td data="Tiempo fichado">6h 21 min</td>
+                            </tr>
                         </tbody>
                     </table>
                 </section>
