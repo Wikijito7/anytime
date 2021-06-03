@@ -7,9 +7,7 @@ import es.wokis.data.repository.UserRepository
 import es.wokis.routing.*
 import es.wokis.services.EmailService
 import es.wokis.services.ImageService
-import es.wokis.utils.user
 import io.ktor.application.*
-import io.ktor.auth.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import org.kodein.di.DI
@@ -32,19 +30,5 @@ fun Application.configureRouting(di: DI) {
         empresaRouting(di)
         ficharRouting(di)
         invitacionRouting(di)
-
-        // si no está autorizado, 401.
-        authenticate {
-            route("/asd") {
-                get("auth") {
-                    call.respondText(
-                        "Auth!? name = ${call.user?.username}" +
-                                ", pass= ${call.user?.password}"
-                    )
-                }
-            }
-
-            // perfil usuario x, TODO: Añadir roles.
-        }
     }
 }

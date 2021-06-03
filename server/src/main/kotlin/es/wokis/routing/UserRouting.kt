@@ -70,7 +70,6 @@ fun Route.userRouting(di: DI) {
             route("/{username}") {
                 get {
                     val username = call.parameters["username"]
-                    val callUser = call.user
 
 //                if (callUser != null && (username == callUser.username || callUser.role == Roles.ADMIN))
 

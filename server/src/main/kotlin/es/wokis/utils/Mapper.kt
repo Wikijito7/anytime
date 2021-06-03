@@ -1,9 +1,6 @@
 package es.wokis.utils
 
-import es.wokis.data.dto.EmpresaDTO
-import es.wokis.data.dto.HorasFichadasDTO
-import es.wokis.data.dto.InvitacionDTO
-import es.wokis.data.dto.UserDTO
+import es.wokis.data.dto.*
 import es.wokis.data.models.*
 import org.jetbrains.exposed.dao.id.EntityID
 
@@ -15,13 +12,17 @@ fun User.toUserDTO(): UserDTO {
     return UserDTO(id.value, username, email, nombre, apellidos, direccion, avatar, empresa.toEmpresaDTO())
 }
 
+fun User.toLoginUserDTO(): LoginUserDTO {
+    return LoginUserDTO(username, password)
+}
+
 // without empresa
 fun User.toUserDTOWE(): UserDTO {
     return UserDTO(id.value, username, email, nombre, apellidos, direccion, avatar, null)
 }
 
 fun HorasFichadasObj.toHorasFichadasDTO(): HorasFichadasDTO {
-    return HorasFichadasDTO(user.toUserDTO(), tipo, createdOn)
+    return HorasFichadasDTO(id.value, user.toUserDTOWE(), entrada, salida)
 }
 
 fun Invitacion.toInvitacionDTO(): InvitacionDTO {

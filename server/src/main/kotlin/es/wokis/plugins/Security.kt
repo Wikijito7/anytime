@@ -4,9 +4,12 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import es.wokis.data.dto.LoginUserDTO
+import es.wokis.data.models.User
+import es.wokis.data.models.Users
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.auth.jwt.*
+import org.jetbrains.exposed.sql.transactions.transaction
 
 private lateinit var jwtIssuer: String
 private lateinit var jwtAudience: String
@@ -28,7 +31,15 @@ fun Application.configureSecurity() {
                 val name = credential.payload.getClaim("username").asString()
                 val password = credential.payload.getClaim("password").asString()
 
-                if (name != null && password != null) LoginUserDTO(name, password) else null
+                val user = transaction {
+                    return@transaction User.find { Users.username eq name }.singleOrNull()
+                }
+
+                if (user != null && password == user.password) {
+                    LoginUserDTO(user.username, user.password)
+                } else {
+                    null
+                }
             }
         }
     }
