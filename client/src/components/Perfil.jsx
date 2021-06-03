@@ -40,16 +40,17 @@ const Perfil = (props) => {
                         user && <div className="container-row">
                             <div id="img-cont" className="container-column">
                                 <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
+                                <button className="btn">Editar perfil</button>
+
                             </div>
                             <div className="container-column">
 
                                 <div id="nombre-cont" className="container-row">
                                     {
                                         user.nombre !== undefined ?
-                                            <p id="userNombre">{`${user.nombre} ${user.apellidos}`}</p>
-                                            : ""
+                                            <p id="userNombre">{`${user.nombre} ${user.apellidos !== undefined ? user.apellidos : ""}`}</p>
+                                            : <p id="userNombre">{user.username}</p>
                                     }
-                                    <button className="btn">Editar</button>
                                 </div>
 
                                 <div id="other-data" className="container-row">
@@ -65,14 +66,12 @@ const Perfil = (props) => {
                                             {user.email}
                                         </p>
                                     </div>
-                                    <div className="container-column">
-                                        {
-                                            user.direccion !== undefined ? <div>
-                                                <p className="label">Dirección</p>
-                                                <p id="userDireccion">{user.direccion}</p>
-                                            </div> : ""
-                                        }
-                                    </div>                                
+                                    {
+                                        user.direccion !== undefined ? <div className="container-column">
+                                            <p className="label">Dirección</p>
+                                            <p id="userDireccion">{user.direccion}</p>
+                                        </div> : ""
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -86,32 +85,32 @@ const Perfil = (props) => {
                     </div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Hora de entrada</th>
-                                <th>Hora de salida</th>
-                                <th>Tiempo fichado</th>
-                            </tr>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora de entrada</th>
+                            <th>Hora de salida</th>
+                            <th>Tiempo fichado</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td data="Fecha">19/10/2020</td>
-                                <td data="Hora de entrada">8:10</td>
-                                <td data="Hora de salida">14:31</td>
-                                <td data="Tiempo fichado">6h 21 min</td>
-                            </tr>
-                            <tr>
-                                <td data="Fecha">20/10/2020</td>
-                                <td data="Hora de entrada">8:10</td>
-                                <td data="Hora de salida">14:31</td>
-                                <td data="Tiempo fichado">6h 21 min</td>
-                            </tr>
-                            <tr>
-                                <td data="Fecha">21/10/2020</td>
-                                <td data="Hora de entrada">8:10</td>
-                                <td data="Hora de salida">14:31</td>
-                                <td data="Tiempo fichado">6h 21 min</td>
-                            </tr>
+                        <tr>
+                            <td data="Fecha">19/10/2020</td>
+                            <td data="Hora de entrada">8:10</td>
+                            <td data="Hora de salida">14:31</td>
+                            <td data="Tiempo fichado">6h 21 min</td>
+                        </tr>
+                        <tr>
+                            <td data="Fecha">20/10/2020</td>
+                            <td data="Hora de entrada">8:10</td>
+                            <td data="Hora de salida">14:31</td>
+                            <td data="Tiempo fichado">6h 21 min</td>
+                        </tr>
+                        <tr>
+                            <td data="Fecha">21/10/2020</td>
+                            <td data="Hora de entrada">8:10</td>
+                            <td data="Hora de salida">14:31</td>
+                            <td data="Tiempo fichado">6h 21 min</td>
+                        </tr>
                         </tbody>
                     </table>
                 </section>

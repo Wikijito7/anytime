@@ -45,7 +45,23 @@ const UserProvider = () => {
         return user;
     }
 
-    return {getUser, refreshUser, getUserByUsername};
+    const fetchFichados = async (token, user) => {
+        const fichajes = [];
+
+        await fetch(`${fetchBase}/fichaje/${user.username}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            mode: "cors"
+        }).then(res => res.json()
+            .then(data => fichajes.push(...data)));
+
+        return fichajes;
+    }
+
+    return {getUser, refreshUser, getUserByUsername, fetchFichados};
 }
 
 export {UserProvider};

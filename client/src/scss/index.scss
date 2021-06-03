@@ -435,8 +435,6 @@ article {
 }
 
 #fichado {
-  display: none;
-
   .container-row {
     flex-flow: row;
     width: fit-content;
@@ -529,10 +527,10 @@ th {
   .container-row {
     margin: auto;
     width: 80%;
-    //justify-content: space-between;
     justify-items: center;
 
     #img-cont {
+      margin-top: 1rem;
       margin-right: 5em;
     }
 
@@ -541,6 +539,7 @@ th {
       width: 160px;
       object-fit: cover;
       border-radius: 50%;
+      flex: unset;
     }
   }
 
@@ -557,7 +556,7 @@ th {
     p {
       margin: 0;
       width: fit-content;
-      margin-top: auto;
+      //margin-top: auto;
     }
     
     #userNombre {
@@ -575,10 +574,11 @@ th {
     #other-data {
       width: 100%;
       justify-content: space-between;
-      
+      flex-flow: row wrap;
+
       .container-column {
-        width: fit-content;
-        padding: 1em;
+        width: 33%;
+        padding: 0.25em 1em;
       }
 
       
@@ -587,16 +587,13 @@ th {
 
   .btn {
     display: block;
-    font-size: 1rem;
+    font-size: 0.9rem;
     width: fit-content;
-    padding: 0.75rem 1.5rem;
-    margin: 1rem;
-    //margin-left: auto;
+    padding: 0.7rem 1.25rem;
+    margin: 2rem auto;
   }
 
 }
-
-
 
 /* FOOTER */
 
@@ -676,11 +673,56 @@ footer {
   #contenido {
     margin-bottom: 1.2em;
   }
+
+  #perfil-cont {
+    
+    .container-row {
+      flex-flow: row;
+    }
+
+    #img-cont {
+      img {
+        margin: 0 auto;
+      }
+    }
+
+    .container-column {
+      width: 100%;
+      padding: 0;
+
+      .btn {
+        margin: 2em auto 1em;
+      }
+
+      #other-data {
+        width: 100%;
+        flex-flow: column;
+        margin: 1rem;
+
+        .container-column {
+          width: 100%;
+          margin: 0 auto;
+          padding: 0;
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 640px) {
   #table {
-    margin: 0;
+    margin: 0 auto;
+    width: 80%;
+
+    .botones-tabla {
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    table {
+      display: block;
+      margin: 1em auto;
+    }
   }
 
   #header-app {
@@ -703,7 +745,7 @@ footer {
   tr {
     display: block;
     width: fit-content;
-    min-width: 90vw;
+    min-width: 50vw;
     padding: 0;
     text-align: left;
     margin-bottom: 1em;
@@ -714,8 +756,13 @@ footer {
     min-width: fit-content;
     max-width: fit-content;
     text-align: left;
-    /* margin: 1em;
-    padding: 1em; */
+
+    &:before {
+      content: attr(data) ": ";
+      font-weight: bold;
+      width: 10em;
+      display: inline-block;
+    }
   }
 
   table {
@@ -724,13 +771,7 @@ footer {
     padding: 0;
     margin-top: 0.5em;
     border: 0;
-  }
-
-  td:before {
-    content: attr(data) ": ";
-    font-weight: bold;
-    width: 10em;
-    display: inline-block;
+    width: fit-content;
   }
 }
 
@@ -803,14 +844,46 @@ footer {
     margin: 10vh auto;
   }
 
-#background {
-  height: 100vh;
-  width: 100vw;
-}
+  #background {
+    height: 100vh;
+    width: 100vw;
+  }
 
   #background img {
     transform: rotate(270deg);
     opacity: 0.85;
     width: auto;
+  }
+
+  #perfil-cont {
+    
+    .container-row {
+      flex-flow: column;
+    }
+    .container-column {
+      #other-data {
+        width: 100%;
+        margin: 0;
+  
+        .container-column {
+          justify-content: space-between;
+          width: 100%;
+          flex-flow: row;
+          align-items: center;
+          
+          .label {
+            width: fit-content;
+            margin: 1em;
+            width: 40%;
+          }
+
+          p {
+            width: 60%;
+            text-align: left;
+            margin-right: auto;
+          }
+        }
+      }
+    }
   }
 }
