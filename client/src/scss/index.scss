@@ -480,11 +480,13 @@ article {
 #table {
   margin: auto;
   width: 80%;
+  margin-bottom: 2em;
 }
 
 .botones-tabla {
   min-height: fit-content;
   margin-bottom: 0.5em;
+  cursor: pointer;
 
   a {
     text-decoration: none;
@@ -501,29 +503,29 @@ article {
 
 table {
   width: 100%;
-  border: 1px solid #acacac;
-}
-
-th, tr, td {
-  padding: 1.2em;
-}
-
-tr {
-  width: 50%;
-  height: fit-content;
-}
-
-th {
-  width: fit-content;
-  text-align: left;
-  font-weight: bold;
+  border: 1px solid $gray;
+  //border-radius: 0.25rem;
+  th, tr, td {
+    padding: 1.2em;
+  }
+  
+  tr {
+    width: 50%;
+    height: fit-content;
+    
+    th {
+      width: fit-content;
+      text-align: left;
+      font-weight: bold;
+    }
+  }
+  
 }
 
 /* PERFIL */
 
 #perfil-cont{
   padding: 2em $padding;
-  
   .container-row {
     margin: auto;
     width: 80%;
@@ -595,6 +597,52 @@ th {
 
 }
 
+.opc-fichar {
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: color 0.15s;
+  font-size: 1.1rem;
+
+  &:hover {
+    transition: color 0.15s;
+    color: $primary-color;
+  }
+}
+
+/*Asminnnnnnnnnn*/
+
+#cont-admin {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  max-width: 1300px;
+  margin: auto;
+  .user {
+    flex: 1 1 400px;
+    
+    img {
+      margin: 1em;
+      height: 160px;
+      width: 160px;
+      object-fit: cover;
+      border-radius: 50%;
+      flex: unset;
+    }
+  
+    .container-column {
+      flex: unset;
+      width: fit-content;
+      margin: auto 1em;
+
+      p {
+        width: fit-content;
+        margin: 0.5em;
+      }
+    }
+  }
+  
+}
+
 /* FOOTER */
 
 footer {
@@ -651,6 +699,12 @@ footer {
     flex-flow: column wrap;
     padding: 0;
     margin: 1em;
+  }
+
+  #opc-cont {
+    .container-row {
+      flex-flow: row nowrap;
+    }
   }
 
   article:nth-child(2n) .container-column, article .container-column, section img {
@@ -713,6 +767,9 @@ footer {
   #table {
     margin: 0 auto;
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1em;
 
     .botones-tabla {
       width: fit-content;
@@ -722,6 +779,36 @@ footer {
     table {
       display: block;
       margin: 1em auto;
+      padding: 0.5em;
+      width: 100%;
+      tbody {
+        display: block;
+        width: 100%;
+        tr {
+          border: 1px solid $gray;
+          border-radius: 0.25rem;
+          width: 100%;
+          display: block;
+          padding: 0.5rem;
+  
+          td {
+            margin: auto;
+            width: 100%;
+            display: block;
+          }
+
+          #opc-cont {
+            &::before {
+              content: unset;
+            }
+  
+            .container-row {
+              flex-flow: row nowrap;
+              margin: 0;
+            }
+          }
+        }
+      }
     }
   }
 

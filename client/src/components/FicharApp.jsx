@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import AppNavbar from './navbars/AppNavbar';
 import {withRouter} from 'react-router-dom'
 
-import {formatTime, getHoras} from '../utils/DateUtils'
+import {getHoras, getHorasToString} from '../utils/DateUtils'
 import {AuthProvider} from '../auth/AuthProvider'
 
 
@@ -12,11 +12,14 @@ const FicharApp = (props) => {
 
     const [user, setUser] = useState(null);
 
-    const [modoFichar, setModoFichar] = useState(false)
+    const [modoFichar, setModoFichar] = useState(false);
 
-    const [ficharDTO, setFicharDTO] = useState({})
+    const [ficharDTO, setFicharDTO] = useState({});
 
-    const [timer, setTimer] = useState(null)
+    const [timer, setTimer] = useState(null);
+
+    const [intervalInstance, setIntervalInstance] = useState(null);
+
 
     let interval;
 
@@ -34,11 +37,14 @@ const FicharApp = (props) => {
             const listFichaje = await fichajes
             
             const ultimoFichaje = listFichaje.sort((a, b) => b["id"] - a["id"])[0]
-
+            
             if (ultimoFichaje.salida === undefined) {
                 setFicharDTO(ultimoFichaje)
                 setTimer(getHoras(ultimoFichaje))
                 interval = setInterval(() => setTimer(getHoras(ultimoFichaje)), 1000);
+                
+                setIntervalInstance(interval);
+
                 setModoFichar(true);
             }
         }
@@ -49,7 +55,6 @@ const FicharApp = (props) => {
         }
 
         fetchUser();
-        
         updateView(fetchFichados());
     }, [])
 
@@ -63,22 +68,23 @@ const FicharApp = (props) => {
     const fichar = async () => {
         setModoFichar(true);
         const ficharDTO = await userInstance.fichar(auth.authToken);
+        
+        setTimer(getHoras(ficharDTO));
+        setFicharDTO(ficharDTO);
 
-        interval = setInterval(() => setTimer(getHoras(ficharDTO)), 1000);
+        interval = await setInterval(() => setTimer(getHoras(ficharDTO)), 1000);
+        setIntervalInstance(interval);
     }
 
     const desfichar = async () => {
         const res = await userInstance.desfichar(auth.authToken, ficharDTO);
         
         if (res != undefined) {
-            clearInterval(interval);
+            clearInterval(intervalInstance);
+            setIntervalInstance(null)
             setModoFichar(false);
             setFicharDTO({})
         }
-
-    }
-
-    const pauseFichar = () => {
 
     }
 
@@ -96,13 +102,8 @@ const FicharApp = (props) => {
                         :
                         <section id="fichado"> 
                             <h2>Tiempo trabajado</h2>
-                            <span id="time">{timer && `${formatTime(timer.horas)}:${formatTime(timer.minutos)}:${formatTime(timer.segundos)}`}</span>
+                            <span id="time">{timer && getHorasToString(timer)}</span>
 
-                            <div className="container-row">
-                                <a className="botoncir not-selected" onClick={pauseFichar(this)}><i className="fas fa-mug-hot"></i></a>
-                                <a className="botoncir not-selected" onClick={pauseFichar(this)}><i className="fas fa-pause"></i></a>
-                                <a className="botoncir not-selected" onClick={pauseFichar(this)}><i className="fas fa-utensils"></i></a>
-                            </div>
                             <a className="boton" onClick={desfichar}>Finalizar</a>
                         </section>
                     }

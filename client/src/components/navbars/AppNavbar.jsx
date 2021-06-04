@@ -20,7 +20,7 @@ const AppNavbar = (props) => {
         <div>
             {user && 
                 <header id="header-app">
-                    <Link to="/admin" id="admin"><i className="fas fa-cogs"></i></Link>
+                    <Link to="/app/admin" id="admin"><i className="fas fa-cogs"></i></Link>
                     <div id="imagen-app">
                         <Link to="/app"><img src="/img/logo.png" alt="Logo de Anytime" /></Link>
                     </div>

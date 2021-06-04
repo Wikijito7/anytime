@@ -3,13 +3,24 @@ import {useParams, withRouter} from 'react-router-dom';
 import AppNavbar from './navbars/AppNavbar';
 
 import {AuthProvider} from '../auth/AuthProvider'
+import {
+    dateInMonth,
+    dateInToday,
+    dateInWeek,
+    drawDate,
+    getHoras,
+    getHorasToString,
+    timeToString
+} from '../utils/DateUtils'
 import {fetchBase} from '../utils/Const'
 
 
 const User = (props) => {
     const {username} = useParams();
 
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
+    const [fichajes, setFichajes] = useState(null);
+    const [selected, setSelected] = useState("");
 
     const userInstance = props.user;
     const auth = AuthProvider();
@@ -19,6 +30,8 @@ const User = (props) => {
             try {
                 const user = await userInstance.getUserByUsername(username, auth.authToken);
                 setUser(user);
+
+                await fetchFichajes(user);
             } catch (error) {
                 console.log(error);
             }
@@ -30,8 +43,44 @@ const User = (props) => {
         }
 
         fetchUser();
-
+        semana();
     }, [])
+
+    const fetchFichajes = async () => {
+        const user = await userInstance.getUserByUsername(username, auth.authToken);
+        const fichajes = await userInstance.fetchFichados(auth.authToken, user);
+        return fichajes;
+    }
+
+    const hoy = async () => {
+        const listaFichajes = await fetchFichajes();
+        const lista = listaFichajes.filter((fichaje) => dateInToday(fichaje.entrada))
+        setSelected("hoy");
+        setFichajes([])
+        setFichajes(lista);
+    }
+
+    const semana = async () => {
+        const listaFichajes = await fetchFichajes();
+        const lista = listaFichajes.filter((fichaje) => dateInWeek(fichaje.entrada))
+        setSelected("semana");
+        setFichajes(lista);
+    }
+
+    const mes = async () => {
+        const listaFichajes = await fetchFichajes();
+        const lista = listaFichajes.filter((fichaje) => dateInMonth(fichaje.entrada))
+        setSelected("mes");
+        setFichajes(lista);
+    }
+
+    const editar = () => {
+
+    }
+
+    const borrar = () => {
+
+    }
 
     return (
         <div>
@@ -79,9 +128,9 @@ const User = (props) => {
                 </section>
                 <section id="table">
                     <div className="botones-tabla">
-                        <a href="#">Hoy</a>
-                        <a href="#" className="btn-selected">Semana</a>
-                        <a href="#">Mes</a>
+                        <a onClick={hoy} className={selected === "hoy" ? "btn-selected" : ""}>Hoy</a>
+                        <a onClick={semana} className={selected === "semana" ? "btn-selected" : ""}>Semana</a>
+                        <a onClick={mes} className={selected === "mes" ? "btn-selected" : ""}>Mes</a>
                     </div>
                     <table>
                         <thead>
@@ -93,24 +142,22 @@ const User = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td data="Fecha">19/10/2020</td>
-                                <td data="Hora de entrada">8:10</td>
-                                <td data="Hora de salida">14:31</td>
-                                <td data="Tiempo fichado">6h 21 min</td>
-                            </tr>
-                            <tr>
-                                <td data="Fecha">20/10/2020</td>
-                                <td data="Hora de entrada">8:10</td>
-                                <td data="Hora de salida">14:31</td>
-                                <td data="Tiempo fichado">6h 21 min</td>
-                            </tr>
-                            <tr>
-                                <td data="Fecha">21/10/2020</td>
-                                <td data="Hora de entrada">8:10</td>
-                                <td data="Hora de salida">14:31</td>
-                                <td data="Tiempo fichado">6h 21 min</td>
-                            </tr>
+                            {
+                                fichajes && fichajes.map((fichaje, index) =>
+                                    <tr key={index}>
+                                        <td data="Fecha">{drawDate(fichaje.entrada)}</td>
+                                        <td data="Hora de entrada">{timeToString(fichaje.entrada)}</td>
+                                        <td data="Hora de salida">{fichaje.salida !== undefined ? timeToString(fichaje.salida) : ""}</td>
+                                        <td data="Tiempo fichado">{getHorasToString(getHoras(fichaje))}</td>
+                                        <td id="opc-cont">
+                                            <div className="container-row">
+                                                <a className="opc-fichar" onClick={() => editar(fichaje)}><i className="fas fa-edit"></i></a>
+                                                <a className="opc-fichar" onClick={() => borrar(fichaje)}><i className="fas fa-trash-alt"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            }
                         </tbody>
                     </table>
                 </section>

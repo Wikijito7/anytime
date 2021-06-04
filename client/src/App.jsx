@@ -9,11 +9,12 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Contacto from './components/Contacto';
 import FicharApp from './components/FicharApp';
+import Perfil from './components/Perfil';
+import User from './components/User';
+import Admin from './components/Admin';
 
 import {AuthProvider} from './auth/AuthProvider'
 import {UserProvider} from './user/UserProvider'
-import Perfil from './components/Perfil';
-import User from './components/User';
 
 
 // TODO: Comprobar las cookies para saber si está logueado y pasarselo a la página que se encuentra para temas como
@@ -46,13 +47,16 @@ function App() {
                         <Footer/>
                     </Route>
                     <Route path="/app" exact>
-                        <FicharApp auth={auth} user={userInstance}/>
+                        <FicharApp user={userInstance}/>
                     </Route>
                     <Route path="/app/perfil">
-                        <Perfil auth={auth} user={userInstance} />
+                        <Perfil user={userInstance} />
                     </Route>
                     <Route path="/app/u/:username">
-                        <User auth={auth} user={userInstance}/>
+                        <User user={userInstance}/>
+                    </Route>
+                    <Route path="/app/admin">
+                        <Admin user={userInstance} />
                     </Route>
                 </Switch>
             </Router>
