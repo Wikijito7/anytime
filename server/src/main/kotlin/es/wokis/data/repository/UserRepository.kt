@@ -27,6 +27,7 @@ class UserRepository : IUserRespository {
     }
 
     override fun register(user: RegisterUserDTO): String? {
+        // TODO: Revisar
         val userDB = transaction {
             val userDB = User.find { Users.username eq user.username }.singleOrNull()
             val empresa = Empresa.findById(user.empresaId) ?: throw SQLException("${user.empresaId} not found")
@@ -44,7 +45,7 @@ class UserRepository : IUserRespository {
         }
 
         return if (userDB != null)
-                login(userDB.toLoginUserDTO())
+                login(LoginUserDTO(user.username, user.password))
             else
                 null
     }
