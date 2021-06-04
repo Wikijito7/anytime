@@ -91,6 +91,9 @@ const FicharApp = (props) => {
     return (
         <div>
             <AppNavbar token={auth.authToken} user={userInstance}/>
+            <div id="background">
+                <img src="/img/fichar-bg.png" alt="imagen fondo vectorial"/>
+            </div>
             {user &&
                 <main id="app">
                     {

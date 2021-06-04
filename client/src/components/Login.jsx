@@ -51,7 +51,7 @@ const Login = (props) => {
     return (
         <main>
             <div id="background">
-                <img src="./img/background.png" alt="imagen fondo vectorial"/>
+                <img src="/img/background.png" alt="imagen fondo vectorial"/>
             </div>
             <section id="login">
                 <h1>Iniciar sesión</h1>

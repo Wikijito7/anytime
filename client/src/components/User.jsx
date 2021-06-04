@@ -91,6 +91,7 @@ const User = (props) => {
                         user && <div className="container-row">
                             <div id="img-cont" className="container-column">
                                 <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
+                                <button className="btn danger">Eliminar usuario</button>
                             </div>
                             <div className="container-column">
 
@@ -104,7 +105,7 @@ const User = (props) => {
 
                                 <div id="other-data" className="container-row">
                                     <div className="container-column">
-                                        <p className="label">Nombre de usuario</p>
+                                        <p className="label">Usuario</p>
                                         <p id="username">
                                             {user.username}
                                         </p>

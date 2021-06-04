@@ -74,6 +74,7 @@ const Perfil = (props) => {
     return (
         <div>
             <AppNavbar token={auth.authToken} user={userInstance} />
+            
             <main>
                 <section id="perfil-cont">
                     {
@@ -81,7 +82,6 @@ const Perfil = (props) => {
                             <div id="img-cont" className="container-column">
                                 <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
                                 <button className="btn">Editar perfil</button>
-
                             </div>
                             <div className="container-column">
 
@@ -95,7 +95,7 @@ const Perfil = (props) => {
 
                                 <div id="other-data" className="container-row">
                                     <div className="container-column">
-                                        <p className="label">Nombre de usuario</p>
+                                        <p className="label">Usuario</p>
                                         <p id="username">
                                             {user.username}
                                         </p>

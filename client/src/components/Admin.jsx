@@ -3,6 +3,7 @@ import AppNavbar from './navbars/AppNavbar';
 
 import {AuthProvider} from '../auth/AuthProvider'
 import {fetchBase} from '../utils/Const'
+import {withRouter} from 'react-router';
 
 
 const Admin = (props) => {
@@ -29,38 +30,48 @@ const Admin = (props) => {
         fetchUser();
     }, [])
 
+    const invitarTrabajador = async () => {
+
+    }
+
     return (
         <div>
             <AppNavbar token={auth.authToken} user={userInstance} />
-            <h1>Asmin</h1>
             {
                 user && 
-                <main id="cont-admin" >
-                    {
-                        user.empresa.users.map((user, index) =>
-                            <div key={index} className="user container-row">
-                                <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
-                                <div className="container-column">
-                                    {  
-                                        user.nombre !== undefined ?
-                                            <p id="userNombre">{`${user.nombre} ${user.apellidos !== undefined ? user.apellidos : ""}`}</p>
-                                            : <p id="userNombre">{user.username}</p>
-                                        
-                                    }
-                                    <p id="username">
-                                        {user.username}
-                                    </p>
-                                    <p id="email">
-                                        {user.email}
-                                    </p>
+                <main>
+                    <div id="admin-header" className="container-row">
+                        <h1>Panel de administración</h1>
+                        <button onClick={invitarTrabajador} className="btn">Añadir trabajador</button>
+                    </div>
+                    <section id="cont-admin" >
+                        {
+                            user.empresa.users.map((user, index) =>
+                                <div key={index} className="user container-row" onClick={() => props.history.push(`/app/u/${user.username}`)}>
+                                    <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
+                                    <div className="container-column">
+                                        {  
+                                            user.nombre !== undefined ?
+                                                <p id="userNombre">{`${user.nombre} ${user.apellidos !== undefined ? user.apellidos : ""}`}</p>
+                                                : <p id="userNombre">{user.username}</p>
+                                            
+                                        }
+                                        <p id="username">
+                                            {user.username}
+                                        </p>
+                                        <p id="email">
+                                            {user.email}
+                                        </p>
+                                    </div>
+
                                 </div>
-                            </div>
-                        )
-                    }
+                            )
+                        }
+                    </section>
                 </main>
             }
         </div>
     )
 }
 
-export default Admin
+export default withRouter(Admin)

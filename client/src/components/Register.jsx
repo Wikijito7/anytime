@@ -10,7 +10,7 @@ const Register = () => {
     return (
         <main>
             <div id="background">
-                <img src="./img/background.png" alt="imagen fondo vectorial"/>
+                <img src="/img/background.png" alt="imagen fondo vectorial"/>
             </div>
             <section id="register">
                 <h1>Crear una cuenta</h1>

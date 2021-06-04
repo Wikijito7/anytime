@@ -418,12 +418,17 @@ article {
 #sinfichar, #fichado {
   display: flex;
   margin: 10vh auto;
+  max-width: calc(50vw + 3em);
   flex-direction: column;
   text-align: center;
   width: 100%;
+  padding: 1em 2em;
+  background: #fdfdfdaa;
+  border-radius: 0.5em;
 }
 
 #app {
+
   h1 {
     margin-bottom: 1.5em;
   }
@@ -444,6 +449,7 @@ article {
 
 .botoncir {
   padding: 1em;
+  width: 1em;
   width: 1em;
   height: 1em;
   transition: all 0.2s ease-in-out;
@@ -490,7 +496,7 @@ article {
 
   a {
     text-decoration: none;
-    color: $black;
+    //color: $black;
     padding: 0.25em 1em;
     border-bottom: 5px solid #00000000;
   }
@@ -498,6 +504,7 @@ article {
   .btn-selected {
     font-weight: bold;
     border-bottom: 5px solid $primary-color-hover;
+    transition: 0.35s;
   }
 }
 
@@ -585,16 +592,24 @@ table {
 
       
     }
-  }
+  }  
+}
 
-  .btn {
-    display: block;
-    font-size: 0.9rem;
-    width: fit-content;
-    padding: 0.7rem 1.25rem;
-    margin: 2rem auto;
-  }
+.btn {
+  display: block;
+  font-size: 0.9rem;
+  width: fit-content;
+  padding: 0.7rem 1.25rem;
+  margin: 2rem auto;
+}
 
+.danger {
+  background: transparentize($danger, 0.2);
+  color: $white;
+
+  &:hover {
+    background: opacify($danger, 0.2);
+  }
 }
 
 .opc-fichar {
@@ -611,19 +626,43 @@ table {
 
 /*Asminnnnnnnnnn*/
 
+#admin-header {
+  justify-content: space-between;
+  max-width: 1250px;
+  width: 100%;
+  margin: auto;
+
+  h1 {
+    width: fit-content;
+    margin: 1rem;
+  }
+
+  .btn {
+    margin: 1rem;
+  }
+}
+
 #cont-admin {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  max-width: 1300px;
+  width: fit-content;
+  max-width: 1250px;
   margin: auto;
+
   .user {
-    flex: 1 1 400px;
-    
+    flex: 1 1 500px;
+    max-width: 550px;
+    border: 1px solid $gray;
+    border-radius: 0.25em;
+    margin: 1em;
+    cursor: pointer;
+    position: relative;
+
     img {
       margin: 1em;
-      height: 160px;
-      width: 160px;
+      height: 90px;
+      width: 90px;
       object-fit: cover;
       border-radius: 50%;
       flex: unset;
@@ -640,7 +679,6 @@ table {
       }
     }
   }
-  
 }
 
 /* FOOTER */
@@ -759,6 +797,14 @@ footer {
           padding: 0;
         }
       }
+    }
+  }
+
+  #cont-admin {
+    .user {
+      flex-flow: row nowrap;
+      max-width: unset;
+
     }
   }
 }
@@ -953,19 +999,20 @@ footer {
         margin: 0;
   
         .container-column {
-          justify-content: space-between;
-          width: 100%;
+          //justify-content: space-between;
+          width: fit-content;
           flex-flow: row;
           align-items: center;
+          margin: auto;
           
           .label {
             width: fit-content;
             margin: 1em;
-            width: 40%;
+            //width: 40%;
           }
 
           p {
-            width: 60%;
+            //width: 60%;
             text-align: left;
             margin-right: auto;
           }
