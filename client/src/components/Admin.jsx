@@ -48,7 +48,7 @@ const Admin = (props) => {
                         {
                             user.empresa.users.map((user, index) =>
                                 <div key={index} className="user container-row" onClick={() => props.history.push(`/app/u/${user.username}`)}>
-                                    <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
+                                    <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} alt="Imagen del usuario" />
                                     <div className="container-column">
                                         {  
                                             user.nombre !== undefined ?

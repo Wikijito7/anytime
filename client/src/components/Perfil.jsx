@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import AppNavbar from './navbars/AppNavbar'
-import {withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import {AuthProvider} from '../auth/AuthProvider'
 import {
@@ -80,8 +80,8 @@ const Perfil = (props) => {
                     {
                         user && <div className="container-row">
                             <div id="img-cont" className="container-column">
-                                <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
-                                <button className="btn">Editar perfil</button>
+                                <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} alt="Avatar del usuario"/>
+                                <Link to="/app/editar" className="btn">Editar perfil</Link>
                             </div>
                             <div className="container-column">
 

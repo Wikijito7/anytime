@@ -90,7 +90,7 @@ const User = (props) => {
                     {
                         user && <div className="container-row">
                             <div id="img-cont" className="container-column">
-                                <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} />
+                                <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} alt="Avatar del usuario"/>
                                 <button className="btn danger">Eliminar usuario</button>
                             </div>
                             <div className="container-column">

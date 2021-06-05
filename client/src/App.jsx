@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Footer from './components/Footer';
@@ -15,14 +15,32 @@ import Admin from './components/Admin';
 
 import {AuthProvider} from './auth/AuthProvider'
 import {UserProvider} from './user/UserProvider'
+import {ThemeProvider} from './theme/ThemeProvider';
+import Logout from './components/Logout';
+import Edit from './components/Edit';
+import TermCond from './components/TermCond';
 
 
 // TODO: Comprobar las cookies para saber si está logueado y pasarselo a la página que se encuentra para temas como
 // el dark mode y que acceda directamente a la app en vez de pasar por el Login.
 
 function App() {
-    const auth = AuthProvider()
-    const userInstance = UserProvider()
+    const auth = AuthProvider();
+    const userInstance = UserProvider();
+    const themeProvider = ThemeProvider();
+
+    useEffect(() => {
+        const theme = () => {
+            if (themeProvider.theme === undefined) {
+                themeProvider.setTheme('light');
+                return;
+            }
+
+            document.body.classList.replace('light', themeProvider.theme);
+        }
+
+        theme();
+    }, [])
 
     return (
         <div>
@@ -35,11 +53,11 @@ function App() {
                     </Route>
                     <Route path="/login">
                         <LogoNavbar/>
-                        <Login auth={auth}/>
+                        <Login auth={auth} user={userInstance}/>
                     </Route>
                     <Route path="/register">
                         <LogoNavbar/>
-                        <Register auth={auth}/>
+                        <Register auth={auth} user={userInstance}/>
                     </Route>
                     <Route path="/contacto">
                         <NavbarFull token={auth} />
@@ -57,6 +75,17 @@ function App() {
                     </Route>
                     <Route path="/app/admin">
                         <Admin user={userInstance} />
+                    </Route>
+                    <Route path="/app/logout">
+                        <Logout user={userInstance}/>
+                    </Route>
+                    <Route path="/app/editar">
+                        <Edit user={userInstance} />
+                    </Route>
+                    <Route path="/term-cond">
+                        <NavbarFull token={auth} />
+                        <TermCond />
+                        <Footer />
                     </Route>
                 </Switch>
             </Router>

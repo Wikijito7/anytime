@@ -13,6 +13,8 @@ const UserProvider = () => {
         return await fetchUser(token);
     }
 
+    const clearUser = () => setUser(null);
+
     const getUserByUsername = async (username, token) => {
         let user;
 
@@ -23,8 +25,9 @@ const UserProvider = () => {
                 'Authorization': `Bearer ${token}`
             },
             mode: "cors"
-        }).then(res => res.json())
-            .then(data => user = data);
+        })
+        .then(res => res.json())
+        .then(data => user = data);
         
         return user;
     }
@@ -39,7 +42,8 @@ const UserProvider = () => {
                 'Authorization': `Bearer ${token}`
             },
             mode: "cors"
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => user = data);
 
         setUser(user);
@@ -56,7 +60,8 @@ const UserProvider = () => {
                 'Authorization': `Bearer ${token}`
             },
             mode: "cors"
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => fichajes.push(...data));
 
         return fichajes;
@@ -72,7 +77,8 @@ const UserProvider = () => {
                 'Authorization': `Bearer ${token}`
             },
             mode: "cors"
-        }).then(res => res.json()
+        })
+        .then(res => res.json()
         .then(data => fichar = data));
 
         return fichar;
@@ -89,15 +95,34 @@ const UserProvider = () => {
             },
             body: JSON.stringify(ficharDTO),
             mode: "cors"
-        }).then(res => res.json()
+        })
+        .then(res => res.json()
         .then(data => fichar = data));
-
-
 
         return fichar;
     }
 
-    return {getUser, refreshUser, getUserByUsername, fetchFichados, fichar, desfichar};
+    const changeAvatar = async (token, file) => {
+        let response;
+        const formData = new FormData();
+
+        formData.append("image", file);
+
+        await fetch(`${fetchBase}/user/avatar`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData,
+            mode: "cors"
+        })
+        .then(res => res.blob()
+        .then(data => response = URL.createObjectURL(data)));
+
+        return response;
+    }
+
+    return {getUser, refreshUser, getUserByUsername, fetchFichados, fichar, desfichar, clearUser, changeAvatar};
 }
 
 export {UserProvider};

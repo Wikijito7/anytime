@@ -1,8 +1,7 @@
 import moment from 'moment'
 
 const cookieExpire = moment().add(30, 'days').toDate();
-const dayOfWeek = moment().isoWeekday()
-const dayOfMonth = moment().date()
+const themeExpire = moment().add(100, 'years').toDate();
 
 const today = () => {
     const now = moment();
@@ -82,10 +81,10 @@ const dateInToday = (date) => {
     const day = moment(datetimeToString(date), "YYYY/MM/DD hh:mm:ss");
     const today = moment()
 
-    return day.date() === today.date() && day.month() == today.month() && day.year() === today.year()
+    return day.date() === today.date() && day.month() === today.month() && day.year() === today.year()
 }
 
 export { cookieExpire, getHoras, datetimeToString, dateToString, 
     timeToString, formatTime, dateInWeek, dateInMonth, today,
-    drawDate, getHorasToString, dateInToday
+    drawDate, getHorasToString, dateInToday, themeExpire
 }

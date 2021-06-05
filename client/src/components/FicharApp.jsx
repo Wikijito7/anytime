@@ -20,9 +20,6 @@ const FicharApp = (props) => {
 
     const [intervalInstance, setIntervalInstance] = useState(null);
 
-
-    let interval;
-
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -36,12 +33,16 @@ const FicharApp = (props) => {
         const updateView = async (fichajes) => {
             const listFichaje = await fichajes
             
-            const ultimoFichaje = listFichaje.sort((a, b) => b["id"] - a["id"])[0]
+            if (listFichaje.lenght === 0) return;
             
+            const ultimoFichaje = listFichaje.sort((a, b) => b["id"] - a["id"])[0]
+
+            if (ultimoFichaje === undefined) return;
+
             if (ultimoFichaje.salida === undefined) {
                 setFicharDTO(ultimoFichaje)
                 setTimer(getHoras(ultimoFichaje))
-                interval = setInterval(() => setTimer(getHoras(ultimoFichaje)), 1000);
+                let interval = setInterval(() => setTimer(getHoras(ultimoFichaje)), 1000);
                 
                 setIntervalInstance(interval);
 
@@ -72,14 +73,14 @@ const FicharApp = (props) => {
         setTimer(getHoras(ficharDTO));
         setFicharDTO(ficharDTO);
 
-        interval = await setInterval(() => setTimer(getHoras(ficharDTO)), 1000);
+        let interval = await setInterval(() => setTimer(getHoras(ficharDTO)), 1000);
         setIntervalInstance(interval);
     }
 
     const desfichar = async () => {
         const res = await userInstance.desfichar(auth.authToken, ficharDTO);
         
-        if (res != undefined) {
+        if (res !== undefined) {
             clearInterval(intervalInstance);
             setIntervalInstance(null)
             setModoFichar(false);

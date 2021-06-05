@@ -3,10 +3,14 @@ import {Link} from 'react-router-dom';
 
 // TODO: Hacer el código para conectar a la API y hacer Register real.
 
-const Register = () => {
+const Register = (props) => {
+    
     const register = async (e) => {
         e.preventDefault()
+        props.user.clearUser();
     }
+
+
     return (
         <main>
             <div id="background">

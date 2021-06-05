@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {Link} from 'react-router-dom'
+import {ThemeProvider} from '../../theme/ThemeProvider';
 
 const NavbarFull = (props) => {
     const [lista, setLista] = useState(false)
@@ -9,7 +10,18 @@ const NavbarFull = (props) => {
     const moon = React.createRef();
     const sun = React.createRef();
 
-    console.log();
+    const themeProvider = ThemeProvider();
+
+    useEffect(() => {
+        const theme = () => {
+            if (themeProvider.theme === 'dark') {
+                sun.current.style.display = "block";
+                moon.current.style.display = "none";
+            }
+        }
+        
+        theme()
+    }, [])
 
     const toggleList = () => {
         if (lista) {
@@ -23,12 +35,18 @@ const NavbarFull = (props) => {
 
     const changeDark = () => {
         document.body.classList.replace("light", "dark");
+
+        themeProvider.setTheme('dark');
+
         sun.current.style.display = "block";
         moon.current.style.display = "none";
     }
 
     const changeLight = () => {
         document.body.classList.replace("dark", "light");
+
+        themeProvider.setTheme('light');
+
         moon.current.style.display = "block";
         sun.current.style.display = "none";
     }

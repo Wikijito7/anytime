@@ -1,11 +1,15 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Link} from 'react-router-dom';
 import {fetchBase} from '../../utils/Const'
 
 const AppNavbar = (props) => {    
     const [user, setUser] = useState({})
+    const [open, setOpen] = useState(false);
+
 
     const token = props.token;
+
+    const menu = useRef();
 
     useEffect(() => {
         const retrieveUser = async () => {
@@ -16,6 +20,16 @@ const AppNavbar = (props) => {
         retrieveUser();
     }, [])
 
+    const menuDesplegable = () => {
+        if (open) {
+            menu.current.style.display = "none";
+        } else {
+            menu.current.style.display = "flex";
+        }
+
+        setOpen(!open)
+    }
+
     return (
         <div>
             {user && 
@@ -24,8 +38,15 @@ const AppNavbar = (props) => {
                     <div id="imagen-app">
                         <Link to="/app"><img src="/img/logo.png" alt="Logo de Anytime" /></Link>
                     </div>
-                    <Link to="/app/perfil" className="perfil"><img id="profile" src={`${fetchBase}/user/${user.username}/avatar`}
-                        alt="Imagen del usuario" /></Link>
+                    <a onClick={menuDesplegable} className="perfil">
+                        <img id="profile" src={`${fetchBase}/user/${user.username}/avatar?${performance.now()}`}
+                        alt="Imagen del usuario" />
+                        <id id="menu" ref={menu} className="container-column">
+                            <Link to="/app/perfil">Perfil</Link>
+                            <Link to="/app/editar">Editar perfil</Link>
+                            <Link to="/app/logout">Cerrar sesión</Link>
+                        </id>
+                    </a>
                 </header>
             }
         </div>

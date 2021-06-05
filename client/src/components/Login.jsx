@@ -11,8 +11,6 @@ const Login = (props) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const authInstance = props.authInstance;
-
     const login = async (e) => {
         e.preventDefault();
         
@@ -32,7 +30,9 @@ const Login = (props) => {
             let token = await auth.login(username, password)
             
             if (!token.toLowerCase().startsWith('wrong')) {
+                props.user.clearUser();
                 props.history.push("/app");
+                
             } else {
                 setError("Usuario o contraseña incorrecta");
             }
@@ -43,7 +43,7 @@ const Login = (props) => {
     }
 
     useEffect(() => {
-        if (auth.authToken != undefined) {
+        if (auth.authToken !== undefined) {
             props.history.push("/app");
         }
     }, []);

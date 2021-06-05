@@ -23,6 +23,25 @@ body {
   background: $dark;
   color: $white;
   transition: ease-in-out 0.25s;
+
+  #fichado, #sinfichar {
+    background: unset;
+  }
+
+  .iconos {
+    .fa-twitter, .fa-phone, .fa-envelope {
+      color: $white;
+    }
+  }
+
+  input, textarea {
+    background: $dark;
+    color: $white;
+  }
+
+  #login, #register {
+    background: transparentize($dark, 0.1);
+  }
 }
 
 /* Vamos a definir de manera general los contenedores header, main y footer con
@@ -51,7 +70,7 @@ header {
 
 nav {
   margin-left: auto;
-
+  
   a {
     text-decoration: none;
     font-weight: 600;
@@ -94,7 +113,12 @@ nav {
   flex-grow: 2;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12%
+  padding: 0 12%;
+
+  .perfil {
+    position: relative;
+    width: 52px;
+  }
 }
 
 #imagen-app a {
@@ -224,6 +248,10 @@ input[type="text"], input[type="password"], textarea {
   font-family: 'Open Sans', sans-serif;
   border: 1px solid $black;
   border-radius: 0.25em;
+}
+
+textarea {
+  resize: none;
 }
 
 input[type="password"] {
@@ -407,6 +435,19 @@ article {
   margin-bottom: 0;
   max-width: 1000px;
   text-align: justify;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-size: 0.9rem;
+    //margin: 0.5em;
+
+    &:hover {
+      transition: 0.2s;
+      color: $primary-color-hover;
+      text-decoration: underline;
+    }
+  }
 }
 
 /* APP */
@@ -677,6 +718,140 @@ table {
         width: fit-content;
         margin: 0.5em;
       }
+    }
+  }
+}
+
+#menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: auto;
+  right: 0;
+  z-index: 2;
+  background: $dark;
+  border-radius: 0 0 0.25em 0.25em;
+  width: max-content;
+
+  &::after {
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    content: "";
+    border: 10px solid transparent;
+    border-bottom: 10px solid $dark;
+    z-index: 3;
+    left: auto;
+    right: 16px;
+    top: -20px;
+  }
+
+  a {
+    color: $white;
+    text-decoration: none;
+    margin: 0.25rem;
+    padding: 0.5em 1.2em;
+
+    &:hover {
+      background: $black;
+    }
+  }
+}
+
+/* EDITAAAAAAAAR */
+#editar {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+
+  h2 {
+    margin: 0;
+    height: fit-content;
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  article {
+    align-items: center;
+    margin: auto;
+    padding: 1rem;
+
+    #userImage {
+      margin: 1em;
+      height: 160px;
+      width: 160px;
+      object-fit: cover;
+      border-radius: 50%;
+      flex: unset;
+    }
+
+    .container-column {
+      height: fit-content;
+      width: fit-content;
+      margin: 0 2em;
+
+      form {
+        width: fit-content;
+        min-width: unset;
+        max-width: unset;
+      }
+
+      label {
+        cursor: pointer;
+        font-weight: 600;
+        color: $primary-color;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      span {
+        cursor: pointer;
+        font-weight: 600;
+        color: $danger;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+  }
+
+  form {
+    display: flex;
+    flex-flow: column;
+    margin-top: 1em;
+  }
+
+  label {
+    margin: 0.5em 0;
+    font-weight: 600;
+    width: fit-content;
+  }
+
+  #theme {
+    justify-content: space-between;
+
+    .container-row {
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    label {
+      display: block;
+      width: fit-content;
+      //margin-right: auto;
+    }
+    // no se puede cambiar los radios :)
+    // https://stackoverflow.com/questions/4253920/how-do-i-change-the-color-of-radio-buttons/38468320
+    input {
+      display: block;
+      width: 1.2em;
+      height: 1.2em;
     }
   }
 }
