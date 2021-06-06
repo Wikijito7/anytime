@@ -5,10 +5,7 @@ import es.wokis.data.models.Empresa
 import es.wokis.data.models.Invitacion
 import es.wokis.data.models.Invitaciones
 import es.wokis.data.repository.interfaces.IInvitacionesRepository
-import es.wokis.utils.toEmpresa
-import es.wokis.utils.toEmpresaDTO
 import es.wokis.utils.toInvitacionDTO
-import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 
@@ -31,25 +28,26 @@ class InvitacionesRepository : IInvitacionesRepository {
     }
 
     override fun eliminarInvitacion(invitacion: InvitacionDTO): Boolean {
-        val invitacionDTO = getInvitacion(invitacion.email)
+        val invitacionDTO = getInvitacion(invitacion.hash!!)
 
         if (invitacionDTO != null) {
-            transaction {
-                Invitaciones.deleteWhere { Invitaciones.email eq invitacion.email }
+            return transaction {
+                val invitacionBD = Invitacion.find { Invitaciones.hash eq invitacion.hash }
+                    .singleOrNull() ?: return@transaction false
+
+                invitacionBD.delete()
+                true
             }
-
-        } else {
-            return false
-
         }
 
-        return true
+        return false
+
     }
 
-    override fun getInvitacion(email: String): InvitacionDTO? {
+    override fun getInvitacion(hash: String): InvitacionDTO? {
         var invitacion: InvitacionDTO? = null
         transaction {
-            val invitacionDB = Invitacion.find { Invitaciones.email eq email }.singleOrNull()
+            val invitacionDB = Invitacion.find { Invitaciones.hash eq hash }.singleOrNull()
 
             if (invitacionDB != null) {
                 invitacion = invitacionDB.toInvitacionDTO()

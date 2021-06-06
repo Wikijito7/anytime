@@ -5,5 +5,6 @@ import es.wokis.data.dto.InvitacionDTO
 interface IInvitacionesRepository {
     fun crearInvitacion(invitacion: InvitacionDTO): InvitacionDTO?
     fun eliminarInvitacion(invitacion: InvitacionDTO): Boolean
-    fun getInvitacion(email: String) : InvitacionDTO?
+    fun getInvitacion(hash: String) : InvitacionDTO?
+
 }
