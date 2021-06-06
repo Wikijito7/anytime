@@ -19,7 +19,6 @@ import {ThemeProvider} from './theme/ThemeProvider';
 import Logout from './components/Logout';
 import Edit from './components/Edit';
 import TermCond from './components/TermCond';
-import Invitation from './components/Invitation';
 
 
 // TODO: Comprobar las cookies para saber si está logueado y pasarselo a la página que se encuentra para temas como
@@ -54,11 +53,11 @@ function App() {
                     </Route>
                     <Route path="/login">
                         <LogoNavbar/>
-                        <Login auth={auth} user={userInstance}/>
+                        <Login user={userInstance}/>
                     </Route>
                     <Route path="/register">
                         <LogoNavbar/>
-                        <Register auth={auth} user={userInstance}/>
+                        <Register user={userInstance}/>
                     </Route>
                     <Route path="/contacto">
                         <NavbarFull token={auth} />
@@ -88,8 +87,9 @@ function App() {
                         <TermCond />
                         <Footer />
                     </Route>
-                    <Route path="/invite">
-                        <Invitation />
+                    <Route path="/invite/:hash">
+                        <LogoNavbar />
+                        <Register user={userInstance} />
                     </Route>
                 </Switch>
             </Router>

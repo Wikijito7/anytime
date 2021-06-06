@@ -50,7 +50,7 @@ const Invitation = (props) => {
                 {loading && 
                     <div id="loading" className="container-column">
                         <div>
-                            <i class="far fa-clock fa-spin"></i>
+                            <i className="far fa-clock fa-spin"></i>
                         </div>
                         <h2>Enviando la invitación</h2>
                     </div>
@@ -59,7 +59,7 @@ const Invitation = (props) => {
                 {
                     sent && 
                     <div id="sent" className="container-column">
-                        <i class="far fa-check-circle"></i>
+                        <i className="far fa-check-circle"></i>
                         <h2>Enviada la invitación</h2>
                     </div>
                 }
@@ -67,7 +67,7 @@ const Invitation = (props) => {
                 {
                     noSent &&
                     <div id="nosent" className="container-column">
-                        <i class="far fa-times-circle"></i>
+                        <i className="far fa-times-circle"></i>
                         <h2>Ha ocurrido un error</h2>
                     </div>
                 }
@@ -81,7 +81,7 @@ const Invitation = (props) => {
                         <input type="text" onChange={(e) => setEmail(e.target.value)} value={email} />
                         <input type="submit" value="Invitar" />
                     </form>
-                    <span onClick={() => close()} id="cerrar" class="far fa-times-circle"></span>
+                    <span onClick={() => close()} id="cerrar" className="far fa-times-circle"></span>
                 </div>
             </div>
         </div>

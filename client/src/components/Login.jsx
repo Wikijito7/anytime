@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {AuthProvider} from '../auth/AuthProvider';
 
 // TODO: Hacer el código para conectar a la API y hacer Login real.
@@ -71,9 +71,6 @@ const Login = (props) => {
                     <br/>
                     <div className="submit">
                         <button>Acceder</button><br/>
-                        <span id="reg">
-                            ¿No tienes cuenta? <Link to="register">Regístrate</Link>
-                        </span>
                     </div>
                 </form>
             </section>

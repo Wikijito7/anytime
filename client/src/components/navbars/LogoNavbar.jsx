@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 const LogoNavbar = () => {
     return (
         <header>
-            <Link to="/" className="middle"><img src="./img/logo.png" alt="Logo de Anytime"/></Link>
+            <Link to="/" className="middle"><img src="/img/logo.png" alt="Logo de Anytime"/></Link>
         </header>
     )
 }

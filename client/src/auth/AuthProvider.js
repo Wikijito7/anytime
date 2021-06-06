@@ -56,7 +56,39 @@ const AuthProvider = () => {
         removeCookie("token");
     }
 
-    return {authToken, login, register, logout};
+    const getInvitation = async (hash) => {
+        let invitation;
+
+        await fetch(`${fetchBase}/invite/${hash}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: "cors"
+        }).then(response => response.json())
+        .then(data => invitation = data);
+
+
+        return invitation;
+    }
+
+    const removeInvitation = async (invitacionDTO) => {
+        let res;
+
+        await fetch(`${fetchBase}/invite`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(invitacionDTO),
+            mode: "cors"
+        }).then(response => res = response.status)
+
+
+        return res;
+    }
+
+    return { authToken, login, register, logout, getInvitation, removeInvitation };
 }
 
 
