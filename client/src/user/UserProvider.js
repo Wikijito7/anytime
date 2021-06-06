@@ -122,7 +122,45 @@ const UserProvider = () => {
         return response;
     }
 
-    return {getUser, refreshUser, getUserByUsername, fetchFichados, fichar, desfichar, clearUser, changeAvatar};
+    const deleteAvatar = async (token) => {
+        let response;
+
+        await fetch(`${fetchBase}/user/avatar`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            mode: "cors"
+        })
+        .then(res => response = res.status);
+
+        return response;
+    }
+
+    const invite = async (token, email, empresa) => {
+        let response;
+
+        await fetch(`${fetchBase}/email`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                "email": email,
+                "empresa": empresa
+            }),
+            mode: "cors"
+        })
+        .then(res => res.json())
+        .then(data => response = data);
+
+        return response;
+    }
+
+    return { getUser, refreshUser, getUserByUsername, fetchFichados, 
+        fichar, desfichar, clearUser, changeAvatar, deleteAvatar,
+        invite };
 }
 
 export {UserProvider};

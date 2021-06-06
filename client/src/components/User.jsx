@@ -29,7 +29,12 @@ const User = (props) => {
         const fetchUser = async () => {
             try {
                 const user = await userInstance.getUserByUsername(username, auth.authToken);
+                const other = await userInstance.getUser(auth.authToken);
                 setUser(user);
+
+                if (other.rol !== "ADMIN") {
+                    props.history.push("/app")
+                }
 
                 await fetchFichajes(user);
             } catch (error) {

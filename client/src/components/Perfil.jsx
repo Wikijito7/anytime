@@ -81,7 +81,7 @@ const Perfil = (props) => {
                         user && <div className="container-row">
                             <div id="img-cont" className="container-column">
                                 <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} alt="Avatar del usuario"/>
-                                <Link to="/app/editar" className="btn">Editar perfil</Link>
+                                <Link to="/app/editar" className="boton btn">Editar perfil</Link>
                             </div>
                             <div className="container-column">
 

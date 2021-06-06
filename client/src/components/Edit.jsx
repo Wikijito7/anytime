@@ -13,6 +13,15 @@ const Edit = (props) => {
     const [user, setUser] = useState(null)
     const [error, setError] = useState("");
 
+    const [email, setEmail] = useState("");
+    const [nombre, setNombre] = useState("");
+    const [apellidos, setApellidos] = useState("");
+    const [direccion, setDireccion] = useState("");
+
+    const [oldPass, setOldPass] = useState("");
+    const [newPass, setNewPass] = useState("");
+
+
     const light = useRef();
     const dark = useRef();
 
@@ -21,6 +30,13 @@ const Edit = (props) => {
         const fetchUser = async () => {
             try {
                 const user = await userInstance.getUser(auth.authToken);
+
+                setEmail(user.email)
+                setNombre(user.nombre)
+                setApellidos(user.apellidos)
+                setDireccion(user.direccion)
+
+
                 setUser(user);
             } catch (error) {
                 console.log(error);
@@ -31,16 +47,19 @@ const Edit = (props) => {
     }, [])
 
     const changeImage = async (e) => {
-        setUser(null);
-
         const response = await userInstance.changeAvatar(auth.authToken, e.target.files[0])
-        const user = await userInstance.refreshUser(auth.authToken);
-        
-        setUser(user);
+        if (response !== undefined) {
+            const user = await userInstance.refreshUser(auth.authToken);
+            setUser(user);
+        }
     }
 
-    const removeImage = () => {
-
+    const removeImage = async () => {
+        const response = await userInstance.deleteAvatar(auth.authToken)
+        if (response != undefined && response === 200) {
+            const user = await userInstance.refreshUser(auth.authToken);
+            setUser(user);
+        }
     }
 
     const editarPerfil = () => {
@@ -95,16 +114,16 @@ const Edit = (props) => {
                             <h3>Editar perfil</h3>
                             <form onSubmit={editarPerfil}>
                                 <label>Email</label>
-                                <input type="text" value={user.email} />
+                                <input type="text" onChange={(e) => setEmail(e.target.value)} value={email} />
 
                                 <label>Nombre</label>
-                                <input type="text" value={user.nombre} />
+                                <input type="text" onChange={(e) => setNombre(e.target.value)} value={nombre} />
 
                                 <label>Apellidos</label>
-                                <input type="text" value={user.apellidos} />
+                                <input type="text" onChange={(e) => setApellidos(e.target.value)} value={apellidos} />
 
                                 <label>Dirección</label>
-                                <input type="text" value={user.direccion} />
+                                <input type="text" onChange={(e) => setDireccion(e.target.value)} value={direccion} />
 
                                 <input type="submit" value="Cambiar" />
                             </form>
@@ -114,10 +133,10 @@ const Edit = (props) => {
                             {error.trim() && <p className="error">{error}</p>}
                             <form onSubmit={editarPerfil}>
                                 <label>Antigua contraseña</label>
-                                <input type="password" value="" />
+                                <input type="password" onChange={(e) => setOldPass(e.target.value)} value={oldPass} />
 
-                                <label>Nueva contrasñea</label>
-                                <input type="password" value="" />
+                                <label>Nueva contraseña</label>
+                                <input type="password" onChange={(e) => setNewPass(e.target.value)} value={newPass} />
 
                                 <input type="submit" value="Cambiar" />
                             </form>

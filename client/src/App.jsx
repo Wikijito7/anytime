@@ -19,6 +19,7 @@ import {ThemeProvider} from './theme/ThemeProvider';
 import Logout from './components/Logout';
 import Edit from './components/Edit';
 import TermCond from './components/TermCond';
+import Invitation from './components/Invitation';
 
 
 // TODO: Comprobar las cookies para saber si está logueado y pasarselo a la página que se encuentra para temas como
@@ -86,6 +87,9 @@ function App() {
                         <NavbarFull token={auth} />
                         <TermCond />
                         <Footer />
+                    </Route>
+                    <Route path="/invite">
+                        <Invitation />
                     </Route>
                 </Switch>
             </Router>

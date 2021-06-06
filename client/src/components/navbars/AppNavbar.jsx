@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {fetchBase} from '../../utils/Const'
 
 const AppNavbar = (props) => {    
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(null)
     const [open, setOpen] = useState(false);
 
 
@@ -34,7 +34,10 @@ const AppNavbar = (props) => {
         <div>
             {user && 
                 <header id="header-app">
-                    <Link to="/app/admin" id="admin"><i className="fas fa-cogs"></i></Link>
+                    {user.rol === "ADMIN" ? 
+                        <Link to="/app/admin" id="admin"><i className="fas fa-cogs"></i></Link> :
+                        ""
+                    }
                     <div id="imagen-app">
                         <Link to="/app"><img src="/img/logo.png" alt="Logo de Anytime" /></Link>
                     </div>

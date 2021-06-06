@@ -28,6 +28,10 @@ body {
     background: unset;
   }
 
+  #modal-invite {
+    background: $black;
+  }
+
   .iconos {
     .fa-twitter, .fa-phone, .fa-envelope {
       color: $white;
@@ -192,15 +196,14 @@ done. */
   padding: 1em;
   background: #fdfdfdaa;
   border-radius: 0.5em;
+}
 
-  .error {
+.error {
   color: $red;
   background: $lightred;
   border-radius: 0.25em;
   margin: 0.5em 0;
   padding: 0.75em;
-  }
-
 }
 
 #term-cond {
@@ -675,6 +678,7 @@ table {
 
   h1 {
     width: fit-content;
+    text-align: left;
     margin: 1rem;
   }
 
@@ -687,7 +691,7 @@ table {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  width: fit-content;
+  width: 100%;
   max-width: 1250px;
   margin: auto;
 
@@ -856,6 +860,97 @@ table {
   }
 }
 
+#modal-container {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1; 
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: transparentize($dark, 0.8);
+}
+
+#modal-invite {
+  width: fit-content;
+  max-height: fit-content;
+  margin: auto;
+  flex: unset;
+  background: $white;
+  padding: 1em;
+  border-radius: 0.5em;
+  position: relative;
+
+  #cerrar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1.2em 1em;
+    font-size: 1.3em;
+    color: $primary-color;
+    cursor: pointer;
+
+    &:hover {
+      color: $primary-color-hover;
+    }
+  }
+
+  .container-column {
+    flex: inherit;
+    height: fit-content;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  #loading, #sent, #nosent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: inherit;
+    border-radius: inherit;
+    
+    h2 {
+      margin-top: 1em;
+    }
+
+    .fa-check-circle, .fa-clock, .fa-times-circle {
+      color: $primary-color;
+      font-size: 2em;
+    }
+  }
+
+}
+
+#genloading {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1; 
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    margin: auto;
+    color: $primary-color;
+    font-size: 3em;
+  }
+}
+
 /* FOOTER */
 
 footer {
@@ -980,6 +1075,16 @@ footer {
       flex-flow: row nowrap;
       max-width: unset;
 
+    }
+  }
+
+  #editar {
+    #theme {
+      margin: 1em 0;
+      .container-row {
+        flex-flow: row nowrap;
+        margin: 1em 0;
+      }
     }
   }
 }

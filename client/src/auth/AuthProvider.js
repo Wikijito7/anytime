@@ -7,6 +7,10 @@ const AuthProvider = () => {
 
     const authToken = cookies.token
 
+    const updateToken = (token) => {
+        setCookie("token", token, { expires: cookieExpire });
+    }
+
     const login = async (username, password) => {
         let token;
 
