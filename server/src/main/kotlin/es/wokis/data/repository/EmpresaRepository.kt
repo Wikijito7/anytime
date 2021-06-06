@@ -1,7 +1,6 @@
 package es.wokis.data.repository
 
 import es.wokis.data.dto.EmpresaDTO
-import es.wokis.data.dto.UserDTO
 import es.wokis.data.models.Empresa
 import es.wokis.data.models.Empresas
 import es.wokis.data.repository.interfaces.IEmpresaRepository
@@ -59,14 +58,6 @@ class EmpresaRepository : IEmpresaRepository {
             Empresas.deleteWhere { Empresas.id eq empresa.id }
 
             return true
-        }
-
-        return false
-    }
-
-    override fun eliminarTrabajador(user: UserDTO): Boolean {
-        transaction {
-
         }
 
         return false

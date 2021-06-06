@@ -69,4 +69,14 @@ class UserRepository : IUserRespository {
             commit()
         }
     }
+
+    override fun removeUser(username: String): String? {
+        return transaction {
+            val userDB = User.find { Users.username eq username }.firstOrNull() ?: return@transaction null
+
+            userDB.delete()
+
+            username
+        }
+    }
 }

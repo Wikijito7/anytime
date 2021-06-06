@@ -9,7 +9,7 @@ fun Empresa.toEmpresaDTO(): EmpresaDTO {
 }
 
 fun User.toUserDTO(): UserDTO {
-    return UserDTO(id.value, username, email, nombre, apellidos, direccion, avatar, empresa.toEmpresaDTO())
+    return UserDTO(id.value, username, email, nombre, apellidos, direccion, avatar, rol,empresa.toEmpresaDTO())
 }
 
 fun User.toLoginUserDTO(): LoginUserDTO {
@@ -18,7 +18,7 @@ fun User.toLoginUserDTO(): LoginUserDTO {
 
 // without empresa
 fun User.toUserDTOWE(): UserDTO {
-    return UserDTO(id.value, username, email, nombre, apellidos, direccion, avatar, null)
+    return UserDTO(id.value, username, email, nombre, apellidos, direccion, avatar, rol, null)
 }
 
 fun HorasFichadasObj.toHorasFichadasDTO(): HorasFichadasDTO {

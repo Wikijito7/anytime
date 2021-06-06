@@ -14,6 +14,7 @@ object Users: IntIdTable() {
     val apellidos = varchar("apellidos", 60).nullable()
     val direccion = varchar("direccion", 100).nullable()
     val avatar = varchar("avatar", 255).default("no-image")
+    val rol = enumeration("rol", Role::class).default(Role.USER)
     val codigoEmpresa = reference("id_empresa", Empresas, ReferenceOption.CASCADE)
 }
 
@@ -26,5 +27,11 @@ class User(id: EntityID<Int>) : IntEntity(id) {
     var apellidos by Users.apellidos
     var direccion by Users.direccion
     var avatar by Users.avatar
+    var rol by Users.rol
     var empresa by Empresa referencedOn Users.codigoEmpresa
+}
+
+enum class Role(val rolName: String) {
+    USER("user"),
+    ADMIN("admin")
 }

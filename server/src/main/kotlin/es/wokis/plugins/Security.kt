@@ -36,7 +36,7 @@ fun Application.configureSecurity() {
                 }
 
                 if (user != null && password == user.password) {
-                    LoginUserDTO(user.username, user.password)
+                    LoginUserDTO(user.username, user.password, user.rol)
                 } else {
                     null
                 }

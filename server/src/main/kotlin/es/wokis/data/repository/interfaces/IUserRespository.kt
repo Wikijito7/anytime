@@ -9,4 +9,5 @@ interface IUserRespository {
     fun register(user: RegisterUserDTO): String?
     fun getUser(username: String): UserDTO?
     fun changeAvatar(username: String, avatar: String)
+    fun removeUser(username: String): String?
 }

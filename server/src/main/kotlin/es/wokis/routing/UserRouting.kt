@@ -1,5 +1,6 @@
 package es.wokis.routing
 
+import es.wokis.data.models.Role
 import es.wokis.data.repository.UserRepository
 import es.wokis.services.ImageService
 import es.wokis.utils.user
@@ -51,6 +52,11 @@ fun Route.userRouting(di: DI) {
                     callUser?.let { user ->
                         multipartData.forEachPart {
                             if (it is PartData.FileItem) {
+                                if (!it.contentType.toString().startsWith("image")) {
+                                    call.respond(HttpStatusCode.BadRequest)
+                                    return@forEachPart
+                                }
+
                                 val avatarPath: String = imageService.insertAvatar(user.username, it)
                                 if (avatarPath.isNotBlank()) {
                                     userRepository.changeAvatar(user.username, avatarPath)
@@ -63,21 +69,55 @@ fun Route.userRouting(di: DI) {
                 }
 
                 delete {
+                    val callUser = call.user
 
+                    callUser?.let {
+                        userRepository.changeAvatar(it.username, "no-image")
+                        call.respondFile(imageService.getAvatar("no-image"))
+                    }
                 }
             }
 
             route("/{username}") {
+
                 get {
                     val username = call.parameters["username"]
+                    val callUser = userRepository.getUser(call.user!!.username)
 
-//                if (callUser != null && (username == callUser.username || callUser.role == Roles.ADMIN))
+                    if (callUser == null || callUser.rol != Role.ADMIN) {
+                        call.respond(HttpStatusCode.Unauthorized)
+                        return@get
+                    }
 
                     if (username.isNullOrBlank()) {
                         call.respond(HttpStatusCode.BadRequest, "Username must be given.")
 
                     } else {
                         val user = userRepository.getUser(username)
+
+                        if (user != null) {
+                            call.respond(user)
+
+                        } else {
+                            call.respond(HttpStatusCode.NotFound, username)
+                        }
+                    }
+                }
+
+                delete {
+                    val callUser = userRepository.getUser(call.user!!.username)
+                    val username = call.parameters["username"]
+
+                    if (callUser == null || callUser.rol != Role.ADMIN) {
+                        call.respond(HttpStatusCode.Unauthorized)
+                        return@delete
+                    }
+
+                    if (username.isNullOrBlank()) {
+                        call.respond(HttpStatusCode.BadRequest, "Username must be given.")
+
+                    } else {
+                        val user = userRepository.removeUser(username)
 
                         if (user != null) {
                             call.respond(user)
