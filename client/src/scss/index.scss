@@ -624,6 +624,26 @@ table {
       align-items: center;
     }
 
+    #role {
+      margin: 0;
+      align-items: center;
+      
+      select {
+        font-size: 1.05em;
+      }
+      
+      span {
+        margin: unset;
+        cursor: pointer;
+        color: $primary-color;
+        margin-left: 1em;
+
+        &:hover {
+          color: $primary-color-hover;
+        }
+      }   
+    }
+
     #other-data {
       width: 100%;
       justify-content: space-between;
@@ -1066,8 +1086,12 @@ footer {
           margin: 0 auto;
           padding: 0;
         }
+
       }
+    
     }
+
+    
   }
 
   #cont-admin {
@@ -1274,6 +1298,10 @@ footer {
       flex-flow: column;
     }
     .container-column {
+      #role {
+        flex-flow: row;
+      }
+
       #other-data {
         width: 100%;
         margin: 0;

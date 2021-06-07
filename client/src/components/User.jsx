@@ -22,6 +22,8 @@ const User = (props) => {
     const [fichajes, setFichajes] = useState(null);
     const [selected, setSelected] = useState("");
 
+    const [editing, setEditing] = useState(false)
+
     const userInstance = props.user;
     const auth = AuthProvider();
 
@@ -79,11 +81,26 @@ const User = (props) => {
         setFichajes(lista);
     }
 
-    const editar = () => {
+    const editar = async () => {
 
     }
 
-    const borrar = () => {
+    const editarRole = async (role) => {
+        const res = await userInstance.editRole(auth.authToken, user.username, role.toUpperCase());
+
+        if (res === 200) {
+            const user = await userInstance.refreshUser(auth.authToken);
+            setUser(user);
+        }
+        
+        setEditing(false);
+    }
+    
+    const borrar = async () => {
+
+    }
+
+    const borrarPerfil = async () => {
 
     }
 
@@ -125,6 +142,28 @@ const User = (props) => {
                                         user.direccion !== undefined ? <div className="container-column">
                                             <p className="label">Dirección</p>
                                             <p id="userDireccion">{user.direccion}</p>
+                                        </div> : ""
+                                    }
+                                    {
+                                        user.rol !== undefined ? <div className="container-column">
+                                            <p className="label">Role</p>
+                                            <div id="role" className="container-row">
+                                                {
+                                                    editing ?
+                                                    <select onChange={(e) => editarRole(e.target.value)}>
+                                                        <option value="admin">Admin</option>
+                                                        <option value="user">User</option>
+                                                    </select>:
+                                                    <p id="userDireccion">{user.rol}</p>    
+                                                }
+                                                <span>
+                                                    { 
+                                                        editing ? 
+                                                        "" : 
+                                                        <i onClick={() => setEditing(true)} className="fas fa-cog"></i> 
+                                                    }
+                                                </span>
+                                            </div>
                                         </div> : ""
                                     }
                                 </div>

@@ -158,9 +158,41 @@ const UserProvider = () => {
         return response;
     }
 
+    const editRole = async (token, username, role) => {
+        let response;
+
+        await fetch(`${fetchBase}/user/${username}/role`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: role,
+            mode: "cors"
+        })
+        .then(res => response = res.status);
+
+        return response;
+    }
+
+    const deleteUser = async (username, token, role) => {
+        let response;
+
+        await fetch(`${fetchBase}/user/${username}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            mode: "cors"
+        })
+        .then(res => response = res.status);
+
+        return response;
+    }
+
     return { getUser, refreshUser, getUserByUsername, fetchFichados, 
         fichar, desfichar, clearUser, changeAvatar, deleteAvatar,
-        invite };
+        invite, editRole, deleteUser };
 }
 
 export {UserProvider};
