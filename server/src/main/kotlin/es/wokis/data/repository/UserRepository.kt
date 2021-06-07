@@ -4,6 +4,7 @@ import es.wokis.data.dto.LoginUserDTO
 import es.wokis.data.dto.RegisterUserDTO
 import es.wokis.data.dto.UserDTO
 import es.wokis.data.models.Empresa
+import es.wokis.data.models.Role
 import es.wokis.data.models.User
 import es.wokis.data.models.Users
 import es.wokis.data.repository.interfaces.IUserRespository
@@ -77,6 +78,16 @@ class UserRepository : IUserRespository {
             userDB.delete()
 
             username
+        }
+    }
+
+    override fun changeRole(username: String, role: Role): UserDTO? {
+        return transaction {
+            val userDB = User.find { Users.username eq username }.singleOrNull() ?: return@transaction null
+            userDB.rol = role
+            commit()
+
+            userDB.toUserDTO()
         }
     }
 }

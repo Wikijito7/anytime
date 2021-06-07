@@ -79,7 +79,6 @@ fun Route.userRouting(di: DI) {
             }
 
             route("/{username}") {
-
                 get {
                     val username = call.parameters["username"]
                     val callUser = userRepository.getUser(call.user!!.username)
@@ -124,6 +123,32 @@ fun Route.userRouting(di: DI) {
 
                         } else {
                             call.respond(HttpStatusCode.NotFound, username)
+                        }
+                    }
+                }
+
+                put("/role") {
+                    val role = call.receive<Role>()
+                    val callUser = call.user
+                    val username = call.parameters["username"]
+
+                    callUser?.let { user ->
+                        if (user.role != Role.ADMIN) {
+                            call.respond(HttpStatusCode.Unauthorized)
+                            return@put
+                        }
+
+                        if (username.isNullOrBlank()) {
+                            call.respond(HttpStatusCode.BadRequest)
+                            return@put
+                        }
+
+                        val userDTO = userRepository.changeRole(username, role)
+
+                        if (userDTO != null) {
+                            call.respond(userDTO)
+                        } else {
+                            call.respond(HttpStatusCode.NotFound)
                         }
                     }
                 }

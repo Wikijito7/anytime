@@ -52,7 +52,26 @@ class HorasFichadasRepository : IHorasFichadasRepository {
         return fichajesList
     }
 
-    override fun modificarDato(old: HorasFichadasDTO, new: HorasFichadasDTO): HorasFichadasDTO {
-        TODO("Not yet implemented")
+    override fun modificarDato(old: HorasFichadasDTO, new: HorasFichadasDTO): HorasFichadasDTO? {
+        return transaction {
+            val horaFichada = HorasFichadasObj.findById(old.id) ?: return@transaction null
+
+            horaFichada.let {
+                it.entrada = new.entrada
+                it.salida = new.salida
+            }
+            commit()
+
+            horaFichada.toHorasFichadasDTO()
+        }
+    }
+
+    override fun eliminarDato(horasFichadasDTO: HorasFichadasDTO): Boolean {
+        return transaction {
+            val horaFichada = HorasFichadasObj.findById(horasFichadasDTO.id) ?: return@transaction false
+
+            horaFichada.delete()
+            true
+        }
     }
 }
