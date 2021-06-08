@@ -17,6 +17,8 @@ const EditFichajeModal = (props) => {
                 setSalida(timeToString(fichajeDTO.salida))
             }
         }
+
+        setupModal();
     }, [])
 
     const editarFichaje = async (e) => {
@@ -24,28 +26,46 @@ const EditFichajeModal = (props) => {
         setError("")
 
         if (!entrada.trim()) {
-            setError("El campo de entrada es obligatorio.")
+            setError("El campo de entrada es obligatorio.");
             return
         }
         
         if (!salida.trim()) {
             fichajeDTO.salida = null;
         } else {
-            const { hora, minutos } = salida.split(":")
+            const salidaArray = salida.split(":");
 
-            fichajeDTO.salida.time.hour = parseInt(hora)
-            fichajeDTO.salida.time.minute = parseInt(minutos)
-            fichajeDTO.salida.time.second = 0
+            if (fichajeDTO.salida === undefined) {
+                Object.defineProperty(fichajeDTO, 'salida', { 
+                    value: {
+                        "date": fichajeDTO.entrada.date,
+                         "time": {
+                                "hour": parseInt(salidaArray[0]),
+                                "minute": parseInt(salidaArray[1]),
+                                "second": 0
+                            }
+                    }, 
+
+                    writable: true,
+                    configurable: true,
+                    enumerable: true
+                });
+            } else {
+                fichajeDTO.salida.time.hour = parseInt(salidaArray[0]);
+                fichajeDTO.salida.time.minute = parseInt(salidaArray[1]);
+                fichajeDTO.salida.time.second = 0;
+            }
+
         }
+        
+        const entradaArray = entrada.split(":");
 
-        const { hora, minutos } = entrada.split(":")
-
-        fichajeDTO.entrada.time.hour = parseInt(hora)
-        fichajeDTO.entrada.time.minute = parseInt(minutos)
-        fichajeDTO.entrada.time.second = 0
+        fichajeDTO.entrada.time.hour = parseInt(entradaArray[0]);
+        fichajeDTO.entrada.time.minute = parseInt(entradaArray[1]);
+        fichajeDTO.entrada.time.second = 0;
 
 
-        const response = await userInstance.editFichaje(fichajeDTO, token)
+        const response = await userInstance.editFichaje(fichajeDTO, token);
 
         if (response === 200) {
             update();

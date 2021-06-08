@@ -19,7 +19,7 @@ const getHoras = (ficharDTO) => {
     const entradaFecha = moment(datetimeToString(entrada), "YYYY/MM/DD hh:mm:ss");
     let salidaFecha;
 
-    if (salida !== undefined) {
+    if (salida !== undefined && salida !== null) {
         salidaFecha = moment(datetimeToString(salida), "YYYY/MM/DD hh:mm:ss");
     } else {
         salidaFecha = moment();

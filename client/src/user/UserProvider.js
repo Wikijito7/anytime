@@ -175,7 +175,7 @@ const UserProvider = () => {
         return response;
     }
 
-    const deleteUser = async (username, token, role) => {
+    const deleteUser = async (username, token) => {
         let response;
 
         await fetch(`${fetchBase}/user/${username}`, {
@@ -196,6 +196,7 @@ const UserProvider = () => {
         await fetch(`${fetchBase}/fichaje`, {
             method: 'DELETE',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(fichajeDTO),
@@ -212,6 +213,7 @@ const UserProvider = () => {
         await fetch(`${fetchBase}/fichaje`, {
             method: 'PUT',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(fichajeDTO),
@@ -222,10 +224,31 @@ const UserProvider = () => {
         return response;
     }
 
+    const editUser = async (user, token) => {
+        let response;
+
+        await fetch(`${fetchBase}/user`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(user),
+            mode: "cors"
+        })
+            .then(res => response = res.status);
+
+        return response;
+    }
+
+    const changePass = async (pass, token) => {
+        // TODO: Implementar
+    }
 
     return { getUser, refreshUser, getUserByUsername, fetchFichados, 
         fichar, desfichar, clearUser, changeAvatar, deleteAvatar,
-        invite, editRole, deleteUser, deleteFichaje, editFichaje };
+        invite, editRole, deleteUser, deleteFichaje, editFichaje,
+        editUser };
 }
 
 export {UserProvider};

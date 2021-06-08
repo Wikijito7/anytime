@@ -7,11 +7,14 @@ const Contacto = () => {
             <section id="informacion">
                 <h1>Sobre nosotros</h1>
                 <img src="./img/logo2.png" alt="Logo de Anytime"/>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>
+                    Anytime es una solución para las empresas para controlar las jornadas laborales de sus 
+                    trabajadores. La aplicación ha sido desarrollada por el pequeño equipo que compone Anytime.
+                    Nuestra visión es tener una aplicación unificada, brindando la misma experiencia de uso 
+                    sin importar el dispositivo que se usa, brindando así una disponibilidad que se adapta a 
+                    las necesidades del usuario.
+
+                </p>
 
                 <div id="contactanos">
                     <h2>Contáctanos</h2>

@@ -111,7 +111,7 @@ const User = (props) => {
         const res = await userInstance.editRole(auth.authToken, user.username, role.toUpperCase());
 
         if (res === 200) {
-            const user = await userInstance.refreshUser(auth.authToken);
+            const user = await userInstance.getUserByUsername(username, auth.authToken);
             setUser(user);
         }
         
@@ -119,11 +119,25 @@ const User = (props) => {
     }
     
     const borrar = async (fichajeDTO) => {
-        console.log(`username: ${fichajeDTO}`);
+        const res = await userInstance.deleteFichaje(fichajeDTO, auth.authToken);
+
+        if (res === 200) {
+            setRemoveFicharMode(false);
+            updateScreen();
+        }
+
     }
 
     const borrarPerfil = async (username) => {
-        console.log(`username: ${username}`);
+        const res = await userInstance.deleteUser(username, auth.authToken);
+
+        if (res === 200) {
+            setRemoveUserMode(false);
+            await userInstance.refreshUser(auth.authToken);
+            props.history.push("/app/admin")
+        }
+        
+        setRemoveUserMode(false)
     }
 
     return (
@@ -151,7 +165,7 @@ const User = (props) => {
 
                             <div id="img-cont" className="container-column">
                                 <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} alt="Avatar del usuario"/>
-                                <button className="btn danger">Eliminar usuario</button>
+                                <button className="btn danger" onClick={() => setRemoveUserMode(true)}>Eliminar usuario</button>
                             </div>
                             <div className="container-column">
 
@@ -189,15 +203,15 @@ const User = (props) => {
                                                 {
                                                     editingRole ?
                                                     <select onChange={(e) => editarRole(e.target.value)}>
-                                                        <option value="admin">Admin</option>
-                                                        <option value="user">User</option>
+                                                        <option value="admin" selected={user.rol === "ADMIN"}>Admin</option>
+                                                        <option value="user" selected={user.rol === "USER"}>User</option>
                                                     </select>:
                                                     <p id="userDireccion">{user.rol}</p>    
                                                 }
                                                 <span>
                                                     { 
                                                         editingRole ? 
-                                                        "" : 
+                                                        <i onClick={() => setEditingRole(false)} className="fas fa-times-circle"></i>  :
                                                         <i onClick={() => setEditingRole(true)} className="fas fa-cog"></i> 
                                                     }
                                                 </span>
@@ -230,7 +244,7 @@ const User = (props) => {
                                     <tr key={index}>
                                         <td data="Fecha">{drawDate(fichaje.entrada)}</td>
                                         <td data="Hora de entrada">{timeToString(fichaje.entrada)}</td>
-                                        <td data="Hora de salida">{fichaje.salida !== undefined ? timeToString(fichaje.salida) : ""}</td>
+                                        <td data="Hora de salida">{fichaje.salida !== undefined && fichaje.salida !== null ? timeToString(fichaje.salida) : ""}</td>
                                         <td data="Tiempo fichado">{getHorasToString(getHoras(fichaje))}</td>
                                         <td id="opc-cont">
                                             <div className="container-row">

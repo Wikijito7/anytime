@@ -21,7 +21,6 @@ const Edit = (props) => {
     const [oldPass, setOldPass] = useState("");
     const [newPass, setNewPass] = useState("");
 
-
     const light = useRef();
     const dark = useRef();
 
@@ -62,8 +61,60 @@ const Edit = (props) => {
         }
     }
 
-    const editarPerfil = () => {
+    const editarPerfil = async (e) => {
+        e.preventDefault();
+        setError("");
 
+        if (!email.trim()) {
+            setError("El email no puede estar vacío.")
+            return
+        }
+        
+        const userEdited = user;
+        userEdited.email = email
+
+        if (userEdited.nombre === undefined) {
+            Object.defineProperty(userEdited, "nombre", {
+                value: nombre === "" ? null : nombre,
+                writable: true,
+                configurable: true,
+                enumerable: true
+            });
+
+        } else {
+            userEdited.nombre = nombre === "" ? null : nombre
+        }
+
+        if (userEdited.apellidos === undefined) {
+            Object.defineProperty(userEdited, "apellidos", {
+                value: apellidos === "" ? null : apellidos,
+                writable: true,
+                configurable: true,
+                enumerable: true
+            });
+
+        } else {
+            userEdited.apellidos = apellidos === "" ? null : apellidos
+        }
+
+        if (userEdited.direccion === undefined) {
+            Object.defineProperty(userEdited, "direccion", {
+                value: direccion === "" ? null : direccion,
+                writable: true,
+                configurable: true,
+                enumerable: true
+            });
+
+        } else {
+            userEdited.direccion = direccion === "" ? null : direccion
+        }
+
+        const response = await userInstance.editUser(userEdited, auth.authToken)
+
+        if (response != undefined && response === 200) {
+            const user = await userInstance.refreshUser(auth.authToken);
+            setUser(user);
+        }
     }
 
     const changeTheme = (theme) => {
@@ -113,6 +164,7 @@ const Edit = (props) => {
                         <article id="editar-perfil">
                             <h3>Editar perfil</h3>
                             <form onSubmit={editarPerfil}>
+                                {error.trim() && <p className="error">{error}</p>}
                                 <label>Email</label>
                                 <input type="text" onChange={(e) => setEmail(e.target.value)} value={email} />
 
