@@ -1,5 +1,6 @@
 package es.wokis.routing
 
+import es.wokis.data.dto.UserDTO
 import es.wokis.data.models.Role
 import es.wokis.data.repository.UserRepository
 import es.wokis.services.ImageService
@@ -41,6 +42,16 @@ fun Route.userRouting(di: DI) {
                     } else {
                         call.respond(HttpStatusCode.NotFound)
                     }
+                }
+            }
+
+            put {
+                val userDTO = call.receive<UserDTO>()
+
+                if (userRepository.updateUser(userDTO) != null) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    call.respond(HttpStatusCode.BadRequest)
                 }
             }
 

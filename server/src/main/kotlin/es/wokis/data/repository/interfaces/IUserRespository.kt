@@ -12,4 +12,5 @@ interface IUserRespository {
     fun changeAvatar(username: String, avatar: String)
     fun removeUser(username: String): String?
     fun changeRole(username: String, role: Role): UserDTO?
+    fun updateUser(userDTO: UserDTO): UserDTO?
 }

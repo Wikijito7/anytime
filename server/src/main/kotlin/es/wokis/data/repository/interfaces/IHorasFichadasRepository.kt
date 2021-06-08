@@ -8,6 +8,6 @@ interface IHorasFichadasRepository {
     fun fichar(user: LoginUserDTO): HorasFichadasDTO?
     fun desfichar(horasFichadasDTO: HorasFichadasDTO): HorasFichadasDTO?
     fun horasFichadas(user: UserDTO): List<HorasFichadasDTO>
-    fun modificarDato(old: HorasFichadasDTO, new: HorasFichadasDTO): HorasFichadasDTO?
+    fun modificarDato(new: HorasFichadasDTO): HorasFichadasDTO?
     fun eliminarDato(horasFichadasDTO: HorasFichadasDTO): Boolean
 }

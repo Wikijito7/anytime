@@ -12,6 +12,7 @@ import org.kodein.di.instance
 fun Route.empresaRouting(di: DI) {
     val empresaRepository: EmpresaRepository by di.instance("empresaRepo")
     val imageService: ImageService by di.instance("imageService")
+    // TODO: 8/6/21 Acabar de implementar esto
 
     route("/empresa") {
         get("{nombre}") {

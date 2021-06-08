@@ -17,6 +17,27 @@ fun Route.ficharRouting(di: DI) {
     val userRepository: UserRepository by di.instance("userRepo")
     val horasFichadasRepository: HorasFichadasRepository by di.instance("horasFichadasRepo")
     authenticate {
+        route("/fichaje") {
+            put {
+                val fichajeDTO = call.receive<HorasFichadasDTO>()
+
+                if (horasFichadasRepository.modificarDato(fichajeDTO) != null) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    call.respond(HttpStatusCode.BadRequest)
+                }
+            }
+
+            delete {
+                val fichajeDTO = call.receive<HorasFichadasDTO>()
+
+                if (horasFichadasRepository.eliminarDato(fichajeDTO)) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    call.respond(HttpStatusCode.BadRequest)
+                }
+            }
+        }
         get("/fichaje/{username}") {
             val username = call.parameters["username"]
 

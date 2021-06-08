@@ -90,4 +90,20 @@ class UserRepository : IUserRespository {
             userDB.toUserDTO()
         }
     }
+
+    override fun updateUser(userDTO: UserDTO): UserDTO? {
+        return transaction {
+            val user = User.findById(userDTO.id) ?: return@transaction null
+
+            user.let {
+                it.email = userDTO.email
+                it.nombre = userDTO.nombre
+                it.apellidos = userDTO.apellidos
+                it.direccion = userDTO.direccion
+            }
+            commit()
+
+            user.toUserDTO()
+        }
+    }
 }
