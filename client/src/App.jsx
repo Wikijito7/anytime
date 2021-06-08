@@ -19,6 +19,7 @@ import {ThemeProvider} from './theme/ThemeProvider';
 import Logout from './components/Logout';
 import Edit from './components/Edit';
 import TermCond from './components/TermCond';
+import EditFichajeModal from './components/EditFichajeModal';
 
 
 // TODO: Comprobar las cookies para saber si está logueado y pasarselo a la página que se encuentra para temas como
@@ -90,6 +91,9 @@ function App() {
                     <Route path="/invite/:hash">
                         <LogoNavbar />
                         <Register user={userInstance} />
+                    </Route>
+                    <Route path="/test">
+                        <EditFichajeModal />
                     </Route>
                 </Switch>
             </Router>

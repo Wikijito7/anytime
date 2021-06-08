@@ -13,6 +13,8 @@ import {
     timeToString
 } from '../utils/DateUtils'
 import {fetchBase} from '../utils/Const'
+import EditFichajeModal from './EditFichajeModal';
+import ConfirmModal from './ConfirmModal';
 
 
 const User = (props) => {
@@ -22,7 +24,12 @@ const User = (props) => {
     const [fichajes, setFichajes] = useState(null);
     const [selected, setSelected] = useState("");
 
-    const [editing, setEditing] = useState(false)
+    const [editingRole, setEditingRole] = useState(false);
+    const [removeFicharMode, setRemoveFicharMode] = useState(false);
+    const [removeUserMode, setRemoveUserMode] = useState(false);
+    const [editingFichaje, setEditingFichaje] = useState(false);
+
+    const [fichajeDTO, setFichajeDTO] = useState(null);
 
     const userInstance = props.user;
     const auth = AuthProvider();
@@ -81,8 +88,23 @@ const User = (props) => {
         setFichajes(lista);
     }
 
-    const editar = async () => {
+    const updateScreen = async () => {
+        switch (selected) {
+            case "hoy":
+                await hoy();
+                break;
+            case "mes":
+                await mes();
+                break;
+            default:
+                await semana();
+                break;
+        }
+    }
 
+    const editar = (fichaje) => {
+        setEditingFichaje(true);
+        setFichajeDTO(fichaje)
     }
 
     const editarRole = async (role) => {
@@ -93,15 +115,15 @@ const User = (props) => {
             setUser(user);
         }
         
-        setEditing(false);
+        setEditingRole(false);
     }
     
-    const borrar = async () => {
-
+    const borrar = async (fichajeDTO) => {
+        console.log(`username: ${fichajeDTO}`);
     }
 
-    const borrarPerfil = async () => {
-
+    const borrarPerfil = async (username) => {
+        console.log(`username: ${username}`);
     }
 
     return (
@@ -111,6 +133,22 @@ const User = (props) => {
                 <section id="perfil-cont">
                     {
                         user && <div className="container-row">
+
+                            {
+                                editingFichaje && 
+                                <EditFichajeModal token={auth.authToken} fichajeDTO={fichajeDTO} userInstance={userInstance} close={() => setEditingFichaje(false)} update={() => updateScreen()}/>
+                            }
+
+                            {
+                                removeFicharMode &&
+                                <ConfirmModal remove={() => borrar(fichajeDTO)} close={() => setRemoveFicharMode(false)} />
+                            }
+
+                            {
+                                removeUserMode &&
+                                <ConfirmModal remove={() => borrarPerfil(user.username)} close={() => setRemoveUserMode(false)} />
+                            }
+
                             <div id="img-cont" className="container-column">
                                 <img id="userImage" src={`${fetchBase}/user/${user.username}/avatar`} alt="Avatar del usuario"/>
                                 <button className="btn danger">Eliminar usuario</button>
@@ -149,7 +187,7 @@ const User = (props) => {
                                             <p className="label">Role</p>
                                             <div id="role" className="container-row">
                                                 {
-                                                    editing ?
+                                                    editingRole ?
                                                     <select onChange={(e) => editarRole(e.target.value)}>
                                                         <option value="admin">Admin</option>
                                                         <option value="user">User</option>
@@ -158,9 +196,9 @@ const User = (props) => {
                                                 }
                                                 <span>
                                                     { 
-                                                        editing ? 
+                                                        editingRole ? 
                                                         "" : 
-                                                        <i onClick={() => setEditing(true)} className="fas fa-cog"></i> 
+                                                        <i onClick={() => setEditingRole(true)} className="fas fa-cog"></i> 
                                                     }
                                                 </span>
                                             </div>
@@ -196,8 +234,8 @@ const User = (props) => {
                                         <td data="Tiempo fichado">{getHorasToString(getHoras(fichaje))}</td>
                                         <td id="opc-cont">
                                             <div className="container-row">
-                                                <a className="opc-fichar" onClick={() => editar(fichaje)}><i className="fas fa-edit"></i></a>
-                                                <a className="opc-fichar" onClick={() => borrar(fichaje)}><i className="fas fa-trash-alt"></i></a>
+                                                <a className="opc-fichar" onClick={() => { setEditingFichaje(true); setFichajeDTO(fichaje) }}><i className="fas fa-edit"></i></a>
+                                                <a className="opc-fichar" onClick={() => { setRemoveFicharMode(true); setFichajeDTO(fichaje) }}><i className="fas fa-trash-alt"></i></a>
                                             </div>
                                         </td>
                                     </tr>

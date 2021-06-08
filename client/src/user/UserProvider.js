@@ -190,9 +190,42 @@ const UserProvider = () => {
         return response;
     }
 
+    const deleteFichaje = async (fichajeDTO, token) => {
+        let response;
+
+        await fetch(`${fetchBase}/fichaje`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(fichajeDTO),
+            mode: "cors"
+        })
+        .then(res => response = res.status);
+
+        return response;
+    }
+
+    const editFichaje = async (fichajeDTO, token) => {
+        let response;
+
+        await fetch(`${fetchBase}/fichaje`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(fichajeDTO),
+            mode: "cors"
+        })
+        .then(res => response = res.status);
+
+        return response;
+    }
+
+
     return { getUser, refreshUser, getUserByUsername, fetchFichados, 
         fichar, desfichar, clearUser, changeAvatar, deleteAvatar,
-        invite, editRole, deleteUser };
+        invite, editRole, deleteUser, deleteFichaje, editFichaje };
 }
 
 export {UserProvider};
