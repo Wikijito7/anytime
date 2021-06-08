@@ -184,13 +184,14 @@ const Edit = (props) => {
                             <h3>Cambiar contraseña</h3>
                             {error.trim() && <p className="error">{error}</p>}
                             <form onSubmit={editarPerfil}>
+                                {/* Disabled, no hay tiempo para acabarlo :( */}
                                 <label>Antigua contraseña</label>
-                                <input type="password" onChange={(e) => setOldPass(e.target.value)} value={oldPass} />
+                                <input type="password" disabled onChange={(e) => setOldPass(e.target.value)} value={oldPass} />
 
                                 <label>Nueva contraseña</label>
-                                <input type="password" onChange={(e) => setNewPass(e.target.value)} value={newPass} />
+                                <input type="password" disabled onChange={(e) => setNewPass(e.target.value)} value={newPass} />
 
-                                <input type="submit" value="Cambiar" />
+                                <input type="submit" disabled value="Cambiar" />
                             </form>
                         </article>
                     </section>
