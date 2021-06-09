@@ -1,0 +1,9 @@
+openapi: "3.0.3"
+info:
+  title: "Anytime Server API"
+  description: "Anytime Server API"
+  version: "1.0.0"
+servers:
+  - url: "https://test.wokis.es"
+paths:
+	
