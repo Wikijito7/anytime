@@ -1,0 +1,211 @@
+openapi: "3.0.3"
+info:
+  title: "Anytime Server API"
+  description: "Anytime Server API"
+  version: "1.0.0"
+servers:
+  - url: "https://test.wokis.es"
+paths:
+  /login:
+    post:
+      summary: "POST Login"
+      operationId: "login"
+      responses:
+        200:
+          description: "OK"
+        403:
+          description: "Wrong username or password"
+  /register:
+    post:
+      summary: "POST Register"
+      operationId: "register"
+      responses:
+        200:
+          description: "OK"
+        409:
+          description: "Username already exists"
+  /empresa/{nombre}:
+    get:
+      summary: "GET Empresa"
+      operationId: "getEmpresa"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "nombre must be given"
+        404:
+          description: "Empresa doesn't exists"
+  /fichaje:
+    put:
+      summary: "PUT Fichaje"
+      operationId: "fichaje"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Fichaje doesn't exists"
+        403:
+          description: "No permission"
+    delete:
+      summary: "DELETE Fichaje"
+      operationId: "fichaje"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Fichaje doesn't exists"
+        403:
+          description: "No permission"
+  /fichaje/{username}:
+    get:
+      summary: "Get fichajes"
+      operationId: "fichajes"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Username must be given"
+        403:
+          description: "No permission"
+        404:
+          description: "Username not found"
+  /fichar:
+    post:
+      summary: "POST fichar"
+      operationId: "fichar"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Username must be given"
+        403:
+          description: "No permission"
+        404:
+          description: "Username not found"
+  /desfichar:
+    post:
+      summary: "POST desfichar"
+      operationId: "desfichar"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Username must be given"
+        403:
+          description: "No permission"
+        404:
+          description: "Username not found"
+  /invite/{hash}:
+    get:
+      summary: "GET invitar"
+      operationId: "invite"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Hash must be given"
+        404:
+          description: "Invitacion not found"
+  /invite:
+    delete:
+      summary: "DELETE invitacion"
+      operationId: "eliminarInvitacion"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Username not found"
+  /email:
+    post:
+      summary: "POST invitacion"
+      operationId: "email"
+      responses:
+        200:
+          description: "OK"
+  /user/{username}/avatar:
+    get:
+      summary: "GET imagen user"
+      operationId: "getImagenUser"
+      responses:
+        200:
+          description: "OK"
+  /user:
+    get:
+      summary: "GET user"
+      operationId: "getUser"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "User not found"
+    put:
+      summary: "PUT user"
+      operationId: "updateUser"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "User not found"
+  /user/avatar:
+    post:
+      summary: "POST user avatar"
+      operationId: "addUserAvatar"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Image must be given"
+        403:
+          description: "No permission"
+    delete:
+      summary: "DELETE user avatar"
+      operationId: "deleteUserAvatar"
+      responses:
+        200:
+          description: "OK"
+        403:
+          description: "No permission"
+  /user/{username}:
+    get:
+      summary: "DELETE user"
+      operationId: "deleteUser"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "User not found"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "No permission"
+        404:
+          description: "Username not found"
+    delete:
+      summary: "DELETE user"
+      operationId: "deleteUser"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "User not found"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "No permission"
+        404:
+          description: "Username not found"
+  /user/{username}/role:
+    put:
+      summary: "PUT user role"
+      operationId: "updateRole"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "User not found"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "No permission"
+        404:
+          description: "Username not found"
