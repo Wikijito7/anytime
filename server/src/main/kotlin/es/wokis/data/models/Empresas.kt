@@ -11,7 +11,6 @@ object Empresas : IntIdTable() {
     val piso = varchar("piso", 10).nullable()
 
     val logo = varchar("logo", 60).nullable()
-//    val creador = reference("creador", Users, ReferenceOption.CASCADE)
 }
 
 class Empresa(id: EntityID<Int>) : IntEntity(id) {

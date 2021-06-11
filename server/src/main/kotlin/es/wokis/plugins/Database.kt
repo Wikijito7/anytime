@@ -54,6 +54,7 @@ fun Application.initDB() {
                 this.password = BCrypt.hashpw("pestillo", BCrypt.gensalt())
                 this.email = "woki@woki.es"
                 this.empresa = empresa
+                this.rol = Role.ADMIN
             }
 
             Users.insertIgnore {
